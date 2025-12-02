@@ -69,6 +69,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
@@ -80,11 +82,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                         <span className="text-xs text-slate-500 capitalize">{user.role}</span>
                     </div>
                     <button 
-                        onClick={onLogout}
-                        className="p-2 text-slate-500 hover:text-red-500 transition-colors"
-                        title="Logout"
+                      onClick={onLogout}
+                      className="p-2 text-slate-500 hover:text-red-500 transition-colors"
+                      title="Logout"
+                      aria-label="Logout"
                     >
-                        <LogOut size={20} />
+                      <LogOut size={20} />
                     </button>
                 </div>
             ) : (

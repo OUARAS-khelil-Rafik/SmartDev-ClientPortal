@@ -2,12 +2,12 @@
 module.exports = {
   // Only scan project source files — avoid broad globs that may match node_modules
   content: [
-    './index.html',
-    './index.tsx',
-    './App.tsx',
-    './components/**/*.{ts,tsx,js,jsx}',
-    './services/**/*.{ts,tsx,js,jsx}',
-    './*.{ts,tsx,js,jsx,html}'
+    './public/index.html',
+    './src/index.tsx',
+    './src/App.tsx',
+    './src/components/**/*.{ts,tsx,js,jsx}',
+    './src/services/**/*.{ts,tsx,js,jsx}',
+    './src/*.{ts,tsx,js,jsx,html}'
   ],
   darkMode: 'class',
   theme: {
