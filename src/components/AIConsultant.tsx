@@ -1,0 +1,159 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { ChatMessage } from '../types';
+import { generateProjectConsultation } from '../services/geminiService';
+import { Send, Bot, User, Sparkles, Loader2 } from 'lucide-react';
+
+const AIConsultant: React.FC = () => {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: 'welcome',
+      role: 'model',
+      text: "Hello! I'm the Nexus AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
+      timestamp: Date.now()
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMsg: ChatMessage = {
+      id: Date.now().toString(),
+      role: 'user',
+      text: input,
+      timestamp: Date.now()
+    };
+
+    setMessages(prev => [...prev, userMsg]);
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      // Format history for Gemini
+      const history = messages.map(m => ({
+        role: m.role,
+        parts: [{ text: m.text }]
+      }));
+
+      const responseText = await generateProjectConsultation(userMsg.text, history);
+
+      const aiMsg: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        role: 'model',
+        text: responseText,
+        timestamp: Date.now()
+      };
+      
+      setMessages(prev => [...prev, aiMsg]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex flex-col items-center">
+      <div className="max-w-4xl w-full flex-grow flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden h-[80vh]">
+        
+        {/* Header */}
+        <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
+                    <Sparkles className="text-white" size={20} />
+                </div>
+                <div>
+                    <h2 className="font-bold text-slate-900 dark:text-white">AI Architect</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Powered by Gemini 2.5 Flash</p>
+                </div>
+            </div>
+            <div className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                Online
+            </div>
+        </div>
+
+        {/* Chat Area */}
+        <div className="flex-grow overflow-y-auto p-6 space-y-6">
+            {messages.map((msg) => (
+                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`flex gap-3 max-w-[80%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                            msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                        }`}>
+                            {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
+                        </div>
+                        <div className={`p-4 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+                            msg.role === 'user' 
+                            ? 'bg-blue-600 text-white rounded-tr-none' 
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200 dark:border-slate-700'
+                        }`}>
+                            {msg.text}
+                        </div>
+                    </div>
+                </div>
+            ))}
+            {isLoading && (
+                <div className="flex justify-start">
+                    <div className="flex gap-3">
+                         <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+                            <Bot size={16} className="text-slate-500" />
+                        </div>
+                        <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none flex items-center gap-2">
+                            <Loader2 size={16} className="animate-spin text-blue-500" />
+                            <span className="text-xs text-slate-500">Thinking...</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+            <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+            <div className="relative flex items-center">
+                <textarea
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    placeholder="Describe your project idea (e.g., 'I want a mobile app for tracking fitness goals with social features')..."
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none h-14 text-slate-900 dark:text-white scrollbar-hide"
+                />
+                <button 
+                    onClick={handleSend}
+                    disabled={isLoading || !input.trim()}
+                    aria-label="Send message"
+                    title="Send message"
+                    className="absolute right-2 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    <Send size={18} />
+                </button>
+            </div>
+            <p className="text-center text-xs text-slate-400 mt-2">
+                AI responses can be inaccurate. Please consult our human engineers for final contracts.
+            </p>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default AIConsultant;
