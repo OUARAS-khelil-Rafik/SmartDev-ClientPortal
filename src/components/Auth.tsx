@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User, Lock, Mail, ArrowRight, Loader2, Sparkles, Chrome } from 'lucide-react';
+import { User, Lock, Mail, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { api } from '../services/mockApi';
 import { User as UserType } from '../types';
 
@@ -14,7 +14,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
-    const [googleLoading, setGoogleLoading] = useState(false);
+    // Google sign-in removed
     const [error, setError] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -29,6 +29,12 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             } else {
                 if (!name) throw new Error("Name is required");
                 user = await api.signup(name, email);
+                // New signups require admin approval; don't auto-login
+                if ((user as any).status === 'pending') {
+                    setError('Account created and is pending administrator approval. You will be notified once approved.');
+                    setLoading(false);
+                    return;
+                }
             }
             onLogin(user);
         } catch (err: any) {
@@ -38,18 +44,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
         }
     };
 
-    const handleGoogleLogin = async () => {
-        setError('');
-        setGoogleLoading(true);
-        try {
-            const user = await api.loginWithGoogle();
-            onLogin(user);
-        } catch (err: any) {
-            setError('Google sign-in failed. Please try again.');
-        } finally {
-            setGoogleLoading(false);
-        }
-    };
+    // Google sign-in removed. Use email signup/login.
 
     return (
         <div className="min-h-screen pt-16 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
@@ -68,16 +63,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     </div>
 
                     <div className="p-8 pb-0">
-                         <button 
-                            onClick={handleGoogleLogin}
-                            disabled={googleLoading || loading}
-                            className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2"
-                         >
-                            {googleLoading ? <Loader2 className="animate-spin" size={20} /> : <Chrome size={20} className="text-red-500" />}
-                            <span>{isLogin ? 'Sign in with Google' : 'Sign up with Google'}</span>
-                         </button>
-                         
-                         <div className="relative my-6">
+                                 <div className="relative my-6">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
                             </div>
@@ -140,7 +126,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 
                         <button 
                             type="submit"
-                            disabled={loading || googleLoading}
+                            disabled={loading}
                             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2 mt-4"
                         >
                             {loading ? <Loader2 className="animate-spin" size={20} /> : (

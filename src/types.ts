@@ -7,6 +7,8 @@ export interface User {
   email: string;
   role: 'admin' | 'client';
   avatar?: string;
+  // Optional approval status for admin moderation
+  status?: 'pending' | 'approved' | 'rejected';
 }
 
 export interface Service {
@@ -49,7 +51,7 @@ export interface Booking {
   userEmail: string;
   date: string;
   time: string;
-  status: 'pending' | 'confirmed' | 'rejected';
+  status: 'pending' | 'confirmed' | 'rejected' | 'cancelled' | 'finished';
   meetLink?: string; // Google Meet Link
   topic: string[]; // Changed to array for multi-select
   description: string;

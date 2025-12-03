@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Booking, Project, User } from '../types';
 import { api } from '../services/mockApi';
-import { Check, X, Video, Calendar, Clock, Loader2, Users, Briefcase, ExternalLink, FileText, BarChart3 } from 'lucide-react';
+import { Check, X, Video, Calendar, Clock, Loader2, Users, Briefcase, ExternalLink, FileText, BarChart3, Trash, Edit } from 'lucide-react';
+import ConfirmDialog from './ConfirmDialog';
 
 const AdminDashboard: React.FC = () => {
     const [bookings, setBookings] = useState<Booking[]>([]);
@@ -11,6 +12,11 @@ const AdminDashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<'bookings' | 'projects'>('bookings');
     const [descriptionModal, setDescriptionModal] = useState<Booking | null>(null);
+    const [projectDeleteDialogOpen, setProjectDeleteDialogOpen] = useState(false);
+    const [pendingProjectDelete, setPendingProjectDelete] = useState<Project | null>(null);
+    const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+    const [pendingRenameProject, setPendingRenameProject] = useState<Project | null>(null);
+    const [renameInput, setRenameInput] = useState('');
 
     // Admin no longer creates/deletes client projects here — clients manage their own projects.
 
@@ -27,12 +33,33 @@ const AdminDashboard: React.FC = () => {
             ]);
             setBookings(b.reverse()); // Newest first
             setProjects(p);
-            setUsers(u.filter(user => user.role === 'client')); // Only clients can have projects
+            setUsers(u.filter(user => user.role === 'client')); // Include clients (may be pending/rejected)
         } catch (e) {
             console.error(e);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleApproveUser = async (id: string) => {
+        try {
+            const updated = await api.approveUser(id);
+            setUsers(updated.filter((user: any) => user.role === 'client'));
+        } catch (e) { console.error(e) }
+    };
+
+    const handleRejectUser = async (id: string) => {
+        try {
+            const updated = await api.rejectUser(id);
+            setUsers(updated.filter((user: any) => user.role === 'client'));
+        } catch (e) { console.error(e) }
+    };
+
+    const handleDeleteUser = async (id: string) => {
+        try {
+            const updated = await api.deleteUser(id);
+            setUsers(updated.filter((user: any) => user.role === 'client'));
+        } catch (e) { console.error(e) }
     };
 
     const handleApprove = async (id: string) => {
@@ -47,6 +74,57 @@ const AdminDashboard: React.FC = () => {
             const updated = await api.rejectBooking(id);
             setBookings(updated.reverse());
         } catch(e) { console.error(e) }
+    };
+
+    const handleCancelBooking = async (id: string) => {
+        try {
+            const updated = await api.cancelBooking(id, { id: 'admin', role: 'admin' });
+            setBookings(updated.reverse());
+        } catch (e) { console.error(e); }
+    };
+
+    const handleFinishBooking = async (id: string) => {
+        try {
+            const updated = await api.finishBooking(id, { id: 'admin', role: 'admin' });
+            setBookings(updated.reverse());
+        } catch (e) { console.error(e); }
+    };
+
+    // Admin: open delete dialog for project
+    const openProjectDeleteDialog = (project: Project) => {
+        setPendingProjectDelete(project);
+        setProjectDeleteDialogOpen(true);
+    };
+
+    const confirmAdminDeleteProject = async () => {
+        if (!pendingProjectDelete) return;
+        try {
+            await api.deleteProject(pendingProjectDelete.id, { id: 'admin', role: 'admin' });
+            const [p, b] = await Promise.all([
+                api.getProjects('admin', 'admin'),
+                api.getBookings('admin', 'admin')
+            ]);
+            setProjects(p);
+            setBookings(b.reverse());
+        } catch (e) { console.error(e); }
+        finally { setProjectDeleteDialogOpen(false); setPendingProjectDelete(null); }
+    };
+
+    const openRenameProjectDialog = (project: Project) => {
+        setPendingRenameProject(project);
+        setRenameInput(project.name);
+        setRenameDialogOpen(true);
+    };
+
+    const confirmAdminRenameProject = async () => {
+        if (!pendingRenameProject) return;
+        if (!renameInput || !renameInput.trim()) return alert('Please provide a valid project name');
+        try {
+            await api.renameProject(pendingRenameProject.id, renameInput.trim(), { id: 'admin', role: 'admin' });
+            const p = await api.getProjects('admin', 'admin');
+            setProjects(p);
+        } catch (e: any) { alert(e.message || 'Failed to rename'); }
+        finally { setRenameDialogOpen(false); setPendingRenameProject(null); }
     };
 
     // Project creation removed for admins; clients create/delete their own projects in My Projects.
@@ -105,6 +183,55 @@ const AdminDashboard: React.FC = () => {
                                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{projects.length}</h3>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {/* User Management */}
+                <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm mb-8">
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">Manage Users</h3>
+                        <div className="text-xs text-slate-500">Approve or remove client accounts</div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+                            <thead className="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase font-semibold text-slate-500">
+                                <tr>
+                                    <th className="px-4 py-3">Name</th>
+                                    <th className="px-4 py-3">Email</th>
+                                    <th className="px-4 py-3">Status</th>
+                                    <th className="px-4 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                                {users.map(u => (
+                                    <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{u.name}</td>
+                                        <td className="px-4 py-3 text-xs">{u.email}</td>
+                                        <td className="px-4 py-3">
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize
+                                                ${u.status === 'approved' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 
+                                                  u.status === 'rejected' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' : 
+                                                  'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'}`}>
+                                                {u.status || 'approved'}
+                                            </span>
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <div className="flex gap-2">
+                                                <button onClick={() => handleApproveUser(u.id)} disabled={u.status === 'approved'} className="px-2 py-1 bg-green-100 hover:bg-green-200 text-green-700 rounded-md text-xs">Approve</button>
+                                                <button onClick={() => handleRejectUser(u.id)} disabled={u.status === 'rejected'} className="px-2 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-xs">Reject</button>
+                                                <button onClick={() => handleDeleteUser(u.id)} className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-xs">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {users.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4} className="px-4 py-6 text-center text-slate-500">No users found.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -210,6 +337,22 @@ const AdminDashboard: React.FC = () => {
                                                         </button>
                                                     </div>
                                                 )}
+                                                {booking.status === 'confirmed' && (
+                                                    <div className="flex gap-2">
+                                                        <button
+                                                            onClick={() => handleFinishBooking(booking.id)}
+                                                            className="p-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors" title="Mark finished"
+                                                        >
+                                                            <Check size={16} />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleCancelBooking(booking.id)}
+                                                            className="p-1.5 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg transition-colors" title="Cancel booking"
+                                                        >
+                                                            <X size={16} />
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
@@ -246,6 +389,34 @@ const AdminDashboard: React.FC = () => {
                     </div>
                 )}
 
+                {/* Admin Project Delete Confirm */}
+                <ConfirmDialog
+                    open={projectDeleteDialogOpen}
+                    title="Delete Project"
+                    message={pendingProjectDelete ? `Are you sure you want to permanently delete "${pendingProjectDelete.name}"? This will remove the project and detach any related bookings.` : 'Are you sure you want to delete this project?'}
+                    confirmLabel="Delete"
+                    cancelLabel="Cancel"
+                    loading={false}
+                    onConfirm={confirmAdminDeleteProject}
+                    onCancel={() => { setProjectDeleteDialogOpen(false); setPendingProjectDelete(null); }}
+                />
+
+                {/* Admin Rename Modal */}
+                {renameDialogOpen && pendingRenameProject && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/40" onClick={() => setRenameDialogOpen(false)} />
+                        <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full p-6">
+                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Rename Project</h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">Rename "{pendingRenameProject.name}"</p>
+                            <input aria-label="New project name" placeholder="New project name" value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
+                            <div className="flex justify-end gap-3">
+                                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Cancel</button>
+                                <button onClick={confirmAdminRenameProject} className="px-4 py-2 rounded bg-blue-600 text-white">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* CONTENT: Projects */}
                 {activeTab === 'projects' && (
                     <div className="space-y-6 animate-fadeIn">
@@ -274,6 +445,10 @@ const AdminDashboard: React.FC = () => {
                                             <div className="flex justify-between items-center text-xs text-slate-400 border-t border-slate-200 dark:border-slate-700 pt-3">
                                                 <span className="flex items-center gap-1"><Clock size={12}/> Due: {project.deadline}</span>
                                                 <span className="flex items-center gap-1"><BarChart3 size={12}/> {project.progress}%</span>
+                                            </div>
+                                            <div className="mt-3 flex justify-end gap-2">
+                                                <button title="Rename" onClick={() => openRenameProjectDialog(project)} className="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded text-slate-700 text-xs flex items-center gap-2"><Edit size={14}/> Rename</button>
+                                                <button title="Delete" onClick={() => openProjectDeleteDialog(project)} className="px-2 py-1 bg-red-100 hover:bg-red-200 rounded text-red-700 text-xs flex items-center gap-2"><Trash size={14}/> Delete</button>
                                             </div>
                                         </div>
                                     );

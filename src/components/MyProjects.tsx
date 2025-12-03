@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Briefcase, Plus, Trash, Loader2 } from 'lucide-react';
+import { Briefcase, Plus, Trash, Loader2, Edit } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
 import { User, Project } from '../types';
@@ -27,6 +27,33 @@ const MyProjects: React.FC<Props> = ({ user }) => {
     finally { setLoading(false); }
   };
 
+  // Rename dialog state
+  const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+  const [pendingRename, setPendingRename] = useState<{ id: string; name?: string } | null>(null);
+  const [renameInput, setRenameInput] = useState('');
+
+  const openRenameDialog = (id: string) => {
+    const proj = projects.find(p => p.id === id);
+    setPendingRename({ id, name: proj?.name });
+    setRenameInput(proj?.name || '');
+    setRenameDialogOpen(true);
+  };
+
+  const confirmRenameFromDialog = async () => {
+    if (!pendingRename) return;
+    const id = pendingRename.id;
+    if (!renameInput || !renameInput.trim()) return alert('Please provide a valid project name');
+    setRenameDialogOpen(false);
+    setLoading(true);
+    try {
+      await api.renameProject(id, renameInput.trim(), { id: user!.id, role: user!.role });
+      await load();
+      // Notify other components (Booking) that projects changed
+      try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
+    } catch (e: any) { alert(e.message || 'Failed to rename'); }
+    finally { setLoading(false); }
+  };
+
   const handleCreate = async () => {
     if (!name) return alert('Please provide a project name');
     setLoading(true);
@@ -38,6 +65,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
       await api.createProject({ name, clientId: user!.id, deadline: deadline || new Date().toISOString().slice(0,10), status: 'Planning' }, { id: user!.id, role: user!.role });
       setName(''); setDeadline(''); setCreating(false);
       await load();
+      try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
     } catch (e: any) { alert(e.message || 'Failed to create'); }
     finally { setLoading(false); }
   };
@@ -97,6 +125,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
     try {
       await api.deleteProject(id, { id: user!.id, role: user!.role });
       await load();
+      try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
     } catch (e: any) { alert(e.message || 'Failed to delete'); }
     finally { setLoading(false); }
   };
@@ -146,6 +175,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
                   <p className="text-xs text-slate-500">Due: {p.deadline} • Status: {p.status}</p>
                 </div>
                 <div className="flex gap-2">
+                  <button title="Rename" onClick={() => openRenameDialog(p.id)} className="p-2 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300"><Edit size={16}/></button>
                   <button title="Delete" onClick={() => openDeleteDialog(p.id)} className="p-2 rounded bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40"><Trash size={16}/></button>
                 </div>
               </div>
@@ -167,6 +197,20 @@ const MyProjects: React.FC<Props> = ({ user }) => {
           onConfirm={confirmDeleteFromDialog}
           onCancel={() => setDeleteDialogOpen(false)}
         />
+        {renameDialogOpen && pendingRename && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/40" onClick={() => setRenameDialogOpen(false)} />
+            <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full p-6">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Rename Project</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">Rename "{pendingRename.name}"</p>
+              <input aria-label="New project name" placeholder="New project name" value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
+              <div className="flex justify-end gap-3">
+                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Cancel</button>
+                <button onClick={confirmRenameFromDialog} disabled={loading} className="px-4 py-2 rounded bg-blue-600 text-white">{loading ? 'Saving...' : 'Save'}</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

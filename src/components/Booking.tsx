@@ -30,9 +30,9 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   const [success, setSuccess] = useState(false);
   
   // Data State
-  const [occupiedSlots, setOccupiedSlots] = useState<{date: string, time: string}[]>([]);
-  const [userProjects, setUserProjects] = useState<Project[]>([]);
-  const [myBookings, setMyBookings] = useState<BookingType[]>([]);
+    const [occupiedSlots, setOccupiedSlots] = useState<{date: string, time: string}[]>([]);
+    const [userProjects, setUserProjects] = useState<Project[]>([]);
+    const [myBookings, setMyBookings] = useState<BookingType[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
     // Project creation/deletion moved to MyProjects page; remove inline creation state
 
@@ -48,6 +48,16 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
           fetchHistory();
       }
   }, [user, activeTab]);
+
+    // Listen for project updates so Booking can refresh its project list when MyProjects changes projects
+    useEffect(() => {
+        const onProjectsUpdated = () => {
+            if (!user) return;
+            api.getProjects(user.id, 'client').then(setUserProjects).catch(() => {});
+        };
+        window.addEventListener('projects-updated', onProjectsUpdated as EventListener);
+        return () => window.removeEventListener('projects-updated', onProjectsUpdated as EventListener);
+    }, [user]);
 
   const fetchHistory = async () => {
       if (!user) return;
@@ -236,6 +246,8 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                         </div>
                     </div>
 
+                    {/* Inline project rename removed from Booking component */}
+
                     <div className="flex gap-4 justify-center">
                          <button 
                             onClick={resetForm}
@@ -373,10 +385,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                     )
                                 })}
                             </div>
-                            <div className="mt-2 flex items-center gap-2 text-xs text-slate-500">
-                                <div className="w-3 h-3 bg-slate-100 dark:bg-slate-800 border border-slate-300 rounded"></div>
-                                <span>Occupied Slot</span>
-                            </div>
+                            {/* Occupied Slot legend removed as requested */}
                         </div>
                     )}
 
@@ -384,10 +393,10 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                         
                          {/* Project Selection (NEW) */}
                                  <div>
-                                     <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">Related Project (Rejected or newly created projects — not approved)</label>
+                                     <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">Related Project</label>
                             <div className="relative">
                                 <Briefcase className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                                <select
+                                                    <select
                                     aria-label="Related project"
                                     title="Related project"
                                     value={selectedProjectId}
@@ -405,6 +414,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                         );
                                     })}
                                 </select>
+                                {/* Rename button removed from Booking component */}
                             </div>
                         </div>
 

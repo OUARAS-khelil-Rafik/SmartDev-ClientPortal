@@ -46,32 +46,13 @@ class MockApi {
     
     // For demo purposes, we accept any password, but check email existence
     if (!user) throw new Error('User not found. Please sign up.');
+    // Block login for users that are pending or rejected
+    if ((user as any).status === 'pending') throw new Error('Your account is pending approval by an administrator.');
+    if ((user as any).status === 'rejected') throw new Error('Your account registration was rejected.');
     return user;
   }
 
-  async loginWithGoogle(): Promise<User> {
-      await delay(1000); // Simulate popup and OAuth delay
-      const users = this.getUsers();
-      
-      // Simulate a Google User
-      const googleEmail = "user.demo@gmail.com";
-      let user = users.find(u => u.email === googleEmail);
-      
-      if (!user) {
-          // Auto-register if first time
-          user = {
-              id: `google_${Date.now()}`,
-              name: "Google User",
-              email: googleEmail,
-              role: 'client',
-              avatar: 'https://lh3.googleusercontent.com/a/default-user=s96-c' // Generic Google avatar
-          };
-          users.push(user);
-          this.saveUsers(users);
-          await this.createDemoProjectForUser(user.id);
-      }
-      return user;
-  }
+    // Google sign-in removed: this method intentionally deleted.
 
   async signup(name: string, email: string): Promise<User> {
     await delay(800);
@@ -83,16 +64,78 @@ class MockApi {
         name,
         email,
         role: 'client' // Default role
-    };
-    
+    } as User;
+    // New signups require admin approval by default
+    newUser.status = 'pending';
     users.push(newUser);
     this.saveUsers(users);
     
     // Assign a demo project to new user
-    await this.createDemoProjectForUser(newUser.id);
-    
+    // Do not create demo project until admin approves the user
     return newUser;
   }
+    
+
+  // --- User moderation (admin) ---
+
+  async approveUser(userId: string): Promise<User[]> {
+    await delay(400);
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.id === userId);
+    if (idx === -1) throw new Error('User not found');
+    users[idx].status = 'approved';
+    this.saveUsers(users);
+    // Create demo project after approval
+    await this.createDemoProjectForUser(userId);
+    return users;
+  }
+
+  async rejectUser(userId: string): Promise<User[]> {
+    await delay(300);
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.id === userId);
+    if (idx === -1) throw new Error('User not found');
+    users[idx].status = 'rejected';
+    this.saveUsers(users);
+    return users;
+  }
+
+  async deleteUser(userId: string): Promise<User[]> {
+    await delay(300);
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.id === userId);
+    if (idx !== -1) {
+      users.splice(idx, 1);
+      this.saveUsers(users);
+    }
+    // Also handle related projects and bookings
+    const projects = this.getStoredProjects().filter(p => p.clientId !== userId);
+    this.saveProjects(projects);
+
+    // For bookings: mark any previously confirmed bookings as cancelled and remove any other bookings for the deleted user
+    const bookings = this.getStoredBookings();
+    let changed = false;
+    const newBookings: Booking[] = [];
+    for (let b of bookings) {
+      if (b.userId === userId) {
+        // Cancel confirmed bookings so admin/user can see history
+        if (b.status === 'confirmed') {
+          b.status = 'cancelled';
+          b.meetLink = undefined;
+          newBookings.push(b);
+          changed = true;
+        } else {
+          // drop other bookings for deleted user
+          changed = true;
+        }
+      } else {
+        newBookings.push(b);
+      }
+    }
+    if (changed) this.saveBookings(newBookings);
+    return users;
+  }
+
 
   // --- Projects ---
 
@@ -165,12 +208,45 @@ class MockApi {
     if (idx === -1) return projects;
 
     const project = projects[idx];
+
+    // Admins are allowed to delete any project (for management purposes).
+    if (actor && actor.role === 'admin') {
+      console.log('[MockApi] Admin deleting project', projectId);
+      projects.splice(idx, 1);
+      this.saveProjects(projects);
+
+      // Also remove projectId references from bookings
+      const bookings = this.getStoredBookings();
+      let changed = false;
+      for (let b of bookings) {
+        if (b.projectId === projectId) {
+          console.log('[MockApi] Found booking for deleted project', b.id, 'status', b.status);
+          // Cancel any pending or confirmed bookings tied to this project
+          if (b.status === 'confirmed' || b.status === 'pending') {
+            const prev = b.status;
+            b.status = 'cancelled';
+            b.meetLink = undefined;
+            console.log('[MockApi] Cancelled booking', b.id, 'status was', prev, 'due to project deletion');
+          }
+          // detach project reference
+          b.projectId = undefined;
+          changed = true;
+        }
+      }
+      if (changed) {
+        console.log('[MockApi] Saving bookings after project deletion');
+        this.saveBookings(bookings);
+      }
+
+      return projects;
+    }
+
+    // Non-admin: enforce client ownership and protections
     if (!actor || actor.role !== 'client' || actor.id !== project.clientId) {
       throw new Error('Only the client who owns this project may delete it via this endpoint');
     }
 
     // Only allow deleting projects that are still in Planning state.
-    // If the project has moved beyond 'Planning' (e.g., In Progress, Review, Completed) it is considered protected.
     if (project.status !== 'Planning') {
       throw new Error('Only projects in Planning can be deleted. Projects that are in progress or completed are protected.');
     }
@@ -196,6 +272,30 @@ class MockApi {
     }
     if (changed) this.saveBookings(bookings);
 
+    return projects;
+  }
+
+  // Rename a project. Admins can rename any project; clients can rename their own projects.
+  async renameProject(projectId: string, newName: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Project[]> {
+    await delay(300);
+    if (!newName || !newName.trim()) throw new Error('Project name cannot be empty');
+    const projects = this.getStoredProjects();
+    const pIndex = projects.findIndex(p => p.id === projectId);
+    if (pIndex === -1) throw new Error('Project not found');
+
+    const project = projects[pIndex];
+
+    // Permission check
+    if (!(actor && (actor.role === 'admin' || (actor.role === 'client' && actor.id === project.clientId)))) {
+      throw new Error('You do not have permission to rename this project');
+    }
+
+    // Prevent duplicate name for same client
+    const dup = projects.find(p => p.clientId === project.clientId && p.name.toLowerCase() === newName.toLowerCase() && p.id !== projectId);
+    if (dup) throw new Error('A project with that name already exists for this client');
+
+    projects[pIndex] = { ...project, name: newName };
+    this.saveProjects(projects);
     return projects;
   }
 
@@ -263,9 +363,9 @@ class MockApi {
     
     // Check for conflicts (date + time)
     const isOccupied = bookings.some(b => 
-        b.date === details.date && 
-        b.time === details.time && 
-        b.status !== 'rejected'
+      b.date === details.date && 
+      b.time === details.time && 
+      (b.status === 'pending' || b.status === 'confirmed')
     );
 
     if (isOccupied) {
@@ -295,17 +395,34 @@ class MockApi {
   async getOccupiedSlots(): Promise<{date: string, time: string}[]> {
       await delay(500);
       const bookings = this.getStoredBookings();
-      // Filter out rejected bookings, as those slots are free again
-      return bookings
-        .filter(b => b.status !== 'rejected')
-        .map(b => ({ date: b.date, time: b.time }));
+    // Only pending or confirmed bookings occupy slots
+    return bookings
+      .filter(b => b.status === 'pending' || b.status === 'confirmed')
+      .map(b => ({ date: b.date, time: b.time }));
   }
 
   async getBookings(userId: string, role: 'admin' | 'client'): Promise<Booking[]> {
     await delay(600);
-    const all = this.getStoredBookings();
-    if (role === 'admin') return all;
-    return all.filter(b => b.userId === userId);
+    // Before returning, auto-finish any confirmed bookings whose date/time have passed
+    const bookings = this.getStoredBookings();
+    const now = new Date();
+    let changed = false;
+    for (let b of bookings) {
+      if (b.status === 'confirmed') {
+        // try to parse date and time (expecting YYYY-MM-DD and HH:mm)
+        try {
+          const dt = new Date(`${b.date}T${b.time}:00`);
+          if (!isNaN(dt.getTime()) && dt.getTime() <= now.getTime()) {
+            b.status = 'finished';
+            changed = true;
+          }
+        } catch (e) { /* ignore parse errors */ }
+      }
+    }
+    if (changed) this.saveBookings(bookings);
+
+    if (role === 'admin') return bookings;
+    return bookings.filter(b => b.userId === userId);
   }
 
   async confirmBooking(bookingId: string): Promise<Booking[]> {
@@ -333,6 +450,40 @@ class MockApi {
           this.saveBookings(bookings);
       }
       return bookings;
+  }
+
+  // Cancel booking (admin can cancel any booking; client can cancel own booking)
+  async cancelBooking(bookingId: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Booking[]> {
+    await delay(400);
+    const bookings = this.getStoredBookings();
+    const idx = bookings.findIndex(b => b.id === bookingId);
+    if (idx === -1) throw new Error('Booking not found');
+
+    const booking = bookings[idx];
+    if (actor && actor.role === 'admin') {
+      // Admin can cancel any booking
+      booking.status = 'cancelled';
+      booking.meetLink = undefined;
+    } else {
+      // Client may cancel their own bookings
+      if (!actor || actor.id !== booking.userId) throw new Error('You do not have permission to cancel this booking');
+      booking.status = 'cancelled';
+      booking.meetLink = undefined;
+    }
+    this.saveBookings(bookings);
+    return bookings;
+  }
+
+  // Admin marks booking as finished manually
+  async finishBooking(bookingId: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Booking[]> {
+    await delay(400);
+    const bookings = this.getStoredBookings();
+    const idx = bookings.findIndex(b => b.id === bookingId);
+    if (idx === -1) throw new Error('Booking not found');
+    if (!actor || actor.role !== 'admin') throw new Error('Only admins may mark bookings as finished');
+    bookings[idx].status = 'finished';
+    this.saveBookings(bookings);
+    return bookings;
   }
 }
 

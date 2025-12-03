@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Project, User } from '../types';
 import { api } from '../services/mockApi';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash, Edit } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 
 const COLORS = ['#3b82f6', '#1e293b'];
@@ -85,6 +85,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
         const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
         const [pendingDelete, setPendingDelete] = useState<{ id: string; name?: string } | null>(null);
+        // Rename dialog state
+        const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+        const [renameInput, setRenameInput] = useState('');
 
         const openDeleteDialog = (projectId: string) => {
             const proj = projects.find(p => p.id === projectId);
@@ -122,6 +125,22 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         };
 
   const activeProject = projects.find(p => p.id === activeProjectId);
+
+    const confirmRenameProject = async () => {
+        if (!activeProject || !activeProjectId) return;
+        if (!renameInput || !renameInput.trim()) return alert('Please provide a valid project name');
+        setRenameDialogOpen(false);
+        setLoading(true);
+        try {
+            await api.renameProject(activeProjectId, renameInput.trim(), { id: user.id, role: user.role });
+            await loadData();
+            try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
+        } catch (e: any) {
+            alert(e.message || 'Failed to rename project');
+        } finally {
+            setLoading(false);
+        }
+    };
 
   if (loading) {
       return (
@@ -211,9 +230,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                                 {activeProject.status}
                                             </span>
                                             {user.role === 'client' && (
-                                                <button title="Delete project" onClick={() => openDeleteDialog(activeProject.id)} className="p-2 rounded bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40">
-                                                    <Trash size={16} />
-                                                </button>
+                                                <>
+                                                    <button title="Rename project" onClick={() => { setRenameInput(activeProject.name); setRenameDialogOpen(true); }} className="p-2 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300 dark:hover:bg-slate-700/20">
+                                                        <Edit size={16} />
+                                                    </button>
+                                                    <button title="Delete project" onClick={() => openDeleteDialog(activeProject.id)} className="p-2 rounded bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40">
+                                                        <Trash size={16} />
+                                                    </button>
+                                                </>
                                             )}
                                         </div>
                                 </div>
@@ -374,7 +398,22 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         )}
       </div>
     </div>
-        <ConfirmDialog
+                {renameDialogOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/40" onClick={() => setRenameDialogOpen(false)} />
+                        <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full p-6">
+                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Rename Project</h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">Rename "{activeProject?.name}"</p>
+                            <input aria-label="New project name" placeholder="New project name" value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
+                            <div className="flex justify-end gap-3">
+                                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Cancel</button>
+                                <button onClick={confirmRenameProject} disabled={loading} className="px-4 py-2 rounded bg-blue-600 text-white">{loading ? 'Saving...' : 'Save'}</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <ConfirmDialog
             open={deleteDialogOpen}
             title="Delete Project"
             message={pendingDelete?.name ? `Are you sure you want to delete "${pendingDelete.name}"? This action cannot be undone.` : 'Are you sure you want to delete this project? This action cannot be undone.'}
