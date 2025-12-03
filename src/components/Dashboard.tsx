@@ -180,7 +180,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
   if (loading) {
       return (
-          <div className="min-h-screen pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+          <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
               <Loader2 size={48} className="animate-spin text-blue-600" />
           </div>
       );
@@ -188,13 +188,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
     return (
         <>
-        <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 animate-fade-in-down">
             <div>
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white">{t('dashboard.title')}</h2>
-                <p className="text-slate-600 dark:text-slate-400">{t('dashboard.welcome_back')} {user.name}.</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('dashboard.title')}</h2>
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">{t('dashboard.welcome_back')} {user.name}.</p>
             </div>
             
             

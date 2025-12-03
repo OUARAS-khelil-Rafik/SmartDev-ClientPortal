@@ -106,7 +106,7 @@ const App: React.FC = () => {
 
   return (
     <I18nProvider>
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-x-hidden">
       <Navbar 
         currentView={currentView} 
         setView={setView} 
@@ -116,7 +116,7 @@ const App: React.FC = () => {
         onLogout={handleLogout}
       />
       
-      <main className="animate-fadeIn pt-6 md:pt-5 pb-8">
+      <main className="flex-grow animate-fadeIn">
         {renderView()}
       </main>
 

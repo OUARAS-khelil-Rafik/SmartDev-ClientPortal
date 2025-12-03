@@ -6,11 +6,18 @@
 @layer base {
   html, body, #root {
     height: 100%;
+    overflow-x: hidden;
   }
   body {
     font-family: Inter, sans-serif;
     background-color: #f8fafc;
     color: #0f172a;
+    min-height: 100%;
+  }
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
   }
 }
 

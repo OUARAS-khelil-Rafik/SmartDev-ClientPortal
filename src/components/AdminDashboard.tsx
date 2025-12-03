@@ -148,22 +148,22 @@ const AdminDashboard: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+            <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
                 <Loader2 size={48} className="animate-spin text-blue-600" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
             <div className="max-w-7xl mx-auto">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{t('admin.title')}</h1>
-                    <p className="text-slate-600 dark:text-slate-400">{t('admin.subtitle')}</p>
+                <div className="mb-6 sm:mb-8">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('admin.title')}</h1>
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">{t('admin.subtitle')}</p>
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
                     <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                         <div className="flex items-center gap-4">
                                     <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">

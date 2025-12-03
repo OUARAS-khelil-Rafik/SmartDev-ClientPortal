@@ -73,18 +73,18 @@ const AIConsultant: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex flex-col items-center">
-      <div className="max-w-4xl w-full flex-grow flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden h-[80vh] animate-fade-in-up">
+    <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex flex-col items-center">
+      <div className="max-w-4xl w-full flex-grow flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden h-[70vh] sm:h-[80vh] animate-fade-in-up">
         
         {/* Header */}
-        <div className="p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20 animate-pulse-slow">
-                    <Sparkles className="text-white animate-spin-slow" size={20} />
+        <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20 animate-pulse-slow">
+                    <Sparkles className="text-white animate-spin-slow" size={16} />
                 </div>
                 <div>
-                    <h2 className="font-bold text-slate-900 dark:text-white">{t('ai_consultant.title')}</h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">{t('ai_consultant.subtitle')}</p>
+                    <h2 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">{t('ai_consultant.title')}</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">{t('ai_consultant.subtitle')}</p>
                 </div>
             </div>
                 <div className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold flex items-center gap-2 animate-glow">
@@ -94,17 +94,17 @@ const AIConsultant: React.FC = () => {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-grow overflow-y-auto p-6 space-y-6">
+        <div className="flex-grow overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
             {messages.map((msg) => (
                 <div 
                   key={msg.id} 
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}
                 >
-                    <div className={`flex gap-3 max-w-[80%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-transform hover:scale-110 ${
+                    <div className={`flex gap-2 sm:gap-3 max-w-[90%] sm:max-w-[80%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                        <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-transform hover:scale-110 ${
                             msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
                         }`}>
-                            {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
+                            {msg.role === 'user' ? <User size={14} className="sm:w-4 sm:h-4" /> : <Bot size={14} className="sm:w-4 sm:h-4" />}
                         </div>
                         <div className={`p-4 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap transition-all duration-300 hover:shadow-lg ${
                             msg.role === 'user'
@@ -138,7 +138,7 @@ const AIConsultant: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div className="p-3 sm:p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
             <div className="relative flex items-center group">
               <textarea
               value={input}

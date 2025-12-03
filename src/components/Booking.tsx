@@ -73,7 +73,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   // If not logged in, show restricted access state
   if (!user) {
       return (
-          <div className="min-h-screen pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+          <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
               <div className="text-center max-w-md">
                   <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lock size={32} className="text-slate-500" />
@@ -94,7 +94,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   // Prevent Admin from Booking
   if (user.role === 'admin') {
       return (
-          <div className="min-h-screen pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+          <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
               <div className="text-center max-w-md">
                   <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lock size={32} className="text-red-500" />
@@ -199,7 +199,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+    <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
       <div className="max-w-6xl w-full flex flex-col gap-6">
         
         {/* Navigation Tabs */}
@@ -207,13 +207,13 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
             <div className="bg-white dark:bg-slate-900 p-1 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex">
                 <button 
                     onClick={() => setActiveTab('new')}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 ${activeTab === 'new' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-300 hover:scale-105 ${activeTab === 'new' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                     {t('booking.new_reservation')}
                 </button>
                 <button 
                     onClick={() => setActiveTab('history')}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-300 hover:scale-105 ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                     {t('booking.my_requests')}
                 </button>
@@ -263,10 +263,10 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
              ) : (
                 <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-slate-200 dark:border-slate-800 animate-fadeIn">
                 {/* Left Side: Info */}
-                <div className="lg:w-1/3 bg-slate-900 text-white p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
+                <div className="lg:w-1/3 bg-slate-900 text-white p-6 sm:p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-600/20 to-transparent pointer-events-none"></div>
                     <div>
-                                <h2 className="text-3xl font-bold mb-4">{t('booking.schedule_consultation')}</h2>
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-4">{t('booking.schedule_consultation')}</h2>
                         <p className="text-slate-300 mb-8">
                             {t('booking.select_services_hint')}
                         </p>

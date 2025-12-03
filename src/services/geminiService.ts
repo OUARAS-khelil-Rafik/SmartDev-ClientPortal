@@ -1,24 +1,62 @@
-// Stubbed Gemini service for client builds
-// The real `@google/genai` SDK is server-side only and should not be bundled into the browser.
-// To avoid build-time Rollup resolution errors we provide a lightweight client-side fallback.
+// Gemini AI service - calls the backend proxy server
+// The backend handles the actual Gemini API calls to keep the API key secure
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const generateProjectConsultation = async (
   userQuery: string,
   history: { role: string; parts: { text: string }[] }[]
 ): Promise<string> => {
-  // Inform the client that AI is only available via a server-side endpoint.
-  return (
-    "AI functionality is disabled in the browser. " +
-    "Please configure a server-side proxy or use environment with server-side rendering to enable Gemini." 
-  );
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/consultation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: userQuery,
+        history: history,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to get AI response');
+    }
+
+    const data = await response.json();
+    return data.response;
+  } catch (error) {
+    console.error('Consultation API Error:', error);
+    return "I apologize, but I'm having trouble connecting to the AI service. Please try again later.";
+  }
 };
 
 export const generateCopilotResponse = async (
   userQuery: string,
   history: { role: string; parts: { text: string }[] }[]
 ): Promise<string> => {
-  return (
-    "Copilot is unavailable in the browser build. " +
-    "For interactive AI responses, run the app in SSR or call a secure server API that uses @google/genai." 
-  );
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/copilot`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: userQuery,
+        history: history,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to get AI response');
+    }
+
+    const data = await response.json();
+    return data.response;
+  } catch (error) {
+    console.error('Copilot API Error:', error);
+    return "I apologize, but I'm having trouble connecting. Please try again.";
+  }
 };

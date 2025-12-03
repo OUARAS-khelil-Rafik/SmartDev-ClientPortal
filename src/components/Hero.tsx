@@ -1,7 +1,7 @@
 import React from 'react';
 import { useI18n } from '../i18n';
 import { ViewState } from '../types';
-import { ArrowRight, Code2, ShieldCheck, Database, Cpu } from 'lucide-react';
+import { ArrowRight, Code2, ShieldCheck, Database, Cpu, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface HeroProps {
@@ -11,8 +11,40 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ setView }) => {
   const { t } = useI18n();
 
+  const scrollToServices = () => {
+    // Scroll to services section or trigger view change
+    const servicesSection = document.querySelector('#services-section');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback: scroll down by viewport height
+      window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+    }
+  };
+
+  // Animation variants for staggered children
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const }
+    }
+  };
+
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-16">
       {/* Animated Background Blobs */}
       <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
       <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -25,44 +57,60 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center lg:text-left"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center lg:text-left overflow-visible"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-6 border border-blue-100 dark:border-blue-800 animate-fade-in-down hover:scale-105 transition-transform cursor-default">
+          <motion.div 
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-6 border border-blue-100 dark:border-blue-800 hover:scale-105 transition-transform cursor-default"
+          >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
             {t('hero.accepting')}
-          </div>
+          </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
-            <span className="animate-fade-in-up inline-block opacity-0 animation-delay-100">{t('hero.title_line1')}</span> <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 animate-fade-in-up inline-block opacity-0 animation-delay-300 gradient-text-animated">
-              {t('hero.title_highlight')}
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
+            <span className="overflow-hidden block pb-2">
+              <motion.span variants={itemVariants} className="inline-block py-1">{t('hero.title_line1')}</motion.span>
+            </span>
+            <span className="overflow-hidden block pb-2">
+              <motion.span 
+                variants={itemVariants}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 inline-block py-2 gradient-text-animated"
+              >
+                {t('hero.title_highlight')}
+              </motion.span>
             </span>
           </h1>
           
-          <p className="mt-4 text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-fade-in-up opacity-0 animation-delay-500">
+          <motion.p 
+            variants={itemVariants}
+            className="mt-4 text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed px-2 sm:px-0"
+          >
             {t('hero.subtitle')}
-          </p>
+          </motion.p>
           
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up opacity-0 animation-delay-700">
+          <motion.div 
+            variants={itemVariants}
+            className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-2 sm:px-0"
+          >
               <button 
                 onClick={() => setView(ViewState.BOOKING)}
-                className="group px-8 py-4 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-lg hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                className="group px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-base sm:text-lg hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
             >
               {t('hero.start_project')} <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
             <button 
                 onClick={() => setView(ViewState.SERVICES)}
-                className="px-8 py-4 rounded-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
+                className="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-base sm:text-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
             >
               {t('hero.explore_services')}
             </button>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* 3D-ish Floating Elements */}
@@ -124,11 +172,20 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
       </div>
       
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center p-1 hover:border-blue-500 transition-colors cursor-pointer">
-            <div className="w-1 h-3 bg-slate-400 rounded-full animate-pulse"></div>
-        </div>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+      >
+        <button
+          onClick={scrollToServices}
+          aria-label="Scroll to services"
+          className="group w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center p-1 hover:border-blue-500 transition-colors cursor-pointer animate-bounce"
+        >
+            <ChevronDown size={16} className="text-slate-400 group-hover:text-blue-500 transition-colors mt-1" />
+        </button>
+      </motion.div>
     </div>
   );
 };

@@ -132,32 +132,62 @@ If you notice an offset between the physical pointer and the custom cursor:
 
 ## AI Integration (important)
 
-This project includes a client-side stub for AI interactions in `src/services/geminiService.ts`. The official `@google/genai` SDK must run server-side where API keys are secret.
+This project includes a backend Express server for AI interactions in `server/`. The official `@google/genai` SDK runs server-side where API keys are kept secret. The frontend calls the backend API endpoints.
 
-To enable real AI:
-- Implement a small server endpoint (Express, Next.js API route, Azure Function, etc.) that calls `@google/genai` using a server-side `GEMINI_API_KEY` environment variable.
-- Have the client call that endpoint instead of importing `@google/genai` directly.
+### Setting up the AI Backend
 
-Example server (concept):
-
-```js
-// server/index.js
-import express from 'express';
-import { GoogleGenAI } from '@google/genai';
-
-const app = express();
-app.use(express.json());
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
-app.post('/api/ai/chat', async (req, res) => {
-   const { message } = req.body;
-   const chat = ai.chats.create({ model: 'gemini-2.5-flash' });
-   const result = await chat.sendMessage({ message });
-   res.json({ text: result.text });
-});
-
-app.listen(3000);
+1. Navigate to the server directory:
+```pwsh
+cd server
 ```
+
+2. Install dependencies:
+```pwsh
+npm install
+```
+
+3. Create a `.env` file from the example:
+```pwsh
+cp .env.example .env
+```
+
+4. Add your Gemini API key to `server/.env`:
+```
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+5. Start the server:
+```pwsh
+npm run dev
+```
+
+The server runs on `http://localhost:3001` by default and provides:
+- `POST /api/consultation` - Project consultation AI
+- `POST /api/copilot` - Website copilot AI
+- `GET /api/health` - Health check
+
+### Running Both Frontend and Backend
+
+Terminal 1 (Backend):
+```pwsh
+cd server
+npm run dev
+```
+
+Terminal 2 (Frontend):
+```pwsh
+npm run dev
+```
+
+### Environment Variables
+
+**Frontend** (`.env` in root):
+- `VITE_API_URL` - Backend API URL (defaults to `http://localhost:3001`)
+
+**Backend** (`server/.env`):
+- `GEMINI_API_KEY` - Your Google Gemini API key (get one at https://makersuite.google.com/app/apikey)
+- `PORT` - Server port (defaults to 3001)
+- `NODE_ENV` - Environment (development/production)
 
 ---
 
