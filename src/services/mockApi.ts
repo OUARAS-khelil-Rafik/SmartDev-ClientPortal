@@ -52,8 +52,6 @@ class MockApi {
     return user;
   }
 
-    // Google sign-in removed: this method intentionally deleted.
-
   async signup(name: string, email: string): Promise<User> {
     await delay(800);
     const users = this.getUsers();
@@ -72,6 +70,16 @@ class MockApi {
     
     // Assign a demo project to new user
     // Do not create demo project until admin approves the user
+    // Notify all admins about the new pending signup
+    try {
+      const admins = this.getUsers().filter(u => u.role === 'admin');
+      for (const a of admins) {
+        // fire-and-forget
+        this.createNotification(a.id, 'New signup pending', `${name} (${email}) signed up and is pending approval.`).catch(() => {});
+      }
+    } catch (e) {
+      // ignore notification failures
+    }
     return newUser;
   }
     
@@ -177,6 +185,16 @@ class MockApi {
 
       projects.push(newProject);
       this.saveProjects(projects);
+
+      // Notify admins about the new project
+      try {
+        const admins = this.getUsers().filter(u => u.role === 'admin');
+        for (const a of admins) {
+          this.createNotification(a.id, 'New project created', `Project "${newProject.name}" was created by ${newProject.clientId}.`).catch(() => {});
+        }
+      } catch (e) {
+        // ignore
+      }
       return newProject;
   }
 
@@ -370,6 +388,16 @@ class MockApi {
 
     bookings.push(newBooking);
     this.saveBookings(bookings);
+
+    // Notify admins about the new booking
+    try {
+      const admins = this.getUsers().filter(u => u.role === 'admin');
+      for (const a of admins) {
+        this.createNotification(a.id, 'New booking', `${details.name} requested a booking on ${details.date} at ${details.time}.`).catch(() => {});
+      }
+    } catch (e) {
+      // ignore
+    }
     return newBooking;
   }
 
@@ -548,10 +576,15 @@ class MockApi {
     return n;
   }
 
-  async getNotifications(userId: string) {
+  async getNotifications(userId?: string, role?: 'admin' | 'client') {
     await delay(300);
     const notifications = this.getStoredNotifications();
+    // If caller is admin, return all notifications newest first
+    if (role === 'admin') {
+      return notifications.slice().sort((a: any,b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }
     // return only notifications for this user, newest first
+    if (!userId) return [];
     return notifications.filter((n: any) => n.userId === userId).sort((a: any,b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
@@ -606,13 +639,19 @@ class MockApi {
   }
 
   // Remove all notifications for a specific user
-  async clearNotifications(userId: string) {
+  async clearNotifications(userId?: string) {
     await delay(200);
     let notifications = this.getStoredNotifications();
     const before = notifications.length;
-    notifications = notifications.filter((n: any) => n.userId !== userId);
+    if (userId) {
+      notifications = notifications.filter((n: any) => n.userId !== userId);
+    } else {
+      // no userId => clear all notifications (admin action)
+      notifications = [];
+    }
     if (notifications.length !== before) this.saveNotifications(notifications);
-    return notifications.filter((n: any) => n.userId === userId);
+    if (userId) return notifications.filter((n: any) => n.userId === userId);
+    return [];
   }
 }
 

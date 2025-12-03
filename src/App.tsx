@@ -11,6 +11,7 @@ import AdminDashboard from './components/AdminDashboard';
 import AllComponents from './components/AllComponents';
 import AllNotifications from './components/AllNotifications';
 import { ViewState, User } from './types';
+import CustomCursor from './components/CustomCursor';
 
 const App: React.FC = () => {
   const [currentView, setView] = useState<ViewState>(ViewState.HOME);
@@ -118,6 +119,8 @@ const App: React.FC = () => {
       </main>
 
       <FloatingCopilot />
+
+      <CustomCursor />
 
       <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 text-center text-slate-500 text-sm">
         <div className="max-w-7xl mx-auto px-4">

@@ -15,7 +15,12 @@ const AllNotifications: React.FC<Props> = ({ user }) => {
     if (!user) return setItems([]);
     setLoading(true);
     try {
-      const res = await api.getNotifications(user.id);
+      let res: any[] = [];
+      if (user.role === 'admin') {
+        res = await api.getNotifications(undefined, 'admin');
+      } else {
+        res = await api.getNotifications(user.id, user.role as any);
+      }
       setItems(res);
     } catch (e) {
       console.error('Failed to load notifications', e);
@@ -33,19 +38,31 @@ const AllNotifications: React.FC<Props> = ({ user }) => {
 
   const toggleRead = async (id: string, currentlyRead: boolean) => {
     if (!user) return;
-    await api.setNotificationRead(id, !currentlyRead, user.id);
+    if (user.role === 'admin') {
+      await api.setNotificationRead(id, !currentlyRead);
+    } else {
+      await api.setNotificationRead(id, !currentlyRead, user.id);
+    }
     fetch();
   };
 
   const remove = async (id: string) => {
     if (!user) return;
-    await api.deleteNotification(id, user.id);
+    if (user.role === 'admin') {
+      await api.deleteNotification(id);
+    } else {
+      await api.deleteNotification(id, user.id);
+    }
     fetch();
   };
 
   const clearAll = async () => {
     if (!user) return;
-    await api.clearNotifications(user.id);
+    if (user.role === 'admin') {
+      await api.clearNotifications();
+    } else {
+      await api.clearNotifications(user.id);
+    }
     fetch();
   };
 

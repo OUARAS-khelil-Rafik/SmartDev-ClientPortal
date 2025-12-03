@@ -41,6 +41,7 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
     if (!user) return setItems([]);
     setLoading(true);
     try {
+      // Only fetch notifications for the current user here (bell should reflect the current user's inbox)
       const res = await api.getNotifications(user.id);
       setItems(res);
     } catch (e) {
