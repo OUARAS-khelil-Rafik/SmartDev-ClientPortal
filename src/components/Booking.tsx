@@ -4,6 +4,7 @@ import { Calendar as CalendarIcon, Clock, MessageSquare, Check, Loader2, Video, 
 import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
 import { User, ViewState, Booking as BookingType, Project } from '../types';
+import { useI18n } from '../i18n';
 
 interface BookingProps {
     user: User | null;
@@ -73,6 +74,8 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
       finally { setHistoryLoading(false); }
   };
 
+    const { t } = useI18n();
+
   // If not logged in, show restricted access state
   if (!user) {
       return (
@@ -81,15 +84,13 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                   <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lock size={32} className="text-slate-500" />
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Login Required</h2>
-                  <p className="text-slate-600 dark:text-slate-400 mb-8">
-                      Please log in or create an account to schedule a consultation with our experts.
-                  </p>
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.login_required')}</h2>
+                  <p className="text-slate-600 dark:text-slate-400 mb-8">{t('booking.please_log_in')}</p>
                   <button 
                     onClick={() => setView(ViewState.LOGIN)}
                     className="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-blue-500/30 hover:scale-105 transition-all"
                   >
-                      Go to Login
+                      {t('booking.go_to_login')}
                   </button>
               </div>
           </div>
@@ -104,10 +105,8 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                   <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lock size={32} className="text-red-500" />
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Admin Access Restricted</h2>
-                  <p className="text-slate-600 dark:text-slate-400 mb-8">
-                      Administrators cannot book meetings. Please switch to a client account to test booking functionality.
-                  </p>
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.admin_restricted')}</h2>
+                  <p className="text-slate-600 dark:text-slate-400 mb-8">{t('booking.admin_restricted_msg')}</p>
               </div>
           </div>
       );
@@ -216,13 +215,13 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                     onClick={() => setActiveTab('new')}
                     className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'new' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
                 >
-                    New Reservation
+                    {t('booking.new_reservation')}
                 </button>
                 <button 
                     onClick={() => setActiveTab('history')}
                     className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
                 >
-                    My Requests
+                    {t('booking.my_requests')}
                 </button>
             </div>
         </div>
@@ -233,18 +232,18 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                         <Check size={32} className="text-green-600 dark:text-green-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Request Sent!</h2>
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('common.request_sent')}</h2>
                     <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm">
-                        We have received your request for <b>{formatDateDisplay(selectedDate)} at {selectedTime ? formatTimeDisplay(selectedTime) : ''}</b>.
+                        {t('booking.request_received_prefix')}<b>{formatDateDisplay(selectedDate)}{selectedTime ? ` ${t('booking.select_time').toLowerCase()} ${formatTimeDisplay(selectedTime)}` : ''}</b>{t('booking.google_meet_msg_suffix')}
                     </p>
                     
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl text-left mb-6 border border-blue-100 dark:border-blue-800">
                         <div className="flex items-start gap-3">
                             <Video className="text-blue-500 mt-1" size={20} />
                             <div>
-                                <p className="font-bold text-slate-800 dark:text-white text-sm">Google Meet Integration</p>
+                                <p className="font-bold text-slate-800 dark:text-white text-sm">{t('booking.google_meet_integration')}</p>
                                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                                    Once an admin approves your request, a functional Google Meet link will be generated and sent to <b>{user.email}</b>.
+                                    {t('booking.google_meet_msg_prefix')}<b>{user.email}</b>{t('booking.google_meet_msg_suffix')}
                                 </p>
                             </div>
                         </div>
@@ -273,9 +272,9 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                 <div className="lg:w-1/3 bg-slate-900 text-white p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-600/20 to-transparent pointer-events-none"></div>
                     <div>
-                        <h2 className="text-3xl font-bold mb-4">Schedule a Consultation</h2>
+                                <h2 className="text-3xl font-bold mb-4">{t('booking.schedule_consultation')}</h2>
                         <p className="text-slate-300 mb-8">
-                            Select one or more services you are interested in. We'll verify the availability in our agenda and secure your slot.
+                            {t('booking.select_services_hint')}
                         </p>
                         
                         <div className="space-y-6">
@@ -284,8 +283,8 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                     <Clock size={20} />
                                 </div>
                                 <div>
-                                    <p className="font-semibold">Live Availability</p>
-                                    <p className="text-xs text-slate-400">Real-time slot checking</p>
+                                    <p className="font-semibold">{t('booking.live_availability')}</p>
+                                    <p className="text-xs text-slate-400">{t('booking.real_time_checking')}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -293,7 +292,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                     <Video size={20} />
                                 </div>
                                 <div>
-                                    <p className="font-semibold">Google Meet</p>
+                                    <p className="font-semibold">{t('booking.google_meet_integration')}</p>
                                     <p className="text-xs text-slate-400">Unique link per booking</p>
                                 </div>
                             </div>

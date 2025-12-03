@@ -2,13 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { generateProjectConsultation } from '../services/geminiService';
 import { Send, Bot, User, Sparkles, Loader2 } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 const AIConsultant: React.FC = () => {
+  const { t } = useI18n();
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
       role: 'model',
-      text: "Hello! I'm the Nexus AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
+      text: t('ai_consultant.welcome'),
       timestamp: Date.now()
     }
   ]);
@@ -80,14 +83,14 @@ const AIConsultant: React.FC = () => {
                     <Sparkles className="text-white" size={20} />
                 </div>
                 <div>
-                    <h2 className="font-bold text-slate-900 dark:text-white">AI Architect</h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">Powered by Gemini 2.5 Flash</p>
+                    <h2 className="font-bold text-slate-900 dark:text-white">{t('ai_consultant.title')}</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{t('ai_consultant.subtitle')}</p>
                 </div>
             </div>
-            <div className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                Online
-            </div>
+                <div className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                  {t('ai_consultant.status.online')}
+                </div>
         </div>
 
         {/* Chat Area */}
@@ -118,7 +121,7 @@ const AIConsultant: React.FC = () => {
                         </div>
                         <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-2xl rounded-tl-none flex items-center gap-2">
                             <Loader2 size={16} className="animate-spin text-blue-500" />
-                            <span className="text-xs text-slate-500">Thinking...</span>
+                            <span className="text-xs text-slate-500">{t('ai_consultant.thinking')}</span>
                         </div>
                     </div>
                 </div>
@@ -133,22 +136,20 @@ const AIConsultant: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Describe your project idea (e.g., 'I want a mobile app for tracking fitness goals with social features')..."
+                    placeholder={t('ai_consultant.placeholder')}
                     className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none h-14 text-slate-900 dark:text-white scrollbar-hide"
                 />
                 <button 
                     onClick={handleSend}
                     disabled={isLoading || !input.trim()}
-                    aria-label="Send message"
-                    title="Send message"
+                      aria-label={t('ai_consultant.send')}
+                      title={t('ai_consultant.send')}
                     className="absolute right-2 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Send size={18} />
                 </button>
             </div>
-            <p className="text-center text-xs text-slate-400 mt-2">
-                AI responses can be inaccurate. Please consult our human engineers for final contracts.
-            </p>
+                  <p className="text-center text-xs text-slate-400 mt-2">{t('ai_consultant.caution')}</p>
         </div>
 
       </div>

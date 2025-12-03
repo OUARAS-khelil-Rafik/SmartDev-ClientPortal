@@ -10,6 +10,7 @@ import Auth from './components/Auth';
 import AdminDashboard from './components/AdminDashboard';
 import AllComponents from './components/AllComponents';
 import AllNotifications from './components/AllNotifications';
+import { I18nProvider } from './i18n';
 import { ViewState, User } from './types';
 import CustomCursor from './components/CustomCursor';
 
@@ -104,6 +105,7 @@ const App: React.FC = () => {
   };
 
   return (
+    <I18nProvider>
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Navbar 
         currentView={currentView} 
@@ -149,6 +151,7 @@ const App: React.FC = () => {
         </div>
       </footer>
     </div>
+    </I18nProvider>
   );
 };
 

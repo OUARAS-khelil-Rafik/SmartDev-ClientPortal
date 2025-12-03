@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useI18n } from '../i18n';
 import { User, Lock, Mail, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { api } from '../services/mockApi';
 import { User as UserType } from '../types';
@@ -16,6 +17,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     const [loading, setLoading] = useState(false);
     // Google sign-in removed
     const [error, setError] = useState('');
+    const { t } = useI18n();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -55,10 +57,10 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                             <Sparkles className="text-white" size={32} />
                         </div>
                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                            {isLogin ? 'Welcome Back' : 'Create Account'}
+                            {isLogin ? t('auth.welcome_back') : t('auth.create_account')}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-                            {isLogin ? 'Access your client portal' : 'Start your journey with Nexus'}
+                            {isLogin ? t('auth.access_portal') : t('auth.start_journey')}
                         </p>
                     </div>
 
@@ -71,7 +73,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 
                         {!isLogin && (
                              <div className="space-y-1">
-                                <label className="text-xs font-semibold uppercase text-slate-500 ml-1">Full Name</label>
+                                <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.full_name')}</label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-3 text-slate-400" size={18} />
                                     <input 
@@ -86,7 +88,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                         )}
 
                         <div className="space-y-1">
-                            <label className="text-xs font-semibold uppercase text-slate-500 ml-1">Email Address</label>
+                            <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.email')}</label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-3 text-slate-400" size={18} />
                                 <input 
@@ -100,7 +102,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                         </div>
 
                         <div className="space-y-1">
-                            <label className="text-xs font-semibold uppercase text-slate-500 ml-1">Password</label>
+                            <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.password')}</label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-3 text-slate-400" size={18} />
                                 <input 
@@ -120,7 +122,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                         >
                             {loading ? <Loader2 className="animate-spin" size={20} /> : (
                                 <>
-                                    {isLogin ? 'Sign In' : 'Create Account'}
+                                    {isLogin ? t('auth.sign_in') : t('auth.create_account_cta')}
                                     <ArrowRight size={18} />
                                 </>
                             )}
@@ -132,14 +134,14 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                             onClick={() => setIsLogin(!isLogin)}
                             className="text-sm text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium transition-colors"
                         >
-                            {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+                            {isLogin ? t('auth.dont_have') : t('auth.already_have')}
                         </button>
                     </div>
                 </div>
                 
                 {/* Admin Tip */}
                 <p className="mt-8 text-center text-xs text-slate-400">
-                    Tip: Use <b>admin@nexus.dev</b> to login as Administrator.
+                    {t('auth.admin_tip')}
                 </p>
             </div>
         </div>

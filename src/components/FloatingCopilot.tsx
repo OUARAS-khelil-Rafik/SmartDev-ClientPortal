@@ -2,17 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Sparkles, Loader2, Bot } from 'lucide-react';
 import { generateCopilotResponse } from '../services/geminiService';
 import { ChatMessage } from '../types';
+import { useI18n } from '../i18n';
 
 const FloatingCopilot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-        id: 'init',
-        role: 'model',
-        text: 'Hi! I\'m Nexus Copilot. How can I assist you today?',
-        timestamp: Date.now()
-    }
-  ]);
+    const { t } = useI18n();
+
+    const [messages, setMessages] = useState<ChatMessage[]>([
+        {
+                id: 'init',
+                role: 'model',
+                text: t('copilot.init_text'),
+                timestamp: Date.now()
+        }
+    ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -68,12 +71,12 @@ const FloatingCopilot: React.FC = () => {
             <div className="p-4 bg-gradient-to-r from-blue-600 to-indigo-600 flex justify-between items-center text-white">
                 <div className="flex items-center gap-2">
                     <Sparkles size={16} />
-                    <span className="font-bold text-sm">Nexus Copilot</span>
+                    <span className="font-bold text-sm">{t('copilot.name')}</span>
                 </div>
                 <button
                     onClick={() => setIsOpen(false)}
-                    title="Close Copilot"
-                    aria-label="Close Copilot"
+                    title={t('copilot.close')}
+                    aria-label={t('copilot.close')}
                     className="hover:bg-white/20 p-1 rounded"
                 >
                     <X size={16} />
@@ -97,7 +100,7 @@ const FloatingCopilot: React.FC = () => {
                     <div className="flex justify-start">
                         <div className="bg-white dark:bg-slate-800 p-2 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2">
                             <Loader2 size={12} className="animate-spin text-blue-500" />
-                            <span className="text-xs text-slate-400">Thinking...</span>
+                            <span className="text-xs text-slate-400">{t('copilot.thinking')}</span>
                         </div>
                     </div>
                 )}
@@ -111,15 +114,15 @@ const FloatingCopilot: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Ask anything..."
+                    placeholder={t('copilot.placeholder')}
                     className="flex-1 bg-slate-100 dark:bg-slate-800 border-none rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none dark:text-white"
                 />
                 <button 
                     type="button"
                     onClick={handleSend}
                     disabled={!input.trim() || isLoading}
-                    aria-label="Send message"
-                    title="Send message"
+                    aria-label={t('copilot.send')}
+                    title={t('copilot.send')}
                     className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors disabled:opacity-50"
                 >
                     <Send size={16} />
@@ -129,13 +132,13 @@ const FloatingCopilot: React.FC = () => {
       )}
 
       {/* Toggle Button */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? "Close Copilot" : "Open Copilot"}
-        title={isOpen ? "Close Copilot" : "Open Copilot"}
-        className="pointer-events-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-full shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 group"
-      >
+            <button
+                type="button"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? t('copilot.close') : t('copilot.open')}
+                title={isOpen ? t('copilot.close') : t('copilot.open')}
+                className="pointer-events-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-full shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 group"
+            >
         {isOpen ? <X size={24} /> : <MessageSquare size={24} className="group-hover:animate-bounce" />}
       </button>
     </div>

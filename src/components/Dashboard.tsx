@@ -5,6 +5,7 @@ import { api } from '../services/mockApi';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash, Edit, X } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
+import { useI18n } from '../i18n';
 
 const COLORS = ['#3b82f6', '#1e293b'];
 
@@ -13,6 +14,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ user }) => {
+    const { t } = useI18n();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
@@ -97,8 +99,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             setDeleteDialogOpen(false);
 
             const proj = projects.find(p => p.id === projectId);
-            if (!proj) return alert('Project not found');
-            if (proj.status !== 'Planning') return alert('Only projects in Planning can be deleted. This project is already in progress or completed.');
+            if (!proj) return alert(t('dashboard.project_not_found'));
+            if (proj.status !== 'Planning') return alert(t('dashboard.only_planning_delete'));
 
             // Check bookings client-side
             try {
@@ -124,7 +126,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
     const confirmRenameProject = async () => {
         if (!activeProject || !activeProjectId) return;
-        if (!renameInput || !renameInput.trim()) return alert('Please provide a valid project name');
+        if (!renameInput || !renameInput.trim()) return alert(t('dashboard.provide_valid_project_name'));
         setRenameDialogOpen(false);
         setLoading(true);
         try {
@@ -132,18 +134,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             await loadData();
             try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
         } catch (e: any) {
-            alert(e.message || 'Failed to rename project');
+            alert(e.message || t('dashboard_extra.failed_to_rename_project'));
         } finally {
             setLoading(false);
         }
     };
 
     const handleCreateProject = async (): Promise<void> => {
-        if (!createName || !createName.trim()) return alert('Please provide a project name');
+        if (!createName || !createName.trim()) return alert(t('dashboard.provide_valid_project_name'));
 
         // Prevent duplicate project names for this client
         const duplicate = projects.find(p => p.clientId === user.id && p.name.toLowerCase() === createName.trim().toLowerCase());
-        if (duplicate) return alert('You already have a project with that name. Choose a different name.');
+        if (duplicate) return alert(t('dashboard.duplicate_project_name'));
 
         setCreating(true);
         setLoading(true);
@@ -169,7 +171,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             setCreating(false);
         } catch (e: any) {
             console.error('[Dashboard] createProject error', e);
-            alert(e?.message || 'Failed to create project');
+            alert(e?.message || t('dashboard.failed_to_create_project'));
         } finally {
             setLoading(false);
             setCreating(false);
@@ -191,8 +193,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Client Portal</h2>
-                <p className="text-slate-600 dark:text-slate-400">Welcome back, {user.name}.</p>
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white">{t('dashboard.title')}</h2>
+                <p className="text-slate-600 dark:text-slate-400">{t('dashboard.welcome_back')} {user.name}.</p>
             </div>
             
             
@@ -206,13 +208,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                         <div className="relative w-full">
                             <select
                                 id="project-select"
-                                title={activeProject?.name ?? (projects.length ? 'Select a project' : 'No projects')}
+                                title={activeProject?.name ?? (projects.length ? t('dashboard.select_project') : t('dashboard.no_projects'))}
                                 value={activeProjectId ?? ''}
                                 onChange={(e) => setActiveProjectId(e.target.value || null)}
                                 className="appearance-none w-full truncate rounded-full text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300 px-4 py-2 pr-10 shadow-sm"
                             >
-                                {projects.length === 0 && <option value="" disabled>No projects</option>}
-                                {projects.length > 0 && <option value="" disabled>Select a project</option>}
+                                {projects.length === 0 && <option value="" disabled>{t('dashboard.no_projects')}</option>}
+                                {projects.length > 0 && <option value="" disabled>{t('dashboard.select_project')}</option>}
                                 {projects.map(p => (
                                     <option key={p.id} value={p.id}>{p.name}</option>
                                 ))}
@@ -236,8 +238,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                         <span className="text-sm text-slate-600 dark:text-slate-400">Deadline: {new Date(activeProject.deadline).toLocaleDateString()}</span>
                                     )}
                                 </>
-                            ) : (
-                                <span className="text-sm text-slate-500 dark:text-slate-400">No project selected</span>
+                                ) : (
+                                <span className="text-sm text-slate-500 dark:text-slate-400">{t('dashboard.no_project_selected')}</span>
                             )}
                         </div>
 
@@ -245,8 +247,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                             {user.role === 'client' && (
                                 <button
                                     onClick={() => setShowCreate(prev => !prev)}
-                                    title={showCreate ? 'Close create form' : 'Create project'}
-                                    aria-label={showCreate ? 'Close create form' : 'Create project'}
+                                    title={showCreate ? t('dashboard.close_create_form') : t('dashboard.create_project')}
+                                    aria-label={showCreate ? t('dashboard.close_create_form') : t('dashboard.create_project')}
                                     className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                                 >
                                     {showCreate ? <X size={16} /> : <Plus size={16} />}
@@ -256,8 +258,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                             {user.role === 'client' && activeProject && (
                                 <>
                                     <button
-                                        title="Rename project"
-                                        aria-label="Rename project"
+                                        title={t('dashboard.rename_project')}
+                                        aria-label={t('dashboard.rename_project')}
                                         onClick={() => { setRenameInput(activeProject.name); setRenameDialogOpen(true); }}
                                         className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300 dark:hover:bg-slate-700/20 focus:outline-none focus:ring-2 focus:ring-slate-300"
                                     >
@@ -265,8 +267,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                     </button>
 
                                     <button
-                                        title="Delete project"
-                                        aria-label="Delete project"
+                                        title={t('dashboard.delete_project')}
+                                        aria-label={t('dashboard.delete_project')}
                                         onClick={() => openDeleteDialog(activeProject.id)}
                                         className="w-10 h-10 flex items-center justify-center rounded-full bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40 focus:outline-none focus:ring-2 focus:ring-red-300"
                                     >
@@ -284,18 +286,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                             <label className="sr-only" htmlFor="create-name">Project name</label>
                             <input
                                 id="create-name"
-                                aria-label="Project name"
-                                title="Project name"
+                                aria-label={t('dashboard.project_name')}
+                                title={t('dashboard.project_name')}
                                 value={createName}
                                 onChange={e => setCreateName(e.target.value)}
-                                placeholder="Project name"
+                                placeholder={t('dashboard.project_name')}
                                 className="col-span-2 p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
                             />
                             <label className="sr-only" htmlFor="create-deadline">Deadline</label>
                             <input
                                 id="create-deadline"
-                                aria-label="Deadline"
-                                title="Deadline"
+                                aria-label={t('dashboard.deadline')}
+                                title={t('dashboard.deadline')}
                                 type="date"
                                 value={createDeadline}
                                 onChange={e => setCreateDeadline(e.target.value)}
@@ -308,13 +310,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                 disabled={creating || loading || !createName.trim()}
                                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-blue-300"
                             >
-                                {creating || loading ? <Loader2 size={16} className="animate-spin" /> : 'Create'}
+                                {creating || loading ? <Loader2 size={16} className="animate-spin" /> : t('dashboard.create')}
                             </button>
                             <button
                                 onClick={() => { setShowCreate(false); setCreateName(''); setCreateDeadline(''); setCreating(false); }}
                                 className="px-4 py-2 border rounded bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300"
                             >
-                                Cancel
+                                {t('dashboard.cancel')}
                             </button>
                         </div>
                     </div>
@@ -332,7 +334,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
                 <div className="mb-8">
                     <div className="flex justify-between text-sm mb-2">
-                        <span className="text-slate-600 dark:text-slate-400">Overall Progress</span>
+                        <span className="text-slate-600 dark:text-slate-400">{t('dashboard.overall_progress')}</span>
                         <span className="font-bold text-slate-900 dark:text-white">{activeProject.progress}%</span>
                     </div>
                     <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-hidden">
@@ -344,8 +346,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                     {/* Task List */}
                     <div>
                         <h4 className="font-semibold text-slate-700 dark:text-slate-200 mb-4 flex justify-between items-center">
-                            Tasks
-                            <span className="text-xs font-normal text-slate-500">Click to toggle</span>
+                            {t('dashboard.tasks')}
+                            <span className="text-xs font-normal text-slate-500">{t('dashboard.click_to_toggle')}</span>
                         </h4>
                         <div className="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
                             {activeProject.tasks.map(task => (
@@ -371,7 +373,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                 type="text" 
                                 value={newTaskInput}
                                 onChange={(e) => setNewTaskInput(e.target.value)}
-                                placeholder="Add new task..."
+                                placeholder={t('dashboard.add_new_task_placeholder')}
                                 className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none dark:text-white"
                             />
                             <button 
@@ -391,14 +393,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             {/* Stats Sidebar */}
             <div className="flex flex-col gap-6">
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex-1 min-h-[300px]">
-                     <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Work Breakdown</h3>
+                     <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">{t('dashboard.work_breakdown')}</h3>
                      <div className="h-full pb-6">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <Pie
                                     data={[
-                                        { name: 'Done', value: activeProject.progress },
-                                        { name: 'Left', value: 100 - activeProject.progress }
+                                        { name: t('dashboard.done'), value: activeProject.progress },
+                                        { name: t('dashboard.remaining'), value: 100 - activeProject.progress }
                                     ]}
                                     innerRadius={60}
                                     outerRadius={80}
@@ -424,8 +426,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </div>
         ) : (
             <div className="text-center py-20 text-slate-500 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <p className="mb-4">You don't have any active projects yet.</p>
-                <p className="text-sm">Book a consultation to get started.</p>
+                <p className="mb-4">{t('empty.no_active_projects')}</p>
+                <p className="text-sm">{t('empty.book_consultation')}</p>
             </div>
         )}
       </div>
@@ -434,27 +436,27 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
                         <div className="absolute inset-0 bg-black/40" onClick={() => setRenameDialogOpen(false)} />
                         <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full p-6">
-                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Rename Project</h3>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">Rename "{activeProject?.name}"</p>
-                            <input aria-label="New project name" placeholder="New project name" value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
+                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{t('dashboard.rename_project')}</h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('dashboard.rename_project')} "{activeProject?.name}"</p>
+                            <input aria-label={t('dashboard.project_name')} placeholder={t('dashboard.project_name')} value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
                             <div className="flex justify-end gap-3">
-                                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Cancel</button>
-                                <button onClick={confirmRenameProject} disabled={loading} className="px-4 py-2 rounded bg-blue-600 text-white">{loading ? 'Saving...' : 'Save'}</button>
+                                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">{t('common_ui.cancel')}</button>
+                                <button onClick={confirmRenameProject} disabled={loading} className="px-4 py-2 rounded bg-blue-600 text-white">{loading ? t('common_ui.saving') : t('common_ui.save')}</button>
                             </div>
                         </div>
                     </div>
                 )}
 
                 <ConfirmDialog
-            open={deleteDialogOpen}
-            title="Delete Project"
-            message={pendingDelete?.name ? `Are you sure you want to delete "${pendingDelete.name}"? This action cannot be undone.` : 'Are you sure you want to delete this project? This action cannot be undone.'}
-            confirmLabel="Delete"
-            cancelLabel="Cancel"
-            loading={loading}
-            onConfirm={performDeleteProject}
-            onCancel={() => setDeleteDialogOpen(false)}
-        />
+                    open={deleteDialogOpen}
+                    title={t('dashboard.delete_project')}
+                    message={pendingDelete?.name ? t('confirm.delete_confirm_with_name').replace('{name}', pendingDelete.name) : t('confirm.delete_confirm')}
+                    confirmLabel={t('common_ui.delete')}
+                    cancelLabel={t('common_ui.cancel')}
+                    loading={loading}
+                    onConfirm={performDeleteProject}
+                    onCancel={() => setDeleteDialogOpen(false)}
+                />
         </>
     );
 };

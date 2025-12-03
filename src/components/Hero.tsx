@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '../i18n';
 import { ViewState } from '../types';
 import { ArrowRight, Code2, ShieldCheck, Database, Cpu } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -8,6 +9,8 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ setView }) => {
+  const { t } = useI18n();
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Animated Background Blobs */}
@@ -27,32 +30,32 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            Accepting New Projects for 2025
+            {t('hero.accepting')}
           </div>
           
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
-            Building the <br />
+            {t('hero.title_line1')} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600">
-              Digital Future
+              {t('hero.title_highlight')}
             </span>
           </h1>
           
           <p className="mt-4 text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-            We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, Nexus delivers excellence in every line of code.
+            {t('hero.subtitle')}
           </p>
           
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <button 
+              <button 
                 onClick={() => setView(ViewState.BOOKING)}
                 className="px-8 py-4 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-lg hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Start Your Project <ArrowRight size={20} />
+              {t('hero.start_project')} <ArrowRight size={20} />
             </button>
             <button 
                 onClick={() => setView(ViewState.SERVICES)}
                 className="px-8 py-4 rounded-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300"
             >
-              Explore Services
+              {t('hero.explore_services')}
             </button>
           </div>
         </motion.div>

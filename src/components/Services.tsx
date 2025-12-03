@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useI18n } from '../i18n';
 import { Brain, Shield, Globe, Smartphone, Cloud, Database, ArrowLeft, CheckCircle2, Zap } from 'lucide-react';
 import { Service } from '../types';
 
@@ -92,16 +93,17 @@ const servicesList: Service[] = [
 
 const Services: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const { t } = useI18n();
 
   if (selectedService) {
       return (
         <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 animate-fadeIn">
             <div className="max-w-7xl mx-auto">
                 <button 
-                    onClick={() => setSelectedService(null)}
-                    className="flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 mb-8 transition-colors"
+                  onClick={() => setSelectedService(null)}
+                  className="flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 mb-8 transition-colors"
                 >
-                    <ArrowLeft size={20} /> Back to Services
+                  <ArrowLeft size={20} /> {t('common.back_to_services')}
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -118,7 +120,7 @@ const Services: React.FC = () => {
                         
                         <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-3xl text-white shadow-xl">
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                <Zap className="text-yellow-300" /> Why Choose Nexus?
+                              <Zap className="text-yellow-300" /> {t('services.why_choose')}
                             </h3>
                             <p className="text-blue-100">
                                 We don't just write code; we architect solutions that drive growth. Our {selectedService.title} team consists of industry veterans dedicated to your success.
@@ -127,7 +129,7 @@ const Services: React.FC = () => {
                     </div>
 
                     <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-lg">
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Key Capabilities</h3>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">{t('services.engineering_excellence')}</h3>
                         <div className="space-y-4">
                             {selectedService.features?.map((feature, idx) => (
                                 <div key={idx} className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
@@ -147,13 +149,9 @@ const Services: React.FC = () => {
     <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wide text-sm mb-2">Our Expertise</h2>
-          <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
-            Engineering Excellence
-          </h3>
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            We combine creativity with technical prowess to deliver solutions that scale.
-          </p>
+          <h2 className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wide text-sm mb-2">{t('services.our_expertise')}</h2>
+          <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">{t('services.engineering_excellence')}</h3>
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">{t('services.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -179,7 +177,7 @@ const Services: React.FC = () => {
                 </p>
                 
                 <div className="mt-6 flex items-center text-blue-600 dark:text-blue-400 font-semibold group-hover:translate-x-2 transition-transform">
-                  View Details <span className="ml-2">&rarr;</span>
+                  {t('services.view_details')} <span className="ml-2">&rarr;</span>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useI18n } from '../i18n';
 import { ViewState, User } from '../types';
 import { Sun, Moon, Hexagon, LayoutDashboard, Calendar, Sparkles, Monitor, LogOut, User as UserIcon, Shield } from 'lucide-react';
 import Notifications from './Notifications';
@@ -14,25 +15,27 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleTheme, user, onLogout }) => {
+  const { t, lang, setLang } = useI18n();
+
   const navItems = [
-    { id: ViewState.HOME, label: 'Home', icon: <Hexagon size={18} /> },
-    { id: ViewState.SERVICES, label: 'Services', icon: <Monitor size={18} /> },
-    { id: ViewState.AI_CONSULT, label: 'AI Architect', icon: <Sparkles size={18} /> },
+    { id: ViewState.HOME, label: t('nav.home'), icon: <Hexagon size={18} /> },
+    { id: ViewState.SERVICES, label: t('nav.services'), icon: <Monitor size={18} /> },
+    { id: ViewState.AI_CONSULT, label: t('nav.ai'), icon: <Sparkles size={18} /> },
   ];
 
   // Add specific items based on role
-  if (user) {
+    if (user) {
       if (user.role === 'admin') {
-          navItems.push({ id: ViewState.ADMIN_DASHBOARD, label: 'Admin Panel', icon: <Shield size={18} /> });
-          // Admins do not book meetings, so we skip adding the Booking link
+        navItems.push({ id: ViewState.ADMIN_DASHBOARD, label: t('nav.admin_panel'), icon: <Shield size={18} /> });
+        // Admins do not book meetings, so we skip adding the Booking link
       } else {
-          navItems.push({ id: ViewState.DASHBOARD, label: 'My Projects', icon: <LayoutDashboard size={18} /> });
-          navItems.push({ id: ViewState.BOOKING, label: 'Bookings', icon: <Calendar size={18} /> });
+        navItems.push({ id: ViewState.DASHBOARD, label: t('nav.my_projects'), icon: <LayoutDashboard size={18} /> });
+        navItems.push({ id: ViewState.BOOKING, label: t('nav.bookings'), icon: <Calendar size={18} /> });
       }
-  } else {
+    } else {
       // Guest view
-      navItems.push({ id: ViewState.BOOKING, label: 'Book Meeting', icon: <Calendar size={18} /> });
-  }
+      navItems.push({ id: ViewState.BOOKING, label: t('nav.book_meeting'), icon: <Calendar size={18} /> });
+    }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
@@ -70,11 +73,23 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? t('theme.switch_light') : t('theme.switch_dark')}
+              aria-label={isDark ? t('theme.switch_light') : t('theme.switch_dark')}
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
+
+            {/* Language Toggle */}
+            <div className="flex items-center">
+              <button
+                onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
+                className="px-2 py-1 rounded-md text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
+                aria-label="Toggle language"
+                title={lang === 'en' ? 'Switch to Français' : 'Passer à English'}
+              >
+                {lang === 'en' ? 'EN' : 'FR'}
+              </button>
+            </div>
 
             {user && <Notifications user={user} setView={setView} />}
 
@@ -87,8 +102,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                     <button 
                       onClick={onLogout}
                       className="p-2 text-slate-500 hover:text-red-500 transition-colors"
-                      title="Logout"
-                      aria-label="Logout"
+                      title={t('nav.logout')}
+                      aria-label={t('nav.logout')}
                     >
                       <LogOut size={20} />
                     </button>
@@ -98,7 +113,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                     onClick={() => setView(ViewState.LOGIN)}
                     className="hidden sm:flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/20"
                 >
-                  <UserIcon size={16} /> Sign In
+                  <UserIcon size={16} /> {t('nav.sign_in')}
                 </button>
             )}
           </div>

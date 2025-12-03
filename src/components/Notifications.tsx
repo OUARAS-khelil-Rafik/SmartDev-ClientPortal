@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { api } from '../services/mockApi';
 import { User, ViewState } from '../types';
 import { Bell, Check, X, Clock } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface NotificationItem {
   id: string;
@@ -32,6 +33,8 @@ const timeAgo = (iso?: string) => {
 };
 
 const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
+  const { t } = useI18n();
+
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<NotificationItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -111,8 +114,8 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
         aria-expanded={open}
         aria-haspopup="menu"
         className="relative inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-        aria-label="Notifications"
-        title="Notifications"
+        aria-label={t('notifications.bell_label')}
+        title={t('notifications.bell_title')}
       >
         <Bell size={20} />
         {unreadCount > 0 && (
@@ -126,22 +129,22 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
         <div className="absolute right-0 mt-2 w-80 md:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg overflow-hidden z-50">
           <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <Clock size={16} />
-              <span className="font-semibold">Notifications</span>
-            </div>
+                <Clock size={16} />
+                <span className="font-semibold">{t('notifications.title')}</span>
+              </div>
             <div className="flex items-center gap-2">
-                <button type="button" onClick={markAll} className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-white">Mark all</button>
-                <button type="button" onClick={clearAll} className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-white">Clear</button>
+                  <button type="button" onClick={markAll} className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-white">{t('notifications.mark_all')}</button>
+                  <button type="button" onClick={clearAll} className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-white">{t('notifications.clear')}</button>
                 {setView && (
-                  <button type="button" onClick={() => setView(ViewState.ALL_NOTIFICATIONS)} className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-white">Show all</button>
+                    <button type="button" onClick={() => setView(ViewState.ALL_NOTIFICATIONS)} className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-white">{t('notifications.show_all')}</button>
                 )}
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close notifications" title="Close notifications" className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-white"><X size={16} /></button>
+                <button type="button" onClick={() => setOpen(false)} aria-label={t('notifications.close')} title={t('notifications.close')} className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-white"><X size={16} /></button>
             </div>
           </div>
 
           <div className="max-h-64 overflow-y-auto">
-            {loading && <div className="p-4 text-sm text-slate-500">Loading...</div>}
-            {!loading && items.length === 0 && <div className="p-4 text-sm text-slate-500">No notifications</div>}
+            {loading && <div className="p-4 text-sm text-slate-500">{t('notifications.loading')}</div>}
+            {!loading && items.length === 0 && <div className="p-4 text-sm text-slate-500">{t('notifications.no_notifications')}</div>}
             {!loading && items.map(item => (
               <div key={item.id} className={`px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-start gap-3 ${item.read ? 'bg-transparent' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
                 <div className="flex-1">
@@ -153,11 +156,11 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
                 </div>
                 <div className="flex flex-col items-center gap-2 ml-2">
                   {!item.read ? (
-                    <button type="button" onClick={() => markRead(item.id)} aria-label="Mark notification as read" title="Mark as read" className="p-1.5 rounded-full text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
+                    <button type="button" onClick={() => markRead(item.id)} aria-label={t('notifications.mark_as_read')} title={t('notifications.mark_as_read')} className="p-1.5 rounded-full text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
                       <Check size={18} />
                     </button>
                   ) : (
-                    <span className="text-xs text-slate-400">Read</span>
+                    <span className="text-xs text-slate-400">{t('notifications.read')}</span>
                   )}
                 </div>
               </div>

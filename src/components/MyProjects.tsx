@@ -3,6 +3,7 @@ import { Briefcase, Plus, Trash, Loader2, Edit } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
 import { User, Project } from '../types';
+import { useI18n } from '../i18n';
 
 interface Props { user: User | null }
 
@@ -42,7 +43,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
   const confirmRenameFromDialog = async () => {
     if (!pendingRename) return;
     const id = pendingRename.id;
-    if (!renameInput || !renameInput.trim()) return alert('Please provide a valid project name');
+    if (!renameInput || !renameInput.trim()) return alert(t('my_projects.errors.provide_valid_name'));
     setRenameDialogOpen(false);
     setLoading(true);
     try {
@@ -55,33 +56,33 @@ const MyProjects: React.FC<Props> = ({ user }) => {
   };
 
   const handleCreate = async () => {
-    if (!name) return alert('Please provide a project name');
+    if (!name) return alert(t('my_projects.errors.provide_name'));
     setLoading(true);
     try {
       // Client-side duplicate name check
       const existing = projects.find(p => p.clientId === user!.id && p.name.toLowerCase() === name.toLowerCase());
-      if (existing) throw new Error('You already have a project with that name.');
+      if (existing) throw new Error(t('my_projects.errors.duplicate_name'));
 
       await api.createProject({ name, clientId: user!.id, deadline: deadline || new Date().toISOString().slice(0,10), status: 'Planning' }, { id: user!.id, role: user!.role });
       setName(''); setDeadline(''); setCreating(false);
       await load();
       try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
-    } catch (e: any) { alert(e.message || 'Failed to create'); }
+    } catch (e: any) { alert(e.message || t('my_projects.errors.failed_create')); }
     finally { setLoading(false); }
   };
 
   const handleDelete = async (id: string) => {
     const project = projects.find(p => p.id === id);
-    if (!project) return alert('Project not found');
-    if (project.clientId !== user!.id) return alert("You can only delete your own projects");
+    if (!project) return alert(t('my_projects.errors.project_not_found'));
+    if (project.clientId !== user!.id) return alert(t('my_projects.errors.only_delete_own'));
     // Prevent deletion if project is no longer in Planning
-    if (project.status !== 'Planning') return alert('Only projects in Planning can be deleted. Contact Admin for protected projects.');
+    if (project.status !== 'Planning') return alert(t('my_projects.errors.only_planning_delete'));
 
     // Check for bookings
     try {
       const bookings = await api.getBookings(user!.id, user!.role);
       const hasActiveBooking = bookings.some(b => b.projectId === id && b.status !== 'rejected');
-      if (hasActiveBooking) return alert('This project has associated bookings and cannot be deleted.');
+      if (hasActiveBooking) return alert(t('my_projects.errors.has_bookings'));
     } catch (e) {
       // ignore booking fetch error and rely on server-side checks
     }
@@ -92,7 +93,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
     try {
       await api.deleteProject(id, { id: user!.id, role: user!.role });
       await load();
-    } catch (e: any) { alert(e.message || 'Failed to delete'); }
+    } catch (e: any) { alert(e.message || t('my_projects.errors.failed_delete')); }
     finally { setLoading(false); }
   };
 
@@ -111,13 +112,13 @@ const MyProjects: React.FC<Props> = ({ user }) => {
     const id = pendingDelete.id;
 
     const project = projects.find(p => p.id === id);
-    if (!project) return alert('Project not found');
-    if (project.status !== 'Planning') return alert('Only projects in Planning can be deleted. Contact Admin for protected projects.');
+    if (!project) return alert(t('my_projects.errors.project_not_found'));
+    if (project.status !== 'Planning') return alert(t('my_projects.errors.only_planning_delete'));
 
     try {
       const bookings = await api.getBookings(user!.id, user!.role);
       const hasActiveBooking = bookings.some(b => b.projectId === id && b.status !== 'rejected');
-      if (hasActiveBooking) { setDeleteDialogOpen(false); return alert('This project has associated bookings and cannot be deleted.'); }
+      if (hasActiveBooking) { setDeleteDialogOpen(false); return alert(t('my_projects.errors.has_bookings')); }
     } catch (e) {}
 
     setDeleteDialogOpen(false);
@@ -126,9 +127,11 @@ const MyProjects: React.FC<Props> = ({ user }) => {
       await api.deleteProject(id, { id: user!.id, role: user!.role });
       await load();
       try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
-    } catch (e: any) { alert(e.message || 'Failed to delete'); }
+    } catch (e: any) { alert(e.message || t('my_projects.errors.failed_delete')); }
     finally { setLoading(false); }
   };
+
+  const { t } = useI18n();
 
   if (!user) return null;
   if (user.role !== 'client') {
@@ -146,21 +149,21 @@ const MyProjects: React.FC<Props> = ({ user }) => {
     <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">My Projects</h2>
+          <h2 className="text-2xl font-bold">{t('my_projects.title')}</h2>
           <button onClick={() => setCreating(!creating)} className="flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded-lg">
-            <Plus size={16}/> {creating ? 'Cancel' : 'Create project'}
+            <Plus size={16}/> {creating ? t('common.cancel') : t('my_projects.create_project')}
           </button>
         </div>
 
         {creating && (
           <div className="p-4 bg-white dark:bg-slate-900 rounded-lg border mb-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
-              <input aria-label="Project name" title="Project name" value={name} onChange={e => setName(e.target.value)} placeholder="Project name" className="col-span-2 p-2 border rounded bg-white dark:bg-slate-800 dark:text-white" />
-              <input aria-label="Deadline" title="Deadline" type="date" value={deadline} onChange={e => setDeadline(e.target.value)} className="p-2 border rounded bg-white dark:bg-slate-800 dark:text-white" />
+              <input aria-label={t('my_projects.form.project_name')} title={t('my_projects.form.project_name')} value={name} onChange={e => setName(e.target.value)} placeholder={t('my_projects.form.project_name')} className="col-span-2 p-2 border rounded bg-white dark:bg-slate-800 dark:text-white" />
+              <input aria-label={t('my_projects.form.deadline')} title={t('my_projects.form.deadline')} type="date" value={deadline} onChange={e => setDeadline(e.target.value)} className="p-2 border rounded bg-white dark:bg-slate-800 dark:text-white" />
             </div>
             <div className="mt-3 flex gap-2">
-              <button onClick={handleCreate} className="bg-green-600 text-white px-4 py-2 rounded">Create</button>
-              <button onClick={() => { setCreating(false); setName(''); setDeadline(''); }} className="px-4 py-2 border rounded">Cancel</button>
+              <button onClick={handleCreate} className="bg-green-600 text-white px-4 py-2 rounded">{t('common.create')}</button>
+              <button onClick={() => { setCreating(false); setName(''); setDeadline(''); }} className="px-4 py-2 border rounded">{t('common.cancel')}</button>
             </div>
           </div>
         )}
@@ -172,27 +175,27 @@ const MyProjects: React.FC<Props> = ({ user }) => {
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-bold">{p.name}</h3>
-                  <p className="text-xs text-slate-500">Due: {p.deadline} • Status: {p.status}</p>
+                  <p className="text-xs text-slate-500">{t('my_projects.card.due')} {p.deadline} • {t('my_projects.card.status')} {p.status}</p>
                 </div>
                 <div className="flex gap-2">
-                  <button title="Rename" onClick={() => openRenameDialog(p.id)} className="p-2 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300"><Edit size={16}/></button>
-                  <button title="Delete" onClick={() => openDeleteDialog(p.id)} className="p-2 rounded bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40"><Trash size={16}/></button>
+                  <button title={t('my_projects.actions.rename')} onClick={() => openRenameDialog(p.id)} className="p-2 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300"><Edit size={16}/></button>
+                  <button title={t('my_projects.actions.delete')} onClick={() => openDeleteDialog(p.id)} className="p-2 rounded bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40"><Trash size={16}/></button>
                 </div>
               </div>
             </div>
           ))}
           {projects.length === 0 && !loading && (
             <div className="col-span-full p-6 bg-white dark:bg-slate-900 rounded-lg text-center text-slate-500">
-              You don't have any projects yet.
+              {t('my_projects.empty')}
             </div>
           )}
         </div>
         <ConfirmDialog
           open={deleteDialogOpen}
-          title="Delete Project"
-          message={pendingDelete?.name ? `Are you sure you want to delete "${pendingDelete.name}"? This action cannot be undone.` : 'Are you sure you want to delete this project? This action cannot be undone.'}
-          confirmLabel="Delete"
-          cancelLabel="Cancel"
+          title={t('my_projects.dialogs.delete_title')}
+          message={pendingDelete?.name ? `${t('my_projects.dialogs.delete_with_name_prefix')} "${pendingDelete.name}"? ${t('my_projects.dialogs.delete_suffix')}` : t('my_projects.dialogs.delete_generic')}
+          confirmLabel={t('common_ui.delete') || t('common.delete')}
+          cancelLabel={t('common.cancel')}
           loading={loading}
           onConfirm={confirmDeleteFromDialog}
           onCancel={() => setDeleteDialogOpen(false)}
@@ -201,12 +204,12 @@ const MyProjects: React.FC<Props> = ({ user }) => {
           <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="absolute inset-0 bg-black/40" onClick={() => setRenameDialogOpen(false)} />
             <div className="relative bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-md w-full p-6">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Rename Project</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">Rename "{pendingRename.name}"</p>
-              <input aria-label="New project name" placeholder="New project name" value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{t('my_projects.dialogs.rename_title')}</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('my_projects.dialogs.rename_desc_prefix')} "{pendingRename.name}"</p>
+              <input aria-label={t('my_projects.form.new_project_name')} placeholder={t('my_projects.form.new_project_name')} value={renameInput} onChange={e => setRenameInput(e.target.value)} className="w-full p-2 border rounded mb-4 bg-white dark:bg-slate-800 dark:text-white" />
               <div className="flex justify-end gap-3">
-                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Cancel</button>
-                <button onClick={confirmRenameFromDialog} disabled={loading} className="px-4 py-2 rounded bg-blue-600 text-white">{loading ? 'Saving...' : 'Save'}</button>
+                <button onClick={() => setRenameDialogOpen(false)} className="px-4 py-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">{t('common.cancel')}</button>
+                <button onClick={confirmRenameFromDialog} disabled={loading} className="px-4 py-2 rounded bg-blue-600 text-white">{loading ? t('common.saving') : t('common.save')}</button>
               </div>
             </div>
           </div>
