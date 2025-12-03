@@ -458,6 +458,13 @@ class MockApi {
       console.log(`[Mock Email Service] Sending confirmation to ${bookings[idx].userEmail} with link ${bookings[idx].meetLink}`);
 
       this.saveBookings(bookings);
+      // Create an in-app notification for the user
+      try {
+        await this.createNotification(bookings[idx].userId, 'Booking confirmed', `Your meeting on ${bookings[idx].date} at ${bookings[idx].time} is confirmed.`);
+      } catch (e) {
+        console.warn('Failed to create in-app notification', e);
+      }
+
       return bookings;
   }
 
@@ -504,6 +511,108 @@ class MockApi {
     bookings[idx].status = 'finished';
     this.saveBookings(bookings);
     return bookings;
+  }
+
+  // --- Notifications ---
+  private getStoredNotifications() {
+    const stored = localStorage.getItem('nexus_notifications');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  private saveNotifications(notifications: any[]) {
+    localStorage.setItem('nexus_notifications', JSON.stringify(notifications));
+    // Dispatch an event so UI components can react in real-time
+    try {
+      const evt = new CustomEvent('nexus:notifications-changed', { detail: { notifications } });
+      window.dispatchEvent(evt as Event);
+    } catch (e) {
+      // ignore if running in non-browser env
+    }
+  }
+
+  // Create a notification for a specific user (used by other methods to push updates)
+  async createNotification(userId: string, title: string, body?: string, type?: string) {
+    await delay(200);
+    const notifications = this.getStoredNotifications();
+    const n = {
+      id: Date.now().toString(),
+      userId,
+      title,
+      body: body || '',
+      type: type || 'info',
+      date: new Date().toISOString(),
+      read: false,
+    };
+    notifications.push(n);
+    this.saveNotifications(notifications);
+    return n;
+  }
+
+  async getNotifications(userId: string) {
+    await delay(300);
+    const notifications = this.getStoredNotifications();
+    // return only notifications for this user, newest first
+    return notifications.filter((n: any) => n.userId === userId).sort((a: any,b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+
+  async markNotificationRead(notificationId: string, userId?: string) {
+    await delay(150);
+    const notifications = this.getStoredNotifications();
+    const idx = notifications.findIndex((n: any) => n.id === notificationId && (!userId || n.userId === userId));
+    if (idx !== -1) {
+      notifications[idx].read = true;
+      this.saveNotifications(notifications);
+    }
+    return notifications.filter((n: any) => !userId || n.userId === userId);
+  }
+
+  // Set read state (true/false) for a notification
+  async setNotificationRead(notificationId: string, read: boolean, userId?: string) {
+    await delay(150);
+    const notifications = this.getStoredNotifications();
+    const idx = notifications.findIndex((n: any) => n.id === notificationId && (!userId || n.userId === userId));
+    if (idx !== -1) {
+      notifications[idx].read = !!read;
+      this.saveNotifications(notifications);
+    }
+    return notifications.filter((n: any) => !userId || n.userId === userId);
+  }
+
+  // Delete a specific notification for a user
+  async deleteNotification(notificationId: string, userId?: string) {
+    await delay(120);
+    let notifications = this.getStoredNotifications();
+    const before = notifications.length;
+    notifications = notifications.filter((n: any) => {
+      if (userId) return !(n.id === notificationId && n.userId === userId);
+      return n.id !== notificationId;
+    });
+    if (notifications.length !== before) this.saveNotifications(notifications);
+    return notifications.filter((n: any) => !userId || n.userId === userId);
+  }
+
+  async markAllNotificationsRead(userId: string) {
+    await delay(200);
+    const notifications = this.getStoredNotifications();
+    let changed = false;
+    for (let n of notifications) {
+      if (n.userId === userId && !n.read) {
+        n.read = true;
+        changed = true;
+      }
+    }
+    if (changed) this.saveNotifications(notifications);
+    return notifications.filter((n: any) => n.userId === userId);
+  }
+
+  // Remove all notifications for a specific user
+  async clearNotifications(userId: string) {
+    await delay(200);
+    let notifications = this.getStoredNotifications();
+    const before = notifications.length;
+    notifications = notifications.filter((n: any) => n.userId !== userId);
+    if (notifications.length !== before) this.saveNotifications(notifications);
+    return notifications.filter((n: any) => n.userId === userId);
   }
 }
 

@@ -9,6 +9,7 @@ import FloatingCopilot from './components/FloatingCopilot';
 import Auth from './components/Auth';
 import AdminDashboard from './components/AdminDashboard';
 import AllComponents from './components/AllComponents';
+import AllNotifications from './components/AllNotifications';
 import { ViewState, User } from './types';
 
 const App: React.FC = () => {
@@ -89,6 +90,9 @@ const App: React.FC = () => {
 
       case ViewState.ALL_COMPONENTS:
         return <AllComponents />;
+      case ViewState.ALL_NOTIFICATIONS:
+        if (!user) return <Auth onLogin={handleLogin} />;
+        return <AllNotifications user={user} />;
         
       case ViewState.LOGIN:
         return <Auth onLogin={handleLogin} />;
@@ -109,7 +113,7 @@ const App: React.FC = () => {
         onLogout={handleLogout}
       />
       
-      <main className="animate-fadeIn">
+      <main className="animate-fadeIn pt-6 md:pt-5 pb-8">
         {renderView()}
       </main>
 
@@ -125,10 +129,9 @@ const App: React.FC = () => {
             <div>
               <h4 className="font-bold text-slate-900 dark:text-white mb-4">Links</h4>
               <ul className="space-y-2">
+                <li className="hover:text-blue-500 cursor-pointer transition-colors" onClick={() => setView(ViewState.HOME)}>Home</li>
                 <li className="hover:text-blue-500 cursor-pointer transition-colors" onClick={() => setView(ViewState.SERVICES)}>Services</li>
-                {user && <li className="hover:text-blue-500 cursor-pointer transition-colors" onClick={() => setView(ViewState.DASHBOARD)}>Portal</li>}
                 <li className="hover:text-blue-500 cursor-pointer transition-colors" onClick={() => setView(ViewState.AI_CONSULT)}>AI Architect</li>
-                <li className="hover:text-blue-500 cursor-pointer transition-colors" onClick={() => setView(ViewState.ALL_COMPONENTS)}>All Components</li>
               </ul>
             </div>
             <div>

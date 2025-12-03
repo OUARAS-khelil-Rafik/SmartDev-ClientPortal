@@ -2,6 +2,7 @@
 import React from 'react';
 import { ViewState, User } from '../types';
 import { Sun, Moon, Hexagon, LayoutDashboard, Calendar, Sparkles, Monitor, LogOut, User as UserIcon, Shield } from 'lucide-react';
+import Notifications from './Notifications';
 
 interface NavbarProps {
   currentView: ViewState;
@@ -75,6 +76,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
+            {user && <Notifications user={user} setView={setView} />}
+
             {user ? (
                 <div className="hidden md:flex items-center gap-4">
                     <div className="hidden sm:flex flex-col items-end">
@@ -115,6 +118,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                  {item.icon}
              </button>
           ))}
+          {user && (
+            <div className="flex items-center">
+              <Notifications user={user} setView={setView} />
+            </div>
+          )}
           {user ? (
               <button onClick={onLogout} title="Logout" aria-label="Logout" className="p-2 rounded-lg flex-shrink-0 mx-1 text-red-500">
                   <LogOut size={18} />
