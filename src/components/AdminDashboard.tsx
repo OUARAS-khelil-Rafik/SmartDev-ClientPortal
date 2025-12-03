@@ -9,6 +9,7 @@ const AdminDashboard: React.FC = () => {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [projects, setProjects] = useState<Project[]>([]);
     const [users, setUsers] = useState<User[]>([]);
+    const [userToggling, setUserToggling] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<'bookings' | 'projects'>('bookings');
     const [descriptionModal, setDescriptionModal] = useState<Booking | null>(null);
@@ -60,6 +61,15 @@ const AdminDashboard: React.FC = () => {
             const updated = await api.deleteUser(id);
             setUsers(updated.filter((user: any) => user.role === 'client'));
         } catch (e) { console.error(e) }
+    };
+
+    const toggleUserApproval = async (id: string, approve: boolean) => {
+        setUserToggling(id);
+        try {
+            if (approve) await handleApproveUser(id);
+            else await handleRejectUser(id);
+        } catch (e) { console.error(e) }
+        finally { setUserToggling(null); }
     };
 
     const handleApprove = async (id: string) => {
@@ -194,13 +204,14 @@ const AdminDashboard: React.FC = () => {
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+                        <table className="w-full text-center text-sm text-slate-600 dark:text-slate-400">
                             <thead className="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase font-semibold text-slate-500">
                                 <tr>
                                     <th className="px-4 py-3">Name</th>
                                     <th className="px-4 py-3">Email</th>
                                     <th className="px-4 py-3">Status</th>
                                     <th className="px-4 py-3">Actions</th>
+                                    <th className="px-4 py-3">Activate</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
@@ -217,17 +228,47 @@ const AdminDashboard: React.FC = () => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3">
-                                            <div className="flex gap-2">
-                                                <button onClick={() => handleApproveUser(u.id)} disabled={u.status === 'approved'} className="px-2 py-1 bg-green-100 hover:bg-green-200 text-green-700 rounded-md text-xs">Approve</button>
-                                                <button onClick={() => handleRejectUser(u.id)} disabled={u.status === 'rejected'} className="px-2 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-xs">Reject</button>
-                                                <button onClick={() => handleDeleteUser(u.id)} className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-xs">Delete</button>
+                                            <div className="flex items-center justify-center">
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        onClick={() => handleDeleteUser(u.id)}
+                                                        disabled={userToggling === u.id}
+                                                        className="p-2 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800/20 dark:text-slate-300 disabled:opacity-50"
+                                                        title="Delete user"
+                                                        aria-label="Delete user"
+                                                    >
+                                                        <Trash size={14} />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <div className="flex items-center justify-center">
+                                                <label className="inline-flex items-center">
+                                                    <input
+                                                        type="checkbox"
+                                                        role="switch"
+                                                        aria-label={u.status === 'approved' ? 'Deactivate user' : 'Activate user'}
+                                                        checked={u.status === 'approved'}
+                                                        onChange={(e) => toggleUserApproval(u.id, e.target.checked)}
+                                                        disabled={userToggling === u.id}
+                                                        className="sr-only"
+                                                    />
+                                                    <div
+                                                        role="presentation"
+                                                        className={`w-11 h-6 rounded-full relative transition-colors ${userToggling === u.id ? 'opacity-50 pointer-events-none' : ''} ${u.status === 'approved' ? 'bg-green-500' : 'bg-slate-200'}`}
+                                                        aria-hidden="true"
+                                                    >
+                                                        <span className={`absolute top-0.5 left-0.5 bg-white w-5 h-5 rounded-full shadow transition-transform ${u.status === 'approved' ? 'translate-x-5' : 'translate-x-0'}`}></span>
+                                                    </div>
+                                                </label>
                                             </div>
                                         </td>
                                     </tr>
                                 ))}
                                 {users.length === 0 && (
                                     <tr>
-                                        <td colSpan={4} className="px-4 py-6 text-center text-slate-500">No users found.</td>
+                                        <td colSpan={5} className="px-4 py-6 text-center text-slate-500">No users found.</td>
                                     </tr>
                                 )}
                             </tbody>

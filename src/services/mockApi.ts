@@ -85,8 +85,6 @@ class MockApi {
     if (idx === -1) throw new Error('User not found');
     users[idx].status = 'approved';
     this.saveUsers(users);
-    // Create demo project after approval
-    await this.createDemoProjectForUser(userId);
     return users;
   }
 
@@ -148,23 +146,7 @@ class MockApi {
     localStorage.setItem('nexus_projects', JSON.stringify(projects));
   }
 
-  private async createDemoProjectForUser(userId: string) {
-    const projects = this.getStoredProjects();
-    const newProject: Project = {
-        id: Date.now().toString(),
-        name: 'My First Project',
-        clientId: userId,
-        status: 'Planning',
-        progress: 10,
-        deadline: '2025-01-01',
-        tasks: [
-            { id: 't1', title: 'Initial Consultation', completed: false, assignee: 'Nexus Team' },
-            { id: 't2', title: 'Requirements Gathering', completed: false, assignee: 'Nexus Team' }
-        ]
-    };
-    projects.push(newProject);
-    this.saveProjects(projects);
-  }
+
 
   // Create project (client action)
   // Only a client can create a project for themselves via this method.
