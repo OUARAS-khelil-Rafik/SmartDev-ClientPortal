@@ -38,14 +38,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
     }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300 animate-slide-down">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center cursor-pointer group" onClick={() => setView(ViewState.HOME)}>
-            <div className="bg-gradient-to-tr from-blue-600 to-cyan-500 p-2 rounded-lg group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300">
-              <Hexagon className="text-white" size={24} strokeWidth={2.5} />
+            <div className="bg-gradient-to-tr from-blue-600 to-cyan-500 p-2 rounded-lg group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+              <Hexagon className="text-white transition-transform group-hover:rotate-180 duration-500" size={24} strokeWidth={2.5} />
             </div>
-            <span className="ml-3 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
+            <span className="ml-3 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 group-hover:from-blue-600 group-hover:to-cyan-500 transition-all duration-300">
               NEXUS
             </span>
           </div>
@@ -56,13 +56,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                 <button
                   key={item.id}
                   onClick={() => setView(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-105 animate-fade-in-down ${
                     currentView === item.id
                       ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  {item.icon}
+                  <span className={`transition-transform duration-300 ${currentView === item.id ? 'scale-110' : 'group-hover:scale-110'}`}>{item.icon}</span>
                   {item.label}
                 </button>
               ))}
@@ -72,18 +72,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
           <div className="flex items-center gap-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110 hover:rotate-180 hover:shadow-lg"
               title={isDark ? t('theme.switch_light') : t('theme.switch_dark')}
               aria-label={isDark ? t('theme.switch_light') : t('theme.switch_dark')}
             >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              {isDark ? <Sun size={20} className="animate-spin-slow" /> : <Moon size={20} />}
             </button>
 
             {/* Language Toggle */}
             <div className="flex items-center">
               <button
                 onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
-                className="px-2 py-1 rounded-md text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
+                className="px-2 py-1 rounded-md text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:scale-105 transition-all duration-300 hover:shadow-md"
                 aria-label={lang === 'en' ? t('nav.switch_to_fr') : t('nav.switch_to_en')}
                 title={lang === 'en' ? t('nav.switch_to_fr') : t('nav.switch_to_en')}
               >
@@ -94,14 +94,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
             {user && <Notifications user={user} setView={setView} />}
 
             {user ? (
-                <div className="hidden md:flex items-center gap-4">
+                <div className="hidden md:flex items-center gap-4 animate-fade-in">
                     <div className="hidden sm:flex flex-col items-end">
                         <span className="text-sm font-bold text-slate-800 dark:text-white">{user.name}</span>
                         <span className="text-xs text-slate-500 capitalize">{user.role}</span>
                     </div>
                     <button 
                       onClick={onLogout}
-                      className="p-2 text-slate-500 hover:text-red-500 transition-colors"
+                      className="p-2 text-slate-500 hover:text-red-500 transition-all duration-300 hover:scale-110 hover:rotate-12"
                       title={t('nav.logout')}
                       aria-label={t('nav.logout')}
                     >
@@ -111,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
             ) : (
                 <button 
                     onClick={() => setView(ViewState.LOGIN)}
-                    className="hidden sm:flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/20"
+                    className="hidden sm:flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-all duration-300 shadow-lg shadow-blue-500/20 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/30 animate-fade-in"
                 >
                   <UserIcon size={16} /> {t('nav.sign_in')}
                 </button>
@@ -128,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                 onClick={() => setView(item.id)}
                 title={item.label}
                 aria-label={item.label}
-                className={`p-2 rounded-lg flex-shrink-0 mx-1 ${currentView === item.id ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-slate-500 dark:text-slate-400'}`}
+                className={`p-2 rounded-lg flex-shrink-0 mx-1 transition-all duration-300 hover:scale-110 ${currentView === item.id ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 scale-110' : 'text-slate-500 dark:text-slate-400'}`}
              >
                  {item.icon}
              </button>
@@ -139,11 +139,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
             </div>
           )}
             {user ? (
-              <button onClick={onLogout} title={t('nav.logout')} aria-label={t('nav.logout')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-red-500">
+              <button onClick={onLogout} title={t('nav.logout')} aria-label={t('nav.logout')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-red-500 hover:scale-110 transition-transform">
                 <LogOut size={18} />
               </button>
             ) : (
-              <button onClick={() => setView(ViewState.LOGIN)} title={t('nav.sign_in')} aria-label={t('nav.sign_in')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-blue-500">
+              <button onClick={() => setView(ViewState.LOGIN)} title={t('nav.sign_in')} aria-label={t('nav.sign_in')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-blue-500 hover:scale-110 transition-transform">
                 <UserIcon size={18} />
               </button>
             )}

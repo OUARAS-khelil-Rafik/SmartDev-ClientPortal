@@ -99,30 +99,30 @@ const Services: React.FC = () => {
 
   if (selectedService) {
       return (
-        <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 animate-fadeIn">
+        <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 animate-fade-in">
             <div className="max-w-7xl mx-auto">
                 <button 
                   onClick={() => setSelectedService(null)}
-                  className="flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 mb-8 transition-colors"
+                  className="flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 mb-8 transition-colors hover:-translate-x-1 duration-300"
                 >
                   <ArrowLeft size={20} /> {t('common.back_to_services')}
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    <div>
-                        <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit mb-6">
+                    <div className="animate-fade-in-left opacity-0">
+                        <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit mb-6 animate-scale-in-bounce">
                             {React.cloneElement(selectedService.icon as React.ReactElement<any>, { size: 64 })}
                         </div>
-                        <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-6">
+                        <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-6 animate-fade-in-up opacity-0 animation-delay-200">
                             {selectedService.title}
                         </h2>
-                        <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                        <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8 animate-fade-in-up opacity-0 animation-delay-300">
                             {selectedService.longDescription}
                         </p>
                         
-                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-3xl text-white shadow-xl">
+                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-3xl text-white shadow-xl animate-fade-in-up opacity-0 animation-delay-400 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                              <Zap className="text-yellow-300" /> {t('services.why_choose')}
+                              <Zap className="text-yellow-300 animate-pulse" /> {t('services.why_choose')}
                             </h3>
                             <p className="text-blue-100">
                               {t('services.why_choose_prefix')} <strong>{selectedService.title}</strong> {t('services.why_choose_suffix')}
@@ -130,12 +130,12 @@ const Services: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-lg">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-lg animate-fade-in-right opacity-0 animation-delay-200">
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6">{t('services.engineering_excellence')}</h3>
-                        <div className="space-y-4">
+                        <div className="space-y-4 stagger-children">
                             {selectedService.features?.map((feature, idx) => (
-                                <div key={idx} className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                                    <CheckCircle2 className="text-green-500 flex-shrink-0 mt-0.5" />
+                                <div key={idx} className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 animate-fade-in-up hover:translate-x-2 hover:shadow-md">
+                                    <CheckCircle2 className="text-green-500 flex-shrink-0 mt-0.5 animate-scale-in" />
                                     <span className="text-slate-700 dark:text-slate-200 font-medium">{feature}</span>
                                 </div>
                             ))}
@@ -150,28 +150,31 @@ const Services: React.FC = () => {
   return (
     <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in-up">
           <h2 className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wide text-sm mb-2">{t('services.our_expertise')}</h2>
-          <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">{t('services.engineering_excellence')}</h3>
+          <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 gradient-text-animated">{t('services.engineering_excellence')}</h3>
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">{t('services.subtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
           {servicesList.map((service) => (
             <div 
               key={service.id}
-              className="group relative bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 border border-slate-100 dark:border-slate-800 overflow-hidden cursor-pointer"
+              className="group relative bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 border border-slate-100 dark:border-slate-800 overflow-hidden cursor-pointer hover-lift animate-fade-in-up"
               onClick={() => setSelectedService(service)}
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-150 duration-500">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-150 group-hover:rotate-12 duration-500">
                 {service.icon}
               </div>
               
+              {/* Animated background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-500 rounded-2xl"></div>
+              
               <div className="relative z-10">
-                <div className="mb-6 p-3 bg-slate-50 dark:bg-slate-800 w-fit rounded-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="mb-6 p-3 bg-slate-50 dark:bg-slate-800 w-fit rounded-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 group-hover:shadow-lg">
                     {service.icon}
                 </div>
-                <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   {service.title}
                 </h4>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
@@ -179,9 +182,12 @@ const Services: React.FC = () => {
                 </p>
                 
                 <div className="mt-6 flex items-center text-blue-600 dark:text-blue-400 font-semibold group-hover:translate-x-2 transition-transform">
-                  {t('services.view_details')} <span className="ml-2">&rarr;</span>
+                  {t('services.view_details')} <span className="ml-2 group-hover:ml-4 transition-all">&rarr;</span>
                 </div>
               </div>
+              
+              {/* Bottom border animation */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
             </div>
           ))}
         </div>

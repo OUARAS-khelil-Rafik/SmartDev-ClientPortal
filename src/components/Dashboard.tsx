@@ -191,7 +191,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 animate-fade-in-down">
             <div>
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">{t('dashboard.title')}</h2>
                 <p className="text-slate-600 dark:text-slate-400">{t('dashboard.welcome_back')} {user.name}.</p>
@@ -200,8 +200,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             
         </div>
         {/* Project Selector card */}
-        <div className="max-w-7xl mx-auto mb-6">
-            <div className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto mb-6 animate-fade-in-up animation-delay-100">
+            <div className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
                         <label className="sr-only" htmlFor="project-select">Select project</label>
@@ -211,7 +211,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                 title={activeProject?.name ?? (projects.length ? t('dashboard.select_project') : t('dashboard.no_projects'))}
                                 value={activeProjectId ?? ''}
                                 onChange={(e) => setActiveProjectId(e.target.value || null)}
-                                className="appearance-none w-full truncate rounded-full text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300 px-4 py-2 pr-10 shadow-sm"
+                                className="appearance-none w-full truncate rounded-full text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300 px-4 py-2 pr-10 shadow-sm transition-all duration-300 hover:border-blue-400"
                             >
                                 {projects.length === 0 && <option value="" disabled>{t('dashboard.no_projects')}</option>}
                                 {projects.length > 0 && <option value="" disabled>{t('dashboard.select_project')}</option>}
@@ -231,7 +231,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                         <div className="flex items-center gap-3">
                             {activeProject ? (
                                 <>
-                                    <span className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${
+                                    <span className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 hover:scale-105 ${
                                         activeProject.status === 'Completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
                                     }`}>{activeProject.status}</span>
                                     {activeProject.deadline && (

@@ -203,17 +203,17 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
       <div className="max-w-6xl w-full flex flex-col gap-6">
         
         {/* Navigation Tabs */}
-        <div className="flex justify-center">
+        <div className="flex justify-center animate-fade-in-down">
             <div className="bg-white dark:bg-slate-900 p-1 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex">
                 <button 
                     onClick={() => setActiveTab('new')}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'new' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-6 py-2 rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 ${activeTab === 'new' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                     {t('booking.new_reservation')}
                 </button>
                 <button 
                     onClick={() => setActiveTab('history')}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-6 py-2 rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 ${activeTab === 'history' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                     {t('booking.my_requests')}
                 </button>
@@ -222,8 +222,8 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
 
         {activeTab === 'new' ? (
              success ? (
-                <div className="w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 text-center border border-slate-200 dark:border-slate-800 animate-fadeIn max-w-2xl mx-auto">
-                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 text-center border border-slate-200 dark:border-slate-800 animate-scale-in-bounce max-w-2xl mx-auto">
+                    <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-subtle">
                         <Check size={32} className="text-green-600 dark:text-green-400" />
                     </div>
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('common.request_sent')}</h2>
@@ -231,9 +231,9 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                         {t('booking.request_received_prefix')}<b>{formatDateDisplay(selectedDate)}{selectedTime ? ` ${t('booking.select_time').toLowerCase()} ${formatTimeDisplay(selectedTime)}` : ''}</b>{t('booking.google_meet_msg_suffix')}
                     </p>
                     
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl text-left mb-6 border border-blue-100 dark:border-blue-800">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl text-left mb-6 border border-blue-100 dark:border-blue-800 hover:shadow-lg transition-shadow">
                         <div className="flex items-start gap-3">
-                            <Video className="text-blue-500 mt-1" size={20} />
+                            <Video className="text-blue-500 mt-1 animate-pulse" size={20} />
                             <div>
                                 <p className="font-bold text-slate-800 dark:text-white text-sm">{t('booking.google_meet_integration')}</p>
                                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
