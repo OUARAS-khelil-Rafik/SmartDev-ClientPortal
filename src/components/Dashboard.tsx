@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Project, User } from '../types';
 import { api } from '../services/mockApi';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash, Edit } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash, Edit, X } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 
 const COLORS = ['#3b82f6', '#1e293b'];
@@ -189,113 +189,145 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Client Portal</h2>
                 <p className="text-slate-600 dark:text-slate-400">Welcome back, {user.name}.</p>
             </div>
             
-            {/* Project Selector */}
-            <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-                {projects.map(p => (
-                    <button
-                        key={p.id}
-                        onClick={() => setActiveProjectId(p.id)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                            activeProjectId === p.id 
-                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
-                            : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-blue-500'
-                        }`}
-                    >
-                        {p.name}
-                    </button>
-                ))}
-            </div>
+            
         </div>
+        {/* Project Selector card */}
+        <div className="max-w-7xl mx-auto mb-6">
+            <div className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                        <label className="sr-only" htmlFor="project-select">Select project</label>
+                        <div className="relative w-full">
+                            <select
+                                id="project-select"
+                                title={activeProject?.name ?? (projects.length ? 'Select a project' : 'No projects')}
+                                value={activeProjectId ?? ''}
+                                onChange={(e) => setActiveProjectId(e.target.value || null)}
+                                className="appearance-none w-full truncate rounded-full text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300 px-4 py-2 pr-10 shadow-sm"
+                            >
+                                {projects.length === 0 && <option value="" disabled>No projects</option>}
+                                {projects.length > 0 && <option value="" disabled>Select a project</option>}
+                                {projects.map(p => (
+                                    <option key={p.id} value={p.id}>{p.name}</option>
+                                ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                                <svg className="w-4 h-4 text-slate-500 dark:text-slate-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.12 1.004l-4.25 4.65a.75.75 0 01-1.08 0l-4.25-4.65a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
-                {/* Create project inline for client users */}
-                {user.role === 'client' && (
-                    <div className="max-w-7xl mx-auto mb-6">
-                        <div className="flex items-center justify-end gap-2">
-                            {!showCreate && (
-                                <button
-                                    onClick={() => setShowCreate(true)}
-                                    className="flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-                                >
-                                    <Plus size={16} /> Create project
-                                </button>
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-3">
+                            {activeProject ? (
+                                <>
+                                    <span className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${
+                                        activeProject.status === 'Completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
+                                    }`}>{activeProject.status}</span>
+                                    {activeProject.deadline && (
+                                        <span className="text-sm text-slate-600 dark:text-slate-400">Deadline: {new Date(activeProject.deadline).toLocaleDateString()}</span>
+                                    )}
+                                </>
+                            ) : (
+                                <span className="text-sm text-slate-500 dark:text-slate-400">No project selected</span>
                             )}
                         </div>
 
-                        {showCreate && (
-                            <div className="mt-3 p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
-                                    <label className="sr-only" htmlFor="create-name">Project name</label>
-                                    <input
-                                        id="create-name"
-                                        aria-label="Project name"
-                                        title="Project name"
-                                        value={createName}
-                                        onChange={e => setCreateName(e.target.value)}
-                                        placeholder="Project name"
-                                        className="col-span-2 p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
-                                    />
-                                    <label className="sr-only" htmlFor="create-deadline">Deadline</label>
-                                    <input
-                                        id="create-deadline"
-                                        aria-label="Deadline"
-                                        title="Deadline"
-                                        type="date"
-                                        value={createDeadline}
-                                        onChange={e => setCreateDeadline(e.target.value)}
-                                        className="p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
-                                    />
-                                </div>
-                                <div className="mt-3 flex gap-2 justify-end">
+                        <div className="flex items-center gap-2 md:gap-3">
+                            {user.role === 'client' && (
+                                <button
+                                    onClick={() => setShowCreate(prev => !prev)}
+                                    title={showCreate ? 'Close create form' : 'Create project'}
+                                    aria-label={showCreate ? 'Close create form' : 'Create project'}
+                                    className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                                >
+                                    {showCreate ? <X size={16} /> : <Plus size={16} />}
+                                </button>
+                            )}
+
+                            {user.role === 'client' && activeProject && (
+                                <>
                                     <button
-                                        onClick={handleCreateProject}
-                                        disabled={creating || loading || !createName.trim()}
-                                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                        title="Rename project"
+                                        aria-label="Rename project"
+                                        onClick={() => { setRenameInput(activeProject.name); setRenameDialogOpen(true); }}
+                                        className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300 dark:hover:bg-slate-700/20 focus:outline-none focus:ring-2 focus:ring-slate-300"
                                     >
-                                        {creating || loading ? <Loader2 size={16} className="animate-spin" /> : 'Create'}
+                                        <Edit size={16} />
                                     </button>
+
                                     <button
-                                        onClick={() => { setShowCreate(false); setCreateName(''); setCreateDeadline(''); setCreating(false); }}
-                                        className="px-4 py-2 border rounded bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                                        title="Delete project"
+                                        aria-label="Delete project"
+                                        onClick={() => openDeleteDialog(activeProject.id)}
+                                        className="w-10 h-10 flex items-center justify-center rounded-full bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40 focus:outline-none focus:ring-2 focus:ring-red-300"
                                     >
-                                        Cancel
+                                        <Trash size={16} />
                                     </button>
-                                </div>
-                            </div>
-                        )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {user.role === 'client' && showCreate && (
+                    <div className="mt-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+                            <label className="sr-only" htmlFor="create-name">Project name</label>
+                            <input
+                                id="create-name"
+                                aria-label="Project name"
+                                title="Project name"
+                                value={createName}
+                                onChange={e => setCreateName(e.target.value)}
+                                placeholder="Project name"
+                                className="col-span-2 p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                            />
+                            <label className="sr-only" htmlFor="create-deadline">Deadline</label>
+                            <input
+                                id="create-deadline"
+                                aria-label="Deadline"
+                                title="Deadline"
+                                type="date"
+                                value={createDeadline}
+                                onChange={e => setCreateDeadline(e.target.value)}
+                                className="p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="mt-3 flex gap-2 justify-end">
+                            <button
+                                onClick={handleCreateProject}
+                                disabled={creating || loading || !createName.trim()}
+                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-blue-300"
+                            >
+                                {creating || loading ? <Loader2 size={16} className="animate-spin" /> : 'Create'}
+                            </button>
+                            <button
+                                onClick={() => { setShowCreate(false); setCreateName(''); setCreateDeadline(''); setCreating(false); }}
+                                className="px-4 py-2 border rounded bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 )}
+            </div>
+        </div>
 
                 {activeProject ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Project Status */}
             <div className="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
                                 <div className="flex justify-between items-center mb-6">
-                                        <h3 className="text-xl font-bold text-slate-800 dark:text-white truncate pr-4">{activeProject.name}</h3>
-                                        <div className="flex items-center gap-2">
-                                            <span className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${
-                                                activeProject.status === 'Completed' 
-                                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                                : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
-                                            }`}>
-                                                {activeProject.status}
-                                            </span>
-                                            {user.role === 'client' && (
-                                                <>
-                                                    <button title="Rename project" onClick={() => { setRenameInput(activeProject.name); setRenameDialogOpen(true); }} className="p-2 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300 dark:hover:bg-slate-700/20">
-                                                        <Edit size={16} />
-                                                    </button>
-                                                    <button title="Delete project" onClick={() => openDeleteDialog(activeProject.id)} className="p-2 rounded bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40">
-                                                        <Trash size={16} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </div>
+                                        <h1 className="text-xl font-bold text-slate-800 dark:text-white truncate pr-5">{activeProject.name}</h1>  
                                 </div>
 
                 <div className="mb-8">

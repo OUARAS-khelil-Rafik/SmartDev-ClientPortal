@@ -76,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
             </button>
 
             {user ? (
-                <div className="flex items-center gap-4">
+                <div className="hidden md:flex items-center gap-4">
                     <div className="hidden sm:flex flex-col items-end">
                         <span className="text-sm font-bold text-slate-800 dark:text-white">{user.name}</span>
                         <span className="text-xs text-slate-500 capitalize">{user.role}</span>
