@@ -1,7 +1,7 @@
 // Gemini AI service - calls the backend proxy server
 // The backend handles the actual Gemini API calls to keep the API key secure
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:3001';
 
 export const generateProjectConsultation = async (
   userQuery: string,
