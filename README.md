@@ -1,205 +1,359 @@
-# SmartDev - Client Portal
+<div align="center">
 
-Lightweight React + Vite client portal used as a demo frontend for project management, bookings and lightweight AI consultations.
+# 🚀 SmartDev Client Portal
 
-This repo contains a browser SPA built with Vite, TypeScript, Tailwind CSS and a small set of UI components under `components/`. AI integrations are provided as stubs for client builds, see **AI Integration** below.
+### *A Modern, AI-Powered Client Management Platform*
 
-**Quick links:**
-- **Source:** `.` (project root)
-- **Main entry:** `index.tsx`
-- **Components:** `components/`
-- **Services:** `services/`
+[![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.7-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Google AI](https://img.shields.io/badge/Google_Gemini-AI_Powered-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
-**Prerequisites**
-- **Node.js:** v18+ recommended
-- **npm** or yarn
+<br/>
 
-**Local development**
-- Install dependencies:
+<img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/sparkles.svg" width="120" alt="SmartDev Logo"/>
 
-# SmartDev - Client Portal
+<br/>
 
-Lightweight React + Vite client portal used as a demo frontend for project management, bookings and lightweight AI consultations.
+**SmartDev** is a cutting-edge client portal featuring AI-powered project consultation, intelligent booking management, and a stunning animated user interface.
 
-This repo is a single-page application (SPA) built with Vite, TypeScript and Tailwind CSS. It contains a set of UI components under `src/components/` and simple client-side services under `src/services/`.
-
----
-
-## Key Features
-- Modern React + TypeScript + Vite starter
-- Tailwind CSS for utility-first styling
-- Multiple UI pages/components (Dashboard, Booking, AI Consultant, Admin)
-- Animated global custom cursor with:
-   - Smooth follow ring and dot
-   - Click ripple effect
-   - Hover enlargement over interactive elements (links, buttons, inputs)
-   - Automatic color cycling (respects `prefers-reduced-motion`)
-   - Works only on fine-pointer devices (touch devices unaffected)
-- Built-in client-side AI service stubs (see `src/services/geminiService.ts`) — replace with a server-side proxy for production
+[✨ Features](#-features) •
+[🛠️ Tech Stack](#️-tech-stack) •
+[🚀 Quick Start](#-quick-start) •
+[📁 Project Structure](#-project-structure) •
+[🤖 AI Integration](#-ai-integration)
 
 ---
 
-## Tech Stack
-- React + TypeScript
-- Vite
-- Tailwind CSS
-- Optional: Google GenAI (server-side only) — client includes a stub
+</div>
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎨 **Beautiful UI/UX**
+- 🌓 Dark/Light mode support
+- 🎯 Custom animated cursor with color cycling
+- ✨ Smooth Framer Motion animations
+- 📱 Fully responsive design
+- 🎭 Micro-interactions & hover effects
+
+</td>
+<td width="50%">
+
+### 🤖 **AI-Powered**
+- 💬 AI Project Consultant (Gemini)
+- 🤝 Floating AI Copilot assistant
+- 🧠 Context-aware conversations
+- 🌍 Multilingual support (EN/FR)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 👥 **Client Management**
+- 📊 Interactive Dashboard
+- 📅 Smart Booking System
+- 📁 Project Management
+- 🔔 Real-time Notifications
+
+</td>
+<td width="50%">
+
+### 🔐 **Admin Features**
+- 👤 User Management
+- ✅ Booking Approvals
+- 📈 Analytics Overview
+- 🛡️ Role-based Access
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Quick Start
+## 🛠️ Tech Stack
 
-Prerequisites
-- Node.js v18+ (recommended)
-- npm (or yarn)
+<div align="center">
 
-Install dependencies:
+| Category | Technologies |
+|----------|-------------|
+| **Frontend** | React 19 • TypeScript • Vite |
+| **Styling** | Tailwind CSS • Framer Motion |
+| **Backend** | Node.js • Express |
+| **AI** | Google Gemini API |
+| **Icons** | Lucide React |
+| **Charts** | Recharts |
 
-```pwsh
+</div>
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+```bash
+Node.js v18+ 
+npm or yarn
+```
+
+### 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/OUARAS-khelil-Rafik/SmartDev-ClientPortal.git
+
+# Navigate to project
+cd SmartDev-ClientPortal
+
+# Install frontend dependencies
 npm install
+
+# Install backend dependencies
+cd server && npm install && cd ..
 ```
 
-Start dev server:
+### ⚙️ Configuration
 
-```pwsh
+Create a `server/.env` file:
+
+```env
+# Get your API key at: https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=your_api_key_here
+PORT=3001
+NODE_ENV=development
+```
+
+### 🎯 Running the Application
+
+**Option 1: Run Both Together (Recommended)**
+```bash
 npm run dev
 ```
+This starts both frontend (port 3000) and backend (port 3001) simultaneously.
 
-Build for production:
+**Option 2: Run Separately**
 
-```pwsh
-npm run build
-```
-
----
-
-## Project Structure (important files)
-- `index.html` — App entry
-- `src/index.tsx` — React bootstrap
-- `src/App.tsx` — Top-level layout and routing/view state
-- `src/components/` — UI components
-- `src/services/` — Client-side service adapters and stubs
-- `src/index.css` — Tailwind + project styles (includes custom cursor CSS)
-
----
-
-## Custom Cursor — details & customization
-
-Location:
-- Component: `src/components/CustomCursor.tsx`
-- Styles: appended to `src/index.css`
-
-Behavior summary:
-- Shows a small dot and a larger ring that follows the pointer smoothly.
-- The dot uses `left`/`top` positioning with CSS `transform: translate(-50%,-50%)` so centering and scale transforms remain consistent.
-- Clicking creates a ripple animation at the pointer position.
-- Hovering interactive elements (links, buttons, inputs, or elements with `.cursor-pointer`) will grow the ring and change its color to indicate interactivity.
-- The ring and dot color cycles automatically via HSL hue rotation. The animation respects `prefers-reduced-motion` and will be disabled if the user has that preference.
-- The custom cursor activates only on fine-pointer devices (so touch users keep native touch behavior).
-
-Quick customization (edit these values inside `CustomCursor.tsx`):
-- `speed` (degrees/sec) — how quickly the hue cycles. Default is `28`.
-- Starting hue (`hueRef` default) — set initial color.
-- Change palette: replace HSL usage with an array of color stops and pick/lerp between them.
-- Disable color cycling: set `prefersReduced` check or force static color in the component.
-
-CSS customization (edit `src/index.css`):
-- `.cursor-dot` — size, shadow, and base color
-- `.cursor-ring` — ring size, border-width, transitions
-- `.cursor-ripple` — ripple size and animation duration
-
-Examples
-- To slow color cycling: set `const speed = 10;` in `CustomCursor.tsx`.
-- To lock color on hover: in the hover handler set a fixed color to `ringRef.current.style.borderColor`.
-
----
-
-## How to test cursor interactions
-
-1. Start the dev server: `npm run dev`.
-2. Open the site in a desktop browser (Chrome, Edge, Firefox) on a non-touch device.
-3. Move the mouse — the dot should follow instantly; the ring should smoothly follow.
-4. Hover a button or link — the ring should grow and change tint.
-5. Click or right-click — a ripple animates from the click point and the ring scales briefly.
-6. To verify `prefers-reduced-motion`, enable reduced motion in OS accessibility settings and reload the page — color cycling and ripples should be suppressed.
-
-If you notice an offset between the physical pointer and the custom cursor:
-- Ensure browser zoom is 100% and OS display scaling is default. High DPI scaling can affect measurement.
-- Test in a different browser to rule out browser-specific issues.
-- If offset persists, open the devtools console and run `window.devicePixelRatio` — a non-integer DPR may require small adjustments in the component (already handled in most cases).
-
----
-
-## AI Integration (important)
-
-This project includes a backend Express server for AI interactions in `server/`. The official `@google/genai` SDK runs server-side where API keys are kept secret. The frontend calls the backend API endpoints.
-
-### Setting up the AI Backend
-
-1. Navigate to the server directory:
-```pwsh
+Terminal 1 - Backend:
+```bash
 cd server
+node index.js
 ```
 
-2. Install dependencies:
-```pwsh
-npm install
+Terminal 2 - Frontend:
+```bash
+npm run client
 ```
 
-3. Create a `.env` file from the example:
-```pwsh
-cp .env.example .env
-```
+### 🌐 Access the App
 
-4. Add your Gemini API key to `server/.env`:
-```
-GEMINI_API_KEY=your_actual_api_key_here
-```
-
-5. Start the server:
-```pwsh
-npm run dev
-```
-
-The server runs on `http://localhost:3001` by default and provides:
-- `POST /api/consultation` - Project consultation AI
-- `POST /api/copilot` - Website copilot AI
-- `GET /api/health` - Health check
-
-### Running Both Frontend and Backend
-
-Terminal 1 (Backend):
-```pwsh
-cd server
-npm run dev
-```
-
-Terminal 2 (Frontend):
-```pwsh
-npm run dev
-```
-
-### Environment Variables
-
-**Frontend** (`.env` in root):
-- `VITE_API_URL` - Backend API URL (defaults to `http://localhost:3001`)
-
-**Backend** (`server/.env`):
-- `GEMINI_API_KEY` - Your Google Gemini API key (get one at https://makersuite.google.com/app/apikey)
-- `PORT` - Server port (defaults to 3001)
-- `NODE_ENV` - Environment (development/production)
+| Service | URL |
+|---------|-----|
+| 🖥️ Frontend | http://localhost:3000 |
+| 🔌 Backend API | http://localhost:3001 |
+| ❤️ Health Check | http://localhost:3001/api/health |
 
 ---
 
-## Troubleshooting & Notes
-- If the dev build fails resolving `@google/genai`, ensure you don't import it in client code. Move SDK usage server-side.
-- If you see performance issues with the animated cursor, check `prefers-reduced-motion` or disable the color animation by setting `speed = 0` or guarding with the media query.
+## 📁 Project Structure
+
+```
+SmartDev-ClientPortal/
+├── 📂 src/
+│   ├── 📂 components/
+│   │   ├── 🎨 AdminDashboard.tsx    # Admin control panel
+│   │   ├── 🤖 AIConsultant.tsx      # AI chat interface
+│   │   ├── 🔐 Auth.tsx              # Authentication
+│   │   ├── 📅 Booking.tsx           # Booking system
+│   │   ├── 📊 Dashboard.tsx         # Client dashboard
+│   │   ├── 💬 FloatingCopilot.tsx   # AI assistant widget
+│   │   ├── 🏠 Hero.tsx              # Landing hero section
+│   │   ├── 📁 MyProjects.tsx        # Project management
+│   │   ├── 🧭 Navbar.tsx            # Navigation bar
+│   │   ├── 🔔 Notifications.tsx     # Notification system
+│   │   ├── 🛠️ Services.tsx          # Services showcase
+│   │   └── 🎯 CustomCursor.tsx      # Animated cursor
+│   │
+│   ├── 📂 i18n/
+│   │   ├── 🇬🇧 en.ts                 # English translations
+│   │   ├── 🇫🇷 fr.ts                 # French translations
+│   │   └── 📦 index.tsx             # i18n provider
+│   │
+│   ├── 📂 services/
+│   │   ├── 🤖 geminiService.ts      # AI API client
+│   │   └── 📡 mockApi.ts            # Mock data service
+│   │
+│   ├── 🎨 App.tsx                   # Main application
+│   ├── 🎭 index.css                 # Global styles
+│   ├── 📦 index.tsx                 # Entry point
+│   └── 📝 types.ts                  # TypeScript types
+│
+├── 📂 server/
+│   ├── 🚀 index.js                  # Express server
+│   ├── 📦 package.json              # Server dependencies
+│   ├── 🔒 .env                      # Environment variables
+│   └── 📄 .env.example              # Environment template
+│
+├── 📄 package.json                  # Project dependencies
+├── ⚡ vite.config.ts                # Vite configuration
+├── 🎨 tailwind.config.cjs           # Tailwind configuration
+└── 📝 tsconfig.json                 # TypeScript configuration
+```
 
 ---
 
-## Contributing
-- Fork, create a branch, and open a PR. Include screenshots for UI changes.
-- If you add server code to work with real AI, add `.env.example` showing expected variables (do not commit secrets).
+## 🤖 AI Integration
 
-## License
-- No license file is included. Add `LICENSE` if you plan to open-source this project.
+SmartDev features two AI-powered assistants powered by **Google Gemini**:
+
+### 💬 AI Project Consultant
+
+A full-page AI consultant that helps clients:
+- Define project requirements
+- Get technology recommendations
+- Understand project timelines
+- Break down complex projects
+
+### 🤝 Floating Copilot
+
+A compact assistant widget that:
+- Helps navigate the website
+- Answers questions about services
+- Provides quick assistance
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/consultation` | Project consultation AI |
+| `POST` | `/api/copilot` | Website copilot AI |
+| `GET` | `/api/health` | Health check |
+
+---
+
+## 🎨 Custom Cursor
+
+The portal features a unique animated cursor experience:
+
+| Feature | Description |
+|---------|-------------|
+| 🎯 **Smooth Following** | Ring follows cursor with smooth animation |
+| 🌈 **Color Cycling** | Automatic HSL color rotation |
+| 💫 **Click Ripples** | Animated ripples on click |
+| 🔍 **Hover Effects** | Ring grows on interactive elements |
+| ♿ **Accessibility** | Respects `prefers-reduced-motion` |
+
+> **Note:** The cursor is only active on devices with fine pointers (not touch devices).
+
+---
+
+## 🌍 Internationalization
+
+The app supports multiple languages:
+
+| Language | Code | Status |
+|----------|------|--------|
+| 🇬🇧 English | `en` | ✅ Complete |
+| 🇫🇷 French | `fr` | ✅ Complete |
+
+Toggle language using the language switcher in the navbar.
+
+---
+
+## 📜 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start frontend + backend together |
+| `npm run client` | Start frontend only |
+| `npm run server` | Start backend only |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+
+---
+
+## 🔧 Environment Variables
+
+### Frontend (`.env` in root)
+
+```env
+VITE_API_URL=http://localhost:3001
+```
+
+### Backend (`server/.env`)
+
+```env
+GEMINI_API_KEY=your_api_key_here
+PORT=3001
+NODE_ENV=development
+```
+
+---
+
+## 🐛 Troubleshooting
+
+<details>
+<summary><b>❌ "I'm having trouble connecting to the AI service"</b></summary>
+
+1. Make sure the backend server is running on port 3001
+2. Check that your `GEMINI_API_KEY` is valid
+3. Verify the API key at [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+</details>
+
+<details>
+<summary><b>❌ Port already in use</b></summary>
+
+Kill the process using the port:
+```powershell
+# Windows
+Get-Process -Id (Get-NetTCPConnection -LocalPort 3001).OwningProcess | Stop-Process -Force
+```
+
+</details>
+
+<details>
+<summary><b>❌ Custom cursor offset issues</b></summary>
+
+- Set browser zoom to 100%
+- Check OS display scaling settings
+- Verify `window.devicePixelRatio` in console
+
+</details>
+
+---
+
+## 👨‍💻 Authors
+
+<div align="center">
+
+**OUARAS Khelil Rafik**
+
+[![GitHub](https://img.shields.io/badge/GitHub-OUARAS--khelil--Rafik-181717?style=for-the-badge&logo=github)](https://github.com/OUARAS-khelil-Rafik)
+
+**KEMMOUN Ramzy**
+
+[![GitHub](https://img.shields.io/badge/GitHub-ramzykemmoun-181717?style=for-the-badge&logo=github)](https://github.com/ramzykemmoun)
+
+**SAIDI Achraf**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Achraf--Saidi-181717?style=for-the-badge&logo=github)](https://github.com/Achraf-Saidi)
+
+</div>
+
+</div>
+
+---
+
+<div align="center">
+
+### ⭐ Star this repo if you found it helpful!
+
+Made with ❤️ and ☕
+
+</div>
