@@ -4,96 +4,98 @@ import { useI18n } from '../i18n';
 import { Brain, Shield, Globe, Smartphone, Cloud, Database, ArrowLeft, CheckCircle2, Zap } from 'lucide-react';
 import { Service } from '../types';
 
-const servicesList: Service[] = [
-  {
-    id: 'ai',
-    icon: <Brain size={40} className="text-purple-500" />,
-    title: "AI & Machine Learning",
-    description: "Custom LLM integration, predictive analytics, and automated decision-making systems.",
-    longDescription: "Harness the power of Generative AI and Machine Learning to transform your business operations. We build custom models tailored to your specific data sets, enabling predictive insights, automated content generation, and intelligent agents.",
-    features: [
-        "Custom LLM Fine-tuning",
-        "Predictive Analytics Dashboards",
-        "Natural Language Processing (NLP)",
-        "Computer Vision Systems",
-        "AI-Powered Automation Agents"
-    ]
-  },
-  {
-    id: 'sec',
-    icon: <Shield size={40} className="text-emerald-500" />,
-    title: "Cybersecurity",
-    description: "Penetration testing, security audits, and secure architecture design to protect assets.",
-    longDescription: "In an era of increasing digital threats, our cybersecurity services ensure your infrastructure is impenetrable. We employ ethical hacking, real-time monitoring, and zero-trust architectures to safeguard your data.",
-    features: [
-        "Penetration Testing & Audits",
-        "Zero Trust Architecture",
-        "Real-time Threat Monitoring",
-        "GDPR & SOC2 Compliance",
-        "Incident Response Planning"
-    ]
-  },
-  {
-    id: 'web',
-    icon: <Globe size={40} className="text-blue-500" />,
-    title: "Web Development",
-    description: "High-performance React & Next.js applications with stunning visuals.",
-    longDescription: "We craft visually stunning and high-performance web applications. Using modern frameworks like React, Next.js, and Tailwind CSS, we ensure your digital presence is fast, accessible, and SEO-optimized.",
-    features: [
-        "React & Next.js Development",
-        "Progressive Web Apps (PWA)",
-        "3D WebGL Experiences",
-        "Headless CMS Integration",
-        "Performance Optimization"
-    ]
-  },
-  {
-    id: 'mob',
-    icon: <Smartphone size={40} className="text-orange-500" />,
-    title: "Mobile Solutions",
-    description: "Native and cross-platform mobile apps providing seamless experiences.",
-    longDescription: "Reach your customers wherever they are with our mobile development services. We build native iOS/Android apps and cross-platform solutions using React Native and Flutter for a seamless user experience.",
-    features: [
-        "iOS & Android Native Apps",
-        "Cross-Platform (Flutter/React Native)",
-        "Mobile UI/UX Design",
-        "App Store Optimization",
-        "Offline Capabilities"
-    ]
-  },
-  {
-    id: 'cloud',
-    icon: <Cloud size={40} className="text-sky-500" />,
-    title: "Cloud Infrastructure",
-    description: "Scalable AWS/Azure/GCP architecture setup, serverless deployment, and DevOps.",
-    longDescription: "Scale effortlessly with our cloud infrastructure services. We design resilient cloud architectures on AWS, Azure, and Google Cloud, utilizing serverless technologies and containerization for maximum efficiency.",
-    features: [
-        "Cloud Migration Strategy",
-        "Serverless Architecture",
-        "Kubernetes & Docker orchestration",
-        "CI/CD Pipeline Automation",
-        "Cost Optimization"
-    ]
-  },
-  {
-    id: 'data',
-    icon: <Database size={40} className="text-red-500" />,
-    title: "Big Data",
-    description: "Data warehousing, ETL pipeline construction, and real-time analytics dashboards.",
-    longDescription: "Unlock the value of your data. Our Big Data engineers build robust pipelines to ingest, process, and visualize massive datasets, giving you actionable insights in real-time.",
-    features: [
-        "Data Warehousing (Snowflake/BigQuery)",
-        "ETL/ELT Pipelines",
-        "Real-time Streaming Analytics",
-        "Business Intelligence Dashboards",
-        "Data Governance & Quality"
-    ]
-  }
-];
+// Service texts are localized at runtime using `t('services.items.<id>...')`
 
 const Services: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const { t } = useI18n();
+
+  const servicesList: Service[] = [
+    {
+      id: 'ai',
+      icon: <Brain size={40} className="text-purple-500" />,
+      title: t('services.items.ai.title'),
+      description: t('services.items.ai.description'),
+      longDescription: t('services.items.ai.longDescription'),
+      features: [
+        t('services.items.ai.features.0'),
+        t('services.items.ai.features.1'),
+        t('services.items.ai.features.2'),
+        t('services.items.ai.features.3'),
+        t('services.items.ai.features.4')
+      ]
+    },
+    {
+      id: 'sec',
+      icon: <Shield size={40} className="text-emerald-500" />,
+      title: t('services.items.sec.title'),
+      description: t('services.items.sec.description'),
+      longDescription: t('services.items.sec.longDescription'),
+      features: [
+        t('services.items.sec.features.0'),
+        t('services.items.sec.features.1'),
+        t('services.items.sec.features.2'),
+        t('services.items.sec.features.3'),
+        t('services.items.sec.features.4')
+      ]
+    },
+    {
+      id: 'web',
+      icon: <Globe size={40} className="text-blue-500" />,
+      title: t('services.items.web.title'),
+      description: t('services.items.web.description'),
+      longDescription: t('services.items.web.longDescription'),
+      features: [
+        t('services.items.web.features.0'),
+        t('services.items.web.features.1'),
+        t('services.items.web.features.2'),
+        t('services.items.web.features.3'),
+        t('services.items.web.features.4')
+      ]
+    },
+    {
+      id: 'mob',
+      icon: <Smartphone size={40} className="text-orange-500" />,
+      title: t('services.items.mob.title'),
+      description: t('services.items.mob.description'),
+      longDescription: t('services.items.mob.longDescription'),
+      features: [
+        t('services.items.mob.features.0'),
+        t('services.items.mob.features.1'),
+        t('services.items.mob.features.2'),
+        t('services.items.mob.features.3'),
+        t('services.items.mob.features.4')
+      ]
+    },
+    {
+      id: 'cloud',
+      icon: <Cloud size={40} className="text-sky-500" />,
+      title: t('services.items.cloud.title'),
+      description: t('services.items.cloud.description'),
+      longDescription: t('services.items.cloud.longDescription'),
+      features: [
+        t('services.items.cloud.features.0'),
+        t('services.items.cloud.features.1'),
+        t('services.items.cloud.features.2'),
+        t('services.items.cloud.features.3'),
+        t('services.items.cloud.features.4')
+      ]
+    },
+    {
+      id: 'data',
+      icon: <Database size={40} className="text-red-500" />,
+      title: t('services.items.data.title'),
+      description: t('services.items.data.description'),
+      longDescription: t('services.items.data.longDescription'),
+      features: [
+        t('services.items.data.features.0'),
+        t('services.items.data.features.1'),
+        t('services.items.data.features.2'),
+        t('services.items.data.features.3'),
+        t('services.items.data.features.4')
+      ]
+    }
+  ];
 
   if (selectedService) {
       return (
@@ -123,7 +125,7 @@ const Services: React.FC = () => {
                               <Zap className="text-yellow-300" /> {t('services.why_choose')}
                             </h3>
                             <p className="text-blue-100">
-                                We don't just write code; we architect solutions that drive growth. Our {selectedService.title} team consists of industry veterans dedicated to your success.
+                              {t('services.why_choose_prefix')} <strong>{selectedService.title}</strong> {t('services.why_choose_suffix')}
                             </p>
                         </div>
                     </div>

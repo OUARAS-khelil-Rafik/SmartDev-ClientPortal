@@ -70,7 +70,7 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
                 <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
                     <Code2 className="text-white" size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Modern Stack</h3>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{t('hero.modern_stack.title')}</h3>
                 <div className="space-y-2">
                     <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full">
                         <div className="h-2 w-3/4 bg-blue-500 rounded-full"></div>
@@ -89,10 +89,8 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
                 <div className="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4">
                     <ShieldCheck className="text-white" size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Enterprise Security</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
-                    SOC2 Compliant infrastructure with end-to-end encryption.
-                </p>
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{t('hero.enterprise_security.title')}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300">{t('hero.enterprise_security.desc')}</p>
             </motion.div>
 
              <motion.div 

@@ -21,13 +21,98 @@ const fr = {
     subtitle: "Nous concevons des solutions logicielles robustes, évolutives et sécurisées. De l'intégration IA à la sécurité d'entreprise, Nexus offre l'excellence à chaque ligne de code.",
     start_project: 'Démarrer votre projet',
     explore_services: 'Explorer les services'
+    ,
+    modern_stack: {
+      title: 'Stack Moderne'
+    },
+    enterprise_security: {
+      title: 'Sécurité d’Entreprise',
+      desc: 'Infrastructure conforme SOC2 avec chiffrement de bout en bout.'
+    }
   },
   services: {
     our_expertise: 'Notre Expertise',
     engineering_excellence: "L'Excellence d'ingénierie",
     subtitle: "Nous combinons créativité et expertise technique pour fournir des solutions évolutives.",
     view_details: 'Voir les détails',
-    why_choose: 'Pourquoi choisir Nexus ?'
+    why_choose: 'Pourquoi choisir Nexus ?',
+    why_choose_prefix: "Nous n'écrivons pas seulement du code ; nous concevons des solutions qui stimulent la croissance. Notre",
+    why_choose_suffix: "équipe est composée de vétérans de l'industrie dédiés à votre réussite."
+  ,
+    items: {
+      ai: {
+        title: 'IA & Apprentissage automatique',
+        description: "Intégration LLM personnalisée, analyses prédictives et systèmes de prise de décision automatisés.",
+        longDescription: "Exploitez la puissance de l'IA générative et du Machine Learning pour transformer vos opérations. Nous construisons des modèles personnalisés adaptés à vos jeux de données, offrant des insights prédictifs, de la génération de contenu automatisée et des agents intelligents.",
+        features: {
+          '0': 'Fine-tuning des LLM personnalisés',
+          '1': "Tableaux de bord d'analyse prédictive",
+          '2': 'Traitement du langage naturel (NLP)',
+          '3': 'Systèmes de vision par ordinateur',
+          '4': "Agents d'automatisation pilotés par l'IA"
+        }
+      },
+      sec: {
+        title: 'Cybersécurité',
+        description: "Tests d'intrusion, audits de sécurité et conception d'architectures sécurisées pour protéger les actifs.",
+        longDescription: "À l'ère des menaces numériques croissantes, nos services de cybersécurité garantissent que votre infrastructure est imperméable. Nous utilisons le hacking éthique, la surveillance en temps réel et des architectures zero-trust pour protéger vos données.",
+        features: {
+          '0': "Tests d'intrusion et audits",
+          '1': 'Architecture Zero Trust',
+          '2': 'Surveillance des menaces en temps réel',
+          '3': 'Conformité GDPR & SOC2',
+          '4': "Planification de la réponse aux incidents"
+        }
+      },
+      web: {
+        title: 'Développement Web',
+        description: "Applications React & Next.js haute performance avec un rendu visuel soigné.",
+        longDescription: "Nous concevons des applications Web esthétiques et performantes. En utilisant des frameworks modernes comme React, Next.js et Tailwind CSS, nous veillons à ce que votre présence digitale soit rapide, accessible et optimisée pour le référencement.",
+        features: {
+          '0': 'Développement React & Next.js',
+          '1': 'Progressive Web Apps (PWA)',
+          '2': 'Expériences 3D WebGL',
+          '3': 'Intégration Headless CMS',
+          '4': "Optimisation des performances"
+        }
+      },
+      mob: {
+        title: 'Solutions Mobiles',
+        description: "Applications mobiles natives et cross-platform offrant des expériences fluides.",
+        longDescription: "Atteignez vos clients où qu'ils soient grâce à nos services mobiles. Nous construisons des applications natives iOS/Android et des solutions cross-platform avec React Native et Flutter.",
+        features: {
+          '0': 'Applications natives iOS & Android',
+          '1': 'Cross-Platform (Flutter/React Native)',
+          '2': 'Conception UI/UX mobile',
+          '3': "Optimisation pour les stores d'applications",
+          '4': 'Fonctionnalités hors ligne'
+        }
+      },
+      cloud: {
+        title: 'Infrastructure Cloud',
+        description: "Mise en place d'architectures AWS/Azure/GCP évolutives, déploiement serverless et DevOps.",
+        longDescription: "Montez en charge facilement grâce à nos services d'infrastructure cloud. Nous concevons des architectures résilientes sur AWS, Azure et Google Cloud, en utilisant serverless et la containerisation pour une efficacité maximale.",
+        features: {
+          '0': 'Stratégie de migration cloud',
+          '1': 'Architecture serverless',
+          '2': "Orchestration Kubernetes & Docker",
+          '3': 'Automatisation CI/CD',
+          '4': 'Optimisation des coûts'
+        }
+      },
+      data: {
+        title: 'Big Data',
+        description: "Entrepôts de données, construction de pipelines ETL et tableaux de bord analytiques en temps réel.",
+        longDescription: "Exploitez la valeur de vos données. Nos ingénieurs Big Data construisent des pipelines robustes pour ingérer, traiter et visualiser de larges jeux de données, fournissant des insights exploitables en temps réel.",
+        features: {
+          '0': "Entrepôts de données (Snowflake/BigQuery)",
+          '1': 'Pipelines ETL/ELT',
+          '2': 'Analyse en streaming en temps réel',
+          '3': "Tableaux de bord Business Intelligence",
+          '4': "Gouvernance et qualité des données"
+        }
+      }
+    }
   },
   auth: {
     welcome_back: 'Bon retour',

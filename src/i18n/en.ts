@@ -21,13 +21,98 @@ const en = {
     subtitle: 'We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, Nexus delivers excellence in every line of code.',
     start_project: 'Start Your Project',
     explore_services: 'Explore Services'
+    ,
+    modern_stack: {
+      title: 'Modern Stack'
+    },
+    enterprise_security: {
+      title: 'Enterprise Security',
+      desc: 'SOC2 Compliant infrastructure with end-to-end encryption.'
+    }
   },
   services: {
     our_expertise: 'Our Expertise',
     engineering_excellence: 'Engineering Excellence',
     subtitle: 'We combine creativity with technical prowess to deliver solutions that scale.',
     view_details: 'View Details',
-    why_choose: 'Why Choose Nexus?'
+    why_choose: 'Why Choose Nexus?',
+    why_choose_prefix: "We don't just write code; we architect solutions that drive growth. Our",
+    why_choose_suffix: 'team consists of industry veterans dedicated to your success.'
+  ,
+    items: {
+      ai: {
+        title: 'AI & Machine Learning',
+        description: 'Custom LLM integration, predictive analytics, and automated decision-making systems.',
+        longDescription: 'Harness the power of Generative AI and Machine Learning to transform your business operations. We build custom models tailored to your specific data sets, enabling predictive insights, automated content generation, and intelligent agents.',
+        features: {
+          '0': 'Custom LLM Fine-tuning',
+          '1': 'Predictive Analytics Dashboards',
+          '2': 'Natural Language Processing (NLP)',
+          '3': 'Computer Vision Systems',
+          '4': 'AI-Powered Automation Agents'
+        }
+      },
+      sec: {
+        title: 'Cybersecurity',
+        description: 'Penetration testing, security audits, and secure architecture design to protect assets.',
+        longDescription: 'In an era of increasing digital threats, our cybersecurity services ensure your infrastructure is impenetrable. We employ ethical hacking, real-time monitoring, and zero-trust architectures to safeguard your data.',
+        features: {
+          '0': 'Penetration Testing & Audits',
+          '1': 'Zero Trust Architecture',
+          '2': 'Real-time Threat Monitoring',
+          '3': 'GDPR & SOC2 Compliance',
+          '4': 'Incident Response Planning'
+        }
+      },
+      web: {
+        title: 'Web Development',
+        description: 'High-performance React & Next.js applications with stunning visuals.',
+        longDescription: 'We craft visually stunning and high-performance web applications. Using modern frameworks like React, Next.js, and Tailwind CSS, we ensure your digital presence is fast, accessible, and SEO-optimized.',
+        features: {
+          '0': 'React & Next.js Development',
+          '1': 'Progressive Web Apps (PWA)',
+          '2': '3D WebGL Experiences',
+          '3': 'Headless CMS Integration',
+          '4': 'Performance Optimization'
+        }
+      },
+      mob: {
+        title: 'Mobile Solutions',
+        description: 'Native and cross-platform mobile apps providing seamless experiences.',
+        longDescription: 'Reach your customers wherever they are with our mobile development services. We build native iOS/Android apps and cross-platform solutions using React Native and Flutter for a seamless user experience.',
+        features: {
+          '0': 'iOS & Android Native Apps',
+          '1': 'Cross-Platform (Flutter/React Native)',
+          '2': 'Mobile UI/UX Design',
+          '3': 'App Store Optimization',
+          '4': 'Offline Capabilities'
+        }
+      },
+      cloud: {
+        title: 'Cloud Infrastructure',
+        description: 'Scalable AWS/Azure/GCP architecture setup, serverless deployment, and DevOps.',
+        longDescription: 'Scale effortlessly with our cloud infrastructure services. We design resilient cloud architectures on AWS, Azure, and Google Cloud, utilizing serverless technologies and containerization for maximum efficiency.',
+        features: {
+          '0': 'Cloud Migration Strategy',
+          '1': 'Serverless Architecture',
+          '2': 'Kubernetes & Docker orchestration',
+          '3': 'CI/CD Pipeline Automation',
+          '4': 'Cost Optimization'
+        }
+      },
+      data: {
+        title: 'Big Data',
+        description: 'Data warehousing, ETL pipeline construction, and real-time analytics dashboards.',
+        longDescription: 'Unlock the value of your data. Our Big Data engineers build robust pipelines to ingest, process, and visualize massive datasets, giving you actionable insights in real-time.',
+        features: {
+          '0': 'Data Warehousing (Snowflake/BigQuery)',
+          '1': 'ETL/ELT Pipelines',
+          '2': 'Real-time Streaming Analytics',
+          '3': 'Business Intelligence Dashboards',
+          '4': 'Data Governance & Quality'
+        }
+      }
+    }
   },
   auth: {
     welcome_back: 'Welcome Back',
