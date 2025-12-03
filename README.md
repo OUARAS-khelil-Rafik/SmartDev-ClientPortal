@@ -173,11 +173,3 @@ app.listen(3000);
 
 ## License
 - No license file is included. Add `LICENSE` if you plan to open-source this project.
-
----
-
-If you'd like, I can also:
-- Add a small demo page that showcases cursor modes and lets you tweak parameters at runtime.
-- Implement left/middle/right click indicators or an on-screen debug overlay.
-
-Happy to make any of these changes — tell me which you'd like next.
