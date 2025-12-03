@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Clock, MessageSquare, Check, Loader2, Video, Lock, List, AlignLeft, RefreshCw, ExternalLink, Info, Briefcase } from 'lucide-react';
+import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
 import { User, ViewState, Booking as BookingType, Project } from '../types';
 
@@ -33,7 +34,10 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
     const [occupiedSlots, setOccupiedSlots] = useState<{date: string, time: string}[]>([]);
     const [userProjects, setUserProjects] = useState<Project[]>([]);
     const [myBookings, setMyBookings] = useState<BookingType[]>([]);
-  const [historyLoading, setHistoryLoading] = useState(false);
+    const [historyLoading, setHistoryLoading] = useState(false);
+    const [filterText, setFilterText] = useState('');
+    const [clearDialogOpen, setClearDialogOpen] = useState(false);
+    const [clearIncludeFinished, setClearIncludeFinished] = useState(false);
     // Project creation/deletion moved to MyProjects page; remove inline creation state
 
   useEffect(() => {
@@ -473,11 +477,31 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
         ) : (
             // History Tab
             <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-800 p-6 sm:p-8 animate-fadeIn">
-                 <div className="flex justify-between items-center mb-6">
-                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white">My Requests</h2>
-                            <button onClick={fetchHistory} disabled={historyLoading} aria-label="Refresh bookings" title="Refresh" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-                         <RefreshCw size={20} className={`text-slate-500 ${historyLoading ? 'animate-spin' : ''}`} />
-                     </button>
+                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                         <div className="flex items-center gap-3">
+                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">My Requests</h2>
+                         <input
+                             type="search"
+                             placeholder="Filter requests..."
+                             value={filterText}
+                             onChange={(e) => setFilterText(e.target.value)}
+                             className="ml-2 p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"
+                         />
+                     </div>
+                         <div className="flex items-center gap-3">
+                             <button onClick={fetchHistory} disabled={historyLoading} aria-label="Refresh bookings" title="Refresh" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                                 <RefreshCw size={20} className={`text-slate-500 ${historyLoading ? 'animate-spin' : ''}`} />
+                             </button>
+                             <div className="flex items-center gap-3">
+                                 <button
+                                     onClick={() => { setClearIncludeFinished(false); setClearDialogOpen(true); }}
+                                     title="Clear history"
+                                     className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm"
+                                 >
+                                     Clear history
+                                 </button>
+                             </div>
+                         </div>
                  </div>
 
                  {myBookings.length === 0 ? (
@@ -487,7 +511,14 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                      </div>
                  ) : (
                      <div className="space-y-4">
-                         {myBookings.map(booking => (
+                         {myBookings
+                            .filter(b => {
+                                if (!filterText.trim()) return true;
+                                const q = filterText.toLowerCase();
+                                const inTopic = b.topic.join(' ').toLowerCase().includes(q);
+                                return [b.userName, b.userEmail, b.date, b.time, b.description].some(s => (s || '').toLowerCase().includes(q)) || inTopic;
+                            })
+                            .map(booking => (
                              <div key={booking.id} className="border border-slate-200 dark:border-slate-800 rounded-xl p-5 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                      <div>
@@ -526,9 +557,32 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                  )}
             </div>
         )}
-      </div>
-    </div>
-  );
+        </div>
+
+        <ConfirmDialog
+            open={clearDialogOpen}
+            title="Clear Booking History"
+            message="Remove cancelled/rejected bookings from your history. Optionally include finished bookings."
+            confirmLabel="Clear"
+            cancelLabel="Cancel"
+            loading={historyLoading}
+            onConfirm={async () => {
+                setHistoryLoading(true);
+                try {
+                    await api.clearBookingHistory(user.id, { id: user.id, role: 'client' }, { includeFinished: clearIncludeFinished });
+                    await fetchHistory();
+                } catch (e) { console.error(e); alert((e as any)?.message || 'Failed to clear history'); }
+                finally { setHistoryLoading(false); setClearDialogOpen(false); }
+            }}
+            onCancel={() => setClearDialogOpen(false)}
+        >
+            <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={clearIncludeFinished} onChange={e => setClearIncludeFinished(e.target.checked)} />
+                <span className="text-xs text-slate-500">Include finished bookings</span>
+            </label>
+        </ConfirmDialog>
+        </div>
+    );
 };
 
 export default Booking;

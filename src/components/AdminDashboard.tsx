@@ -11,6 +11,10 @@ const AdminDashboard: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [userToggling, setUserToggling] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const [bookingFilter, setBookingFilter] = useState('');
+    const [clearDialogOpen, setClearDialogOpen] = useState(false);
+    const [clearIncludeFinished, setClearIncludeFinished] = useState(false);
+    const [clearLoading, setClearLoading] = useState(false);
     const [activeTab, setActiveTab] = useState<'bookings' | 'projects'>('bookings');
     const [descriptionModal, setDescriptionModal] = useState<Booking | null>(null);
     const [projectDeleteDialogOpen, setProjectDeleteDialogOpen] = useState(false);
@@ -233,9 +237,9 @@ const AdminDashboard: React.FC = () => {
                                                     <button
                                                         onClick={() => handleDeleteUser(u.id)}
                                                         disabled={userToggling === u.id}
-                                                        className="p-2 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800/20 dark:text-slate-300 disabled:opacity-50"
                                                         title="Delete user"
                                                         aria-label="Delete user"
+                                                        className="p-2 rounded text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/10 dark:hover:bg-red-900/20 dark:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-300 disabled:opacity-50 disabled:pointer-events-none"
                                                     >
                                                         <Trash size={14} />
                                                     </button>
@@ -296,7 +300,21 @@ const AdminDashboard: React.FC = () => {
                 {activeTab === 'bookings' && (
                 <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm mb-12 animate-fadeIn">
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+                            <div className="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div className="flex items-center gap-3">
+                                    <input type="search" placeholder="Filter requests..." value={bookingFilter} onChange={e => setBookingFilter(e.target.value)} className="p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm" />
+                                    <button
+                                        onClick={() => { setClearIncludeFinished(false); setClearDialogOpen(true); }}
+                                        className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm"
+                                    >
+                                        Clear history
+                                    </button>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="text-xs text-slate-500 mr-2">Showing {bookings.length} requests</div>
+                                </div>
+                            </div>
+                            <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
                             <thead className="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase font-semibold text-slate-500">
                                 <tr>
                                     <th className="px-6 py-4">Client</th>
@@ -307,7 +325,14 @@ const AdminDashboard: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                                {bookings.map(booking => (
+                                {bookings
+                                    .filter(b => {
+                                        if (!bookingFilter.trim()) return true;
+                                        const q = bookingFilter.toLowerCase();
+                                        const inTopic = b.topic.join(' ').toLowerCase().includes(q);
+                                        return [b.userName, b.userEmail, b.date, b.time, b.description].some(s => (s || '').toLowerCase().includes(q)) || inTopic;
+                                    })
+                                    .map(booking => (
                                     <tr key={booking.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="font-medium text-slate-900 dark:text-white">{booking.userName}</div>
@@ -410,6 +435,30 @@ const AdminDashboard: React.FC = () => {
                     </div>
                 </div>
                 )}
+
+                <ConfirmDialog
+                    open={clearDialogOpen}
+                    title="Clear Booking History"
+                    message="Remove cancelled/rejected bookings from the system. Optionally include finished bookings."
+                    confirmLabel="Clear"
+                    cancelLabel="Cancel"
+                    loading={clearLoading}
+                    onConfirm={async () => {
+                        setClearLoading(true);
+                        try {
+                            await api.clearBookingHistory(undefined, { id: 'admin', role: 'admin' }, { includeFinished: clearIncludeFinished });
+                            const b = await api.getBookings('admin', 'admin');
+                            setBookings(b.reverse());
+                        } catch (e) { console.error(e); alert((e as any)?.message || 'Failed to clear history'); }
+                        finally { setClearLoading(false); setClearDialogOpen(false); }
+                    }}
+                    onCancel={() => setClearDialogOpen(false)}
+                >
+                    <label className="flex items-center gap-2 text-sm">
+                        <input type="checkbox" checked={clearIncludeFinished} onChange={e => setClearIncludeFinished(e.target.checked)} />
+                        <span className="text-xs text-slate-500">Include finished bookings</span>
+                    </label>
+                </ConfirmDialog>
 
                 {/* Description Modal */}
                 {descriptionModal && (

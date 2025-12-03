@@ -407,6 +407,44 @@ class MockApi {
     return bookings.filter(b => b.userId === userId);
   }
 
+  // Clear booking history entries with status 'cancelled' or 'rejected'.
+  // - If called by a client, only clears that client's cancelled/rejected bookings.
+  // - If called by an admin without a userId, clears cancelled/rejected bookings globally.
+  // - If called by an admin with a userId, clears cancelled/rejected bookings for that user.
+  async clearBookingHistory(
+    userId?: string,
+    actor?: { id: string, role: 'admin' | 'client' },
+    options?: { includeFinished?: boolean }
+  ): Promise<Booking[]> {
+    await delay(400);
+    const bookings = this.getStoredBookings();
+
+    if (!actor) throw new Error('Unauthorized');
+
+    const includeFinished = !!options?.includeFinished;
+    const statusesToRemove: string[] = ['cancelled', 'rejected'];
+    if (includeFinished) statusesToRemove.push('finished');
+
+    let remaining: Booking[] = [];
+
+    if (actor.role === 'admin') {
+      if (userId) {
+        // Remove matching statuses for specific user
+        remaining = bookings.filter(b => !(b.userId === userId && statusesToRemove.includes(b.status as any)));
+      } else {
+        // Remove matching statuses across all users
+        remaining = bookings.filter(b => !statusesToRemove.includes(b.status as any));
+      }
+    } else {
+      // client: only allow clearing their own matching-status bookings
+      if (actor.id !== userId) throw new Error('You may only clear your own history');
+      remaining = bookings.filter(b => !(b.userId === actor.id && statusesToRemove.includes(b.status as any)));
+    }
+
+    this.saveBookings(remaining);
+    return remaining;
+  }
+
   async confirmBooking(bookingId: string): Promise<Booking[]> {
       await delay(800);
       const bookings = this.getStoredBookings();

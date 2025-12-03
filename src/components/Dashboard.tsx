@@ -7,13 +7,6 @@ import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash, Edit } from 'lucide-
 import ConfirmDialog from './ConfirmDialog';
 
 const COLORS = ['#3b82f6', '#1e293b'];
-const ACTIVITY_DATA = [
-  { name: 'Mon', tasks: 4 },
-  { name: 'Tue', tasks: 7 },
-  { name: 'Wed', tasks: 5 },
-  { name: 'Thu', tasks: 9 },
-  { name: 'Fri', tasks: 6 },
-];
 
 interface DashboardProps {
     user: User;
@@ -26,6 +19,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const [newTaskInput, setNewTaskInput] = useState('');
   const [addingTask, setAddingTask] = useState(false);
     const [creating, setCreating] = useState(false);
+    // `showCreate` controls whether the create form is visible.
+    // `creating` is used to indicate the creation is in-progress.
+    const [showCreate, setShowCreate] = useState(false);
     const [createName, setCreateName] = useState('');
     const [createDeadline, setCreateDeadline] = useState<string>('');
 
@@ -142,6 +138,44 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         }
     };
 
+    const handleCreateProject = async (): Promise<void> => {
+        if (!createName || !createName.trim()) return alert('Please provide a project name');
+
+        // Prevent duplicate project names for this client
+        const duplicate = projects.find(p => p.clientId === user.id && p.name.toLowerCase() === createName.trim().toLowerCase());
+        if (duplicate) return alert('You already have a project with that name. Choose a different name.');
+
+        setCreating(true);
+        setLoading(true);
+        try {
+            const payload: { name: string; clientId: string; deadline: string; status: Project['status'] } = {
+                name: createName.trim(),
+                clientId: user.id,
+                deadline: createDeadline || new Date().toISOString().slice(0, 10),
+                status: 'Planning'
+            };
+            console.debug('[Dashboard] createProject payload', payload);
+            const newProject = await api.createProject(payload, { id: user.id, role: user.role });
+            console.debug('[Dashboard] createProject success', newProject);
+            // Refresh list and select the newly created project
+            await loadData();
+            setActiveProjectId(newProject.id);
+            // Close the create form on success
+            setShowCreate(false);
+            try { window.dispatchEvent(new Event('projects-updated')); } catch (e) {}
+            // Reset inputs
+            setCreateName('');
+            setCreateDeadline('');
+            setCreating(false);
+        } catch (e: any) {
+            console.error('[Dashboard] createProject error', e);
+            alert(e?.message || 'Failed to create project');
+        } finally {
+            setLoading(false);
+            setCreating(false);
+        }
+    };
+
   if (loading) {
       return (
           <div className="min-h-screen pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
@@ -183,32 +217,54 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 {user.role === 'client' && (
                     <div className="max-w-7xl mx-auto mb-6">
                         <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => setCreating(!creating)} className="flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded-lg">
-                                <Plus size={16}/> {creating ? 'Cancel' : 'Create project'}
-                            </button>
+                            {!showCreate && (
+                                <button
+                                    onClick={() => setShowCreate(true)}
+                                    className="flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                                >
+                                    <Plus size={16} /> Create project
+                                </button>
+                            )}
                         </div>
 
-                        {creating && (
-                            <div className="mt-3 p-4 bg-white dark:bg-slate-900 rounded-lg border">
+                        {showCreate && (
+                            <div className="mt-3 p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
-                                    <input aria-label="Project name" title="Project name" value={createName} onChange={e => setCreateName(e.target.value)} placeholder="Project name" className="col-span-2 p-2 border rounded bg-white dark:bg-slate-800 dark:text-white" />
-                                    <input aria-label="Deadline" title="Deadline" type="date" value={createDeadline} onChange={e => setCreateDeadline(e.target.value)} className="p-2 border rounded bg-white dark:bg-slate-800 dark:text-white" />
+                                    <label className="sr-only" htmlFor="create-name">Project name</label>
+                                    <input
+                                        id="create-name"
+                                        aria-label="Project name"
+                                        title="Project name"
+                                        value={createName}
+                                        onChange={e => setCreateName(e.target.value)}
+                                        placeholder="Project name"
+                                        className="col-span-2 p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    />
+                                    <label className="sr-only" htmlFor="create-deadline">Deadline</label>
+                                    <input
+                                        id="create-deadline"
+                                        aria-label="Deadline"
+                                        title="Deadline"
+                                        type="date"
+                                        value={createDeadline}
+                                        onChange={e => setCreateDeadline(e.target.value)}
+                                        className="p-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    />
                                 </div>
                                 <div className="mt-3 flex gap-2 justify-end">
-                                    <button onClick={async () => {
-                                        if (!createName) return alert('Please provide a project name');
-                                        // Client-side duplicate name check
-                                        const duplicate = projects.find(p => p.clientId === user.id && p.name.toLowerCase() === createName.toLowerCase());
-                                        if (duplicate) return alert('You already have a project with that name. Choose a different name.');
-                                        setLoading(true);
-                                        try {
-                                            await api.createProject({ name: createName, clientId: user.id, deadline: createDeadline || new Date().toISOString().slice(0,10), status: 'Planning' }, { id: user.id, role: user.role });
-                                            setCreateName(''); setCreateDeadline(''); setCreating(false);
-                                            await loadData();
-                                        } catch (e: any) { alert(e.message || 'Failed to create'); }
-                                        finally { setLoading(false); }
-                                    }} className="bg-green-600 text-white px-4 py-2 rounded">Create</button>
-                                    <button onClick={() => { setCreating(false); setCreateName(''); setCreateDeadline(''); }} className="px-4 py-2 border rounded">Cancel</button>
+                                    <button
+                                        onClick={handleCreateProject}
+                                        disabled={creating || loading || !createName.trim()}
+                                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                    >
+                                        {creating || loading ? <Loader2 size={16} className="animate-spin" /> : 'Create'}
+                                    </button>
+                                    <button
+                                        onClick={() => { setShowCreate(false); setCreateName(''); setCreateDeadline(''); setCreating(false); }}
+                                        className="px-4 py-2 border rounded bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -252,14 +308,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 gap-8">
                     {/* Task List */}
                     <div>
                         <h4 className="font-semibold text-slate-700 dark:text-slate-200 mb-4 flex justify-between items-center">
                             Tasks
                             <span className="text-xs font-normal text-slate-500">Click to toggle</span>
                         </h4>
-                        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+                        <div className="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
                             {activeProject.tasks.map(task => (
                                 <div 
                                     key={task.id} 
@@ -296,22 +352,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                         </form>
                     </div>
 
-                    {/* Chart */}
-                    <div className="h-64">
-                         <h4 className="font-semibold text-slate-700 dark:text-slate-200 mb-2">Weekly Velocity</h4>
-                         <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={ACTIVITY_DATA}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.2} />
-                                <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
-                                <Tooltip 
-                                    contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                                    cursor={{fill: 'transparent'}}
-                                />
-                                <Bar dataKey="tasks" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
+                    {/* Weekly Velocity chart removed per request */}
                 </div>
             </div>
 
@@ -333,38 +374,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                     dataKey="value"
                                 >
 
-                {/* Create project inline for client users */}
-                {user.role === 'client' && (
-                    <div className="max-w-7xl mx-auto mb-6">
-                        <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => setCreating(!creating)} className="flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded-lg">
-                                <Plus size={16}/> {creating ? 'Cancel' : 'Create project'}
-                            </button>
-                        </div>
-
-                        {creating && (
-                            <div className="mt-3 p-4 bg-white dark:bg-slate-900 rounded-lg border">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
-                                    <input aria-label="Project name" title="Project name" value={createName} onChange={e => setCreateName(e.target.value)} placeholder="Project name" className="col-span-2 p-2 border rounded" />
-                                    <input aria-label="Deadline" title="Deadline" type="date" value={createDeadline} onChange={e => setCreateDeadline(e.target.value)} className="p-2 border rounded" />
-                                </div>
-                                <div className="mt-3 flex gap-2 justify-end">
-                                    <button onClick={async () => {
-                                        if (!createName) return alert('Please provide a project name');
-                                        setLoading(true);
-                                        try {
-                                            await api.createProject({ name: createName, clientId: user.id, deadline: createDeadline || new Date().toISOString().slice(0,10), status: 'Planning' }, { id: user.id, role: user.role });
-                                            setCreateName(''); setCreateDeadline(''); setCreating(false);
-                                            await loadData();
-                                        } catch (e: any) { alert(e.message || 'Failed to create'); }
-                                        finally { setLoading(false); }
-                                    }} className="bg-green-600 text-white px-4 py-2 rounded">Create</button>
-                                    <button onClick={() => { setCreating(false); setCreateName(''); setCreateDeadline(''); }} className="px-4 py-2 border rounded">Cancel</button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                )}
+                
                                     <Cell fill="#3b82f6" />
                                     <Cell fill="#1e293b" />
                                 </Pie>
@@ -377,17 +387,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                      </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-6 rounded-2xl shadow-lg text-white">
-                    <h3 className="font-bold text-lg mb-2">Upcoming Meeting</h3>
-                    <div className="flex items-center gap-3 mb-4">
-                        <Clock size={20} className="text-blue-200" />
-                        <span>Nov 15, 10:00 AM EST</span>
-                    </div>
-                    <p className="text-blue-100 text-sm mb-4">Sprint Review & Planning</p>
-                    <button className="w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg transition text-sm font-medium backdrop-blur-sm">
-                        Join Call
-                    </button>
-                </div>
+                {/* Upcoming Meeting removed per request; sidebar keeps only the Work Breakdown chart */}
             </div>
         </div>
         ) : (

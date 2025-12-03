@@ -62,18 +62,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                         </p>
                     </div>
 
-                    <div className="p-8 pb-0">
-                                 <div className="relative my-6">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
-                            </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white dark:bg-slate-900 text-slate-500">Or continue with email</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="px-8 pb-8 space-y-4">
+                    <form onSubmit={handleSubmit} className="px-8 pt-8 pb-8 space-y-4">
                         {error && (
                             <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-lg text-sm text-center">
                                 {error}
