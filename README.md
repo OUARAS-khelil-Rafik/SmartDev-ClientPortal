@@ -2,7 +2,7 @@
 
 Lightweight React + Vite client portal used as a demo frontend for project management, bookings and lightweight AI consultations.
 
-This repo contains a browser SPA built with Vite, TypeScript, Tailwind CSS and a small set of UI components under `components/`. AI integrations are provided as stubs for client builds — see **AI Integration** below.
+This repo contains a browser SPA built with Vite, TypeScript, Tailwind CSS and a small set of UI components under `components/`. AI integrations are provided as stubs for client builds, see **AI Integration** below.
 
 **Quick links:**
 - **Source:** `.` (project root)
@@ -17,52 +17,138 @@ This repo contains a browser SPA built with Vite, TypeScript, Tailwind CSS and a
 **Local development**
 - Install dependencies:
 
-```powershell
+# SmartDev - Client Portal
+
+Lightweight React + Vite client portal used as a demo frontend for project management, bookings and lightweight AI consultations.
+
+This repo is a single-page application (SPA) built with Vite, TypeScript and Tailwind CSS. It contains a set of UI components under `src/components/` and simple client-side services under `src/services/`.
+
+---
+
+## Key Features
+- Modern React + TypeScript + Vite starter
+- Tailwind CSS for utility-first styling
+- Multiple UI pages/components (Dashboard, Booking, AI Consultant, Admin)
+- Animated global custom cursor with:
+   - Smooth follow ring and dot
+   - Click ripple effect
+   - Hover enlargement over interactive elements (links, buttons, inputs)
+   - Automatic color cycling (respects `prefers-reduced-motion`)
+   - Works only on fine-pointer devices (touch devices unaffected)
+- Built-in client-side AI service stubs (see `src/services/geminiService.ts`) — replace with a server-side proxy for production
+
+---
+
+## Tech Stack
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- Optional: Google GenAI (server-side only) — client includes a stub
+
+---
+
+## Quick Start
+
+Prerequisites
+- Node.js v18+ (recommended)
+- npm (or yarn)
+
+Install dependencies:
+
+```pwsh
 npm install
 ```
 
-- Start dev server (PowerShell):
+Start dev server:
 
-```powershell
+```pwsh
 npm run dev
 ```
 
-- Build for production:
+Build for production:
 
-```powershell
+```pwsh
 npm run build
 ```
 
-**Project structure (key files)**
-- **`index.tsx`**: App bootstrap and router
-- **`App.tsx`**: Top-level app layout and state
-- **`components/`**: UI components and pages (Dashboard, Booking, AIConsultant, etc.)
-- **`services/`**: Client-side data/AI adapters (`mockApi.ts`, `geminiService.ts`)
-- **`types.ts`**: Shared TypeScript interfaces and enums
-- **`src/types/google-genai.d.ts`**: Local ambient types for `@google/genai` (development only)
+---
 
-**What I fixed (current branch)**
-- TypeScript: added `src/types/google-genai.d.ts` to silence missing SDK types.
-- Build: replaced direct `@google/genai` import in `services/geminiService.ts` with a browser-safe stub so the app can be bundled by Vite.
+## Project Structure (important files)
+- `index.html` — App entry
+- `src/index.tsx` — React bootstrap
+- `src/App.tsx` — Top-level layout and routing/view state
+- `src/components/` — UI components
+- `src/services/` — Client-side service adapters and stubs
+- `src/index.css` — Tailwind + project styles (includes custom cursor CSS)
 
-**AI Integration (important)**
-- The official `@google/genai` SDK is intended for server-side usage and must not be bundled into browser code (security and compatibility). This repo currently ships a client-side stub in `services/geminiService.ts` that returns friendly messages prompting you to use a server API.
+---
 
-- To enable real AI responses, implement a server-side proxy or API route that calls `@google/genai` with your secret API key. Example approaches:
-   - Add an API route in Node/Express or Vercel/Azure Function that reads `process.env.GEMINI_API_KEY` and uses `@google/genai`.
-   - Use server-side rendering (SSR) or a backend-for-frontend pattern to keep keys secret.
+## Custom Cursor — details & customization
 
-Example minimal server (concept):
+Location:
+- Component: `src/components/CustomCursor.tsx`
+- Styles: appended to `src/index.css`
 
-```javascript
-// server/index.js (Express)
+Behavior summary:
+- Shows a small dot and a larger ring that follows the pointer smoothly.
+- The dot uses `left`/`top` positioning with CSS `transform: translate(-50%,-50%)` so centering and scale transforms remain consistent.
+- Clicking creates a ripple animation at the pointer position.
+- Hovering interactive elements (links, buttons, inputs, or elements with `.cursor-pointer`) will grow the ring and change its color to indicate interactivity.
+- The ring and dot color cycles automatically via HSL hue rotation. The animation respects `prefers-reduced-motion` and will be disabled if the user has that preference.
+- The custom cursor activates only on fine-pointer devices (so touch users keep native touch behavior).
+
+Quick customization (edit these values inside `CustomCursor.tsx`):
+- `speed` (degrees/sec) — how quickly the hue cycles. Default is `28`.
+- Starting hue (`hueRef` default) — set initial color.
+- Change palette: replace HSL usage with an array of color stops and pick/lerp between them.
+- Disable color cycling: set `prefersReduced` check or force static color in the component.
+
+CSS customization (edit `src/index.css`):
+- `.cursor-dot` — size, shadow, and base color
+- `.cursor-ring` — ring size, border-width, transitions
+- `.cursor-ripple` — ripple size and animation duration
+
+Examples
+- To slow color cycling: set `const speed = 10;` in `CustomCursor.tsx`.
+- To lock color on hover: in the hover handler set a fixed color to `ringRef.current.style.borderColor`.
+
+---
+
+## How to test cursor interactions
+
+1. Start the dev server: `npm run dev`.
+2. Open the site in a desktop browser (Chrome, Edge, Firefox) on a non-touch device.
+3. Move the mouse — the dot should follow instantly; the ring should smoothly follow.
+4. Hover a button or link — the ring should grow and change tint.
+5. Click or right-click — a ripple animates from the click point and the ring scales briefly.
+6. To verify `prefers-reduced-motion`, enable reduced motion in OS accessibility settings and reload the page — color cycling and ripples should be suppressed.
+
+If you notice an offset between the physical pointer and the custom cursor:
+- Ensure browser zoom is 100% and OS display scaling is default. High DPI scaling can affect measurement.
+- Test in a different browser to rule out browser-specific issues.
+- If offset persists, open the devtools console and run `window.devicePixelRatio` — a non-integer DPR may require small adjustments in the component (already handled in most cases).
+
+---
+
+## AI Integration (important)
+
+This project includes a client-side stub for AI interactions in `src/services/geminiService.ts`. The official `@google/genai` SDK must run server-side where API keys are secret.
+
+To enable real AI:
+- Implement a small server endpoint (Express, Next.js API route, Azure Function, etc.) that calls `@google/genai` using a server-side `GEMINI_API_KEY` environment variable.
+- Have the client call that endpoint instead of importing `@google/genai` directly.
+
+Example server (concept):
+
+```js
+// server/index.js
 import express from 'express';
 import { GoogleGenAI } from '@google/genai';
 
 const app = express();
+app.use(express.json());
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-app.use(express.json());
 app.post('/api/ai/chat', async (req, res) => {
    const { message } = req.body;
    const chat = ai.chats.create({ model: 'gemini-2.5-flash' });
@@ -73,22 +159,25 @@ app.post('/api/ai/chat', async (req, res) => {
 app.listen(3000);
 ```
 
-Then call `/api/ai/chat` from the client instead of using `@google/genai` directly.
+---
 
-**Environment variables**
-- Use `.env` or your deployment platform to set `GEMINI_API_KEY` (server only). Do NOT commit API keys.
+## Troubleshooting & Notes
+- If the dev build fails resolving `@google/genai`, ensure you don't import it in client code. Move SDK usage server-side.
+- If you see performance issues with the animated cursor, check `prefers-reduced-motion` or disable the color animation by setting `speed = 0` or guarding with the media query.
 
-**Troubleshooting**
-- Build fails resolving `@google/genai`: this is expected if the SDK is imported in client code. Keep SDK usage on server-side only or add it to `build.rollupOptions.external` and provide a runtime shim.
-- Large single bundle: Vite built some large chunks. Consider code-splitting with dynamic `import()` or configure `build.rollupOptions.output.manualChunks` in `vite.config.ts`.
+---
 
-**Tests & Linters**
-- This project does not include automated tests by default. If you add `eslint` / `vitest`, update `package.json` accordingly and I can help wire them.
+## Contributing
+- Fork, create a branch, and open a PR. Include screenshots for UI changes.
+- If you add server code to work with real AI, add `.env.example` showing expected variables (do not commit secrets).
 
-**License & Contributing**
-- This repo does not include an explicit license file. Add a `LICENSE` if you plan to open-source it.
-- To contribute, fork and open a PR; please include a short description of changes and relevant screenshots if UI-related.
+## License
+- No license file is included. Add `LICENSE` if you plan to open-source this project.
 
-If you want, I can:
-- Implement a minimal server API that proxies requests to `@google/genai` and wire the client to use it.
-- Add ESLint/Prettier and basic tests.
+---
+
+If you'd like, I can also:
+- Add a small demo page that showcases cursor modes and lets you tweak parameters at runtime.
+- Implement left/middle/right click indicators or an on-screen debug overlay.
+
+Happy to make any of these changes — tell me which you'd like next.
