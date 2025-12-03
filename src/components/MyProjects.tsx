@@ -170,12 +170,23 @@ const MyProjects: React.FC<Props> = ({ user }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-children">
           {loading && <div className="col-span-full text-center py-8"><Loader2 className="animate-spin mx-auto"/></div>}
-          {projects.map((p) => (
+          {projects.map((p) => {
+            const statusClass = (() => {
+              const map: Record<string, string> = {
+                'Planning': 'text-yellow-600',
+                'Active': 'text-green-600',
+                'In Progress': 'text-green-600',
+                'Review': 'text-blue-600',
+                'Completed': 'text-blue-600'
+              };
+              return map[p.status as string] || 'text-blue-600';
+            })();
+            return (
             <div key={p.id} className="p-4 bg-white dark:bg-slate-900 rounded-lg border flex flex-col hover-lift animate-fade-in-up hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300">
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-bold hover:text-blue-600 transition-colors">{p.name}</h3>
-                  <p className="text-xs text-slate-500">{t('my_projects.card.due')} {p.deadline} • {t('my_projects.card.status')} <span className={`font-medium ${p.status === 'Planning' ? 'text-yellow-600' : p.status === 'Active' ? 'text-green-600' : 'text-blue-600'}`}>{p.status}</span></p>
+                  <p className="text-xs text-slate-500">{t('my_projects.card.due')} {p.deadline} • {t('my_projects.card.status')} <span className={`font-medium ${statusClass}`}>{p.status}</span></p>
                 </div>
                 <div className="flex gap-2">
                   <button title={t('my_projects.actions.rename')} onClick={() => openRenameDialog(p.id)} className="p-2 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/20 dark:text-slate-300 hover:scale-110 transition-all duration-300"><Edit size={16}/></button>
@@ -183,7 +194,8 @@ const MyProjects: React.FC<Props> = ({ user }) => {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
           {projects.length === 0 && !loading && (
             <div className="col-span-full p-6 bg-white dark:bg-slate-900 rounded-lg text-center text-slate-500 animate-fade-in">
               <Briefcase size={48} className="mx-auto mb-4 opacity-30" />
