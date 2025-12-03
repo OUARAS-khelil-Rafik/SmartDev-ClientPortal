@@ -84,8 +84,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
               <button
                 onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
                 className="px-2 py-1 rounded-md text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
-                aria-label="Toggle language"
-                title={lang === 'en' ? 'Switch to Français' : 'Passer à English'}
+                aria-label={lang === 'en' ? t('nav.switch_to_fr') : t('nav.switch_to_en')}
+                title={lang === 'en' ? t('nav.switch_to_fr') : t('nav.switch_to_en')}
               >
                 {lang === 'en' ? 'EN' : 'FR'}
               </button>
@@ -138,15 +138,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
               <Notifications user={user} setView={setView} />
             </div>
           )}
-          {user ? (
-              <button onClick={onLogout} title="Logout" aria-label="Logout" className="p-2 rounded-lg flex-shrink-0 mx-1 text-red-500">
-                  <LogOut size={18} />
+            {user ? (
+              <button onClick={onLogout} title={t('nav.logout')} aria-label={t('nav.logout')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-red-500">
+                <LogOut size={18} />
               </button>
-          ) : (
-              <button onClick={() => setView(ViewState.LOGIN)} title="Sign In" aria-label="Sign In" className="p-2 rounded-lg flex-shrink-0 mx-1 text-blue-500">
-                  <UserIcon size={18} />
+            ) : (
+              <button onClick={() => setView(ViewState.LOGIN)} title={t('nav.sign_in')} aria-label={t('nav.sign_in')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-blue-500">
+                <UserIcon size={18} />
               </button>
-          )}
+            )}
       </div>
     </nav>
   );

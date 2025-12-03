@@ -8,7 +8,10 @@ const en = {
     bookings: 'Bookings',
     book_meeting: 'Book Meeting',
     sign_in: 'Sign In',
-    logout: 'Logout'
+    logout: 'Logout',
+    switch_to_fr: 'Switch to Français',
+    switch_to_en: 'Switch to English',
+    toggle_language: 'Toggle language'
   },
   theme: {
     switch_light: 'Switch to light mode',
@@ -145,15 +148,32 @@ const en = {
       real_time_checking: 'Real-time slot checking',
       select_project_required: 'Please select or create a related project before confirming the request.',
     schedule_consultation: 'Schedule a Consultation',
+    agenda_for: 'Agenda for',
+    unique_link_text: 'A unique Meet link will be provided upon approval.',
     select_date: 'Select Date',
     pick_date_hint: 'Pick a date to view agenda and available hours.',
     occupied_slots: 'Occupied Slots',
     no_bookings: 'No bookings',
     select_time: 'Select Time',
+    select_project_placeholder: 'Select related project...',
+    services_label: 'Services',
+    description_label: 'Description',
+    description_placeholder: 'Describe the goals and context for this meeting...',
+    related_project_label: 'Related Project',
+    not_eligible_suffix: ' — not eligible',
+    logged_in_as: 'Logged in as:',
+    clear_history: 'Clear history',
+    refresh: 'Refresh',
+    refresh_bookings: 'Refresh bookings',
     book_another: 'Book Another',
     view_my_requests: 'View My Requests',
     confirm_request: 'Confirm Request',
     processing: 'Processing...'
+    ,
+    no_booking_history: 'No booking history',
+    join_meet: 'Join Meet'
+    ,
+    booking_failed: 'Booking failed'
   },
   dashboard: {
     title: 'Client Portal',
@@ -232,6 +252,7 @@ const en = {
     clear_booking_history_title: 'Clear Booking History',
     clear_booking_history_message: 'Remove cancelled/rejected bookings from the system. Optionally include finished bookings.',
     clear_confirm: 'Clear',
+    clear_failed: 'Failed to clear booking history',
     include_finished: 'Include finished bookings',
     show_description: 'Show description',
     approve_send_link: 'Approve & Send Link',

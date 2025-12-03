@@ -8,7 +8,10 @@ const fr = {
     bookings: 'Réservations',
     book_meeting: 'Réserver une réunion',
     sign_in: "S'identifier",
-    logout: 'Se déconnecter'
+    logout: 'Se déconnecter',
+    switch_to_fr: 'Passer au Français',
+    switch_to_en: 'Passer à l\'anglais',
+    toggle_language: 'Basculer la langue'
   },
   theme: {
     switch_light: 'Passer en mode clair',
@@ -145,15 +148,32 @@ const fr = {
       real_time_checking: 'Vérification des créneaux en temps réel',
       select_project_required: "Veuillez sélectionner ou créer un projet lié avant de confirmer la demande.",
     schedule_consultation: 'Planifier une consultation',
+    agenda_for: 'Agenda pour',
+    unique_link_text: 'Un lien Meet unique sera fourni après approbation.',
     select_date: 'Sélectionner une date',
     pick_date_hint: 'Choisissez une date pour voir l’agenda et les heures disponibles.',
     occupied_slots: 'Créneaux occupés',
     no_bookings: 'Aucune réservation',
     select_time: "Sélectionner l'heure",
+    select_project_placeholder: 'Sélectionnez le projet lié...',
+    services_label: 'Services',
+    description_label: 'Description',
+    description_placeholder: "Décrivez les objectifs et le contexte de cette réunion...",
+    related_project_label: 'Projet lié',
+    not_eligible_suffix: ' — non éligible',
+    logged_in_as: 'Connecté en tant que :',
+    clear_history: "Effacer l’historique",
+    refresh: 'Rafraîchir',
+    refresh_bookings: 'Rafraîchir les réservations',
     book_another: 'Réserver une autre',
     view_my_requests: 'Voir mes demandes',
     confirm_request: 'Confirmer la demande',
     processing: 'Traitement...'
+    ,
+    no_booking_history: "Aucun historique de réservations",
+    join_meet: 'Rejoindre la réunion'
+    ,
+    booking_failed: 'La réservation a échoué'
   },
   dashboard: {
     title: "Portail client",
@@ -232,6 +252,7 @@ const fr = {
     clear_booking_history_title: "Effacer l'historique des réservations",
     clear_booking_history_message: "Supprimez les réservations annulées/rejetées du système. Inclure éventuellement les réservations terminées.",
     clear_confirm: 'Effacer',
+    clear_failed: "Échec de l'effacement de l'historique des réservations",
     include_finished: 'Inclure les réservations terminées',
     show_description: 'Afficher la description',
     approve_send_link: 'Approuver et envoyer le lien',

@@ -104,7 +104,7 @@ const AIConsultant: React.FC = () => {
                             {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                         </div>
                         <div className={`p-4 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                            msg.role === 'user' 
+                            msg.role === 'user'
                             ? 'bg-blue-600 text-white rounded-tr-none' 
                             : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200 dark:border-slate-700'
                         }`}>
@@ -132,22 +132,22 @@ const AIConsultant: React.FC = () => {
         {/* Input Area */}
         <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
             <div className="relative flex items-center">
-                <textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyPress}
-                    placeholder={t('ai_consultant.placeholder')}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-4 pr-12 py-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none h-14 text-slate-900 dark:text-white scrollbar-hide"
-                />
-                <button 
-                    onClick={handleSend}
-                    disabled={isLoading || !input.trim()}
-                      aria-label={t('ai_consultant.send')}
-                      title={t('ai_consultant.send')}
-                    className="absolute right-2 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    <Send size={18} />
-                </button>
+              <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder={t('ai_consultant.placeholder')}
+              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl pl-4 pr-14 py-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none h-22 text-sm text-slate-900 dark:text-white scrollbar-hide"
+              />
+              <button
+              onClick={handleSend}
+              disabled={isLoading || !input.trim()}
+              aria-label={t('ai_consultant.send')}
+              title={t('ai_consultant.send')}
+              className="absolute right-3 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+              <Send size={16} />
+              </button>
             </div>
                   <p className="text-center text-xs text-slate-400 mt-2">{t('ai_consultant.caution')}</p>
         </div>

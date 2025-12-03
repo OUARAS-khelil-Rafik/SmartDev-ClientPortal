@@ -10,16 +10,6 @@ interface BookingProps {
     user: User | null;
     setView: (view: ViewState) => void;
 }
-
-const SERVICES = [
-    "AI & Machine Learning",
-    "Cybersecurity",
-    "Web Development",
-    "Mobile Solutions",
-    "Cloud Infrastructure",
-    "Big Data Analysis"
-];
-
 const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   const [activeTab, setActiveTab] = useState<'new' | 'history'>('new');
     // selectedDate stored as ISO date string (yyyy-mm-dd)
@@ -75,6 +65,10 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   };
 
     const { t } = useI18n();
+
+    // Build services list from translations (keep IDs consistent with `services.items` keys)
+    const serviceIds = ['ai', 'sec', 'web', 'mob', 'cloud', 'data'];
+    const SERVICES = serviceIds.map(id => ({ id, title: t(`services.items.${id}.title`) }));
 
   // If not logged in, show restricted access state
   if (!user) {
@@ -166,7 +160,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   const handleSubmit = async () => {
     if (!selectedDate || !selectedTime || selectedTopics.length === 0 || !description) return;
     if (!selectedProjectId) {
-        alert('Please select or create a related project before confirming the request.');
+        alert(t('booking.select_project_required'));
         return;
     }
 
@@ -187,7 +181,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
         // Refresh availability
         api.getOccupiedSlots().then(setOccupiedSlots);
     } catch (e: any) {
-        alert(e.message || "Booking failed");
+        alert((e as any)?.message || t('booking.booking_failed'));
     } finally {
         setLoading(false);
     }
@@ -252,17 +246,17 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                     {/* Inline project rename removed from Booking component */}
 
                     <div className="flex gap-4 justify-center">
-                         <button 
+                        <button 
                             onClick={resetForm}
                             className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 px-8 rounded-xl hover:opacity-90 transition-opacity"
                         >
-                            Book Another
+                            {t('booking.book_another')}
                         </button>
                         <button 
                             onClick={() => setActiveTab('history')}
                             className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold py-3 px-8 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                         >
-                            View My Requests
+                            {t('booking.view_my_requests')}
                         </button>
                     </div>
                 </div>
@@ -293,14 +287,14 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                 </div>
                                 <div>
                                     <p className="font-semibold">{t('booking.google_meet_integration')}</p>
-                                    <p className="text-xs text-slate-400">Unique link per booking</p>
+                                    <p className="text-xs text-slate-400">{t('booking.unique_link_text')}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div className="mt-12 pt-6 border-t border-slate-800">
-                        <p className="text-sm font-semibold text-slate-200">Logged in as:</p>
+                        <p className="text-sm font-semibold text-slate-200">{t('booking.logged_in_as')}</p>
                         <div className="flex items-center gap-2 mt-2">
                             {user.avatar ? (
                                 <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
@@ -321,36 +315,36 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                 <div className="lg:w-2/3 p-6 sm:p-8 lg:p-12">
                     {/* Date Selection (full date picker) */}
                     <div className="mb-8">
-                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                            <CalendarIcon size={18} className="text-blue-500"/> Select Date
+                            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <CalendarIcon size={18} className="text-blue-500"/> {t('booking.select_date')}
                         </h3>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <input
                                 type="date"
                                 value={selectedDate || ''}
-                                aria-label="Select date"
+                                aria-label={t('booking.select_date')}
                                 min={new Date().toISOString().slice(0,10)}
                                 max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().slice(0,10)}
                                 onChange={(e) => { setSelectedDate(e.target.value); setSelectedTime(null); }}
                                 className="py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                             />
-                            <div className="text-xs text-slate-500">
+                                <div className="text-xs text-slate-500">
                                 {selectedDate ? (
                                     <>
-                                        Agenda for <b>{new Date(selectedDate).toLocaleDateString()}</b>
+                                        {t('booking.agenda_for')} <b>{new Date(selectedDate).toLocaleDateString()}</b>
                                     </>
                                 ) : (
-                                    'Pick a date to view agenda and available hours.'
+                                    t('booking.pick_date_hint')
                                 )}
                             </div>
                         </div>
                         {/* Show agenda (occupied slots) for selected date */}
                         {selectedDate && (
                             <div className="mt-4 text-sm text-slate-600 dark:text-slate-400">
-                                <div className="font-semibold mb-2">Occupied Slots</div>
+                                <div className="font-semibold mb-2">{t('booking.occupied_slots')}</div>
                                 <div className="flex flex-wrap gap-2">
                                     {occupiedSlots.filter(s => normalizeToISODate(s.date) === selectedDate).length === 0 ? (
-                                        <span className="px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-700">No bookings</span>
+                                        <span className="px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-700">{t('booking.no_bookings')}</span>
                                     ) : (
                                         occupiedSlots.filter(s => normalizeToISODate(s.date) === selectedDate).map((s, i) => (
                                             <span key={i} className="px-3 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-700">{formatTimeDisplay(s.time)}</span>
@@ -365,7 +359,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                     {selectedDate && (
                         <div className="mb-8 animate-fadeIn">
                             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                                <Clock size={18} className="text-blue-500"/> Select Time
+                                <Clock size={18} className="text-blue-500"/> {t('booking.select_time')}
                             </h3>
                             <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                 {timeSlots.map((time) => {
@@ -396,23 +390,23 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                         
                          {/* Project Selection (NEW) */}
                                  <div>
-                                     <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">Related Project</label>
+                                     <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">{t('booking.related_project_label')}</label>
                             <div className="relative">
                                 <Briefcase className="absolute left-3 top-3.5 text-slate-400" size={18} />
                                                     <select
-                                    aria-label="Related project"
-                                    title="Related project"
+                                    aria-label={t('booking.related_project_label')}
+                                    title={t('booking.related_project_label')}
                                     value={selectedProjectId}
                                     onChange={(e) => setSelectedProjectId(e.target.value)}
                                     className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition text-slate-900 dark:text-white appearance-none cursor-pointer"
                                 >
-                                    <option value="">-- Select Related Project --</option>
+                                    <option value="">{t('booking.select_project_placeholder')}</option>
                                     {userProjects.map(p => {
                                         const st = (p.status || '').toLowerCase();
                                         const enabled = st === 'rejected' || st === 'planning';
                                         return (
                                             <option key={p.id} value={p.id} disabled={!enabled}>
-                                                {p.name} ({p.status}){!enabled ? ' — not eligible' : ''}
+                                                {p.name} ({p.status}){!enabled ? t('booking.not_eligible_suffix') : ''}
                                             </option>
                                         );
                                     })}
@@ -425,22 +419,22 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
 
                          {/* Multi-Select Topics */}
                         <div>
-                            <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">Services / Functionalities</label>
+                            <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">{t('booking.services_label')}</label>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {SERVICES.map(s => (
                                     <button
-                                        key={s}
-                                        onClick={() => toggleTopic(s)}
+                                        key={s.id}
+                                        onClick={() => toggleTopic(s.title)}
                                         className={`flex items-center gap-3 p-3 rounded-xl border text-sm font-medium transition-all text-left ${
-                                            selectedTopics.includes(s)
+                                            selectedTopics.includes(s.title)
                                             ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
                                             : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-blue-400'
                                         }`}
                                     >
-                                        <div className={`w-5 h-5 rounded border flex items-center justify-center ${selectedTopics.includes(s) ? 'bg-blue-500 border-blue-500' : 'border-slate-400'}`}>
-                                            {selectedTopics.includes(s) && <Check size={14} className="text-white" />}
+                                        <div className={`w-5 h-5 rounded border flex items-center justify-center ${selectedTopics.includes(s.title) ? 'bg-blue-500 border-blue-500' : 'border-slate-400'}`}>
+                                            {selectedTopics.includes(s.title) && <Check size={14} className="text-white" />}
                                         </div>
-                                        {s}
+                                        {s.title}
                                     </button>
                                 ))}
                             </div>
@@ -448,11 +442,11 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
 
                         {/* Description Textarea */}
                         <div>
-                            <label className="block text-xs font-semibold uppercase text-slate-500 mb-1 ml-1">Project Description</label>
+                            <label className="block text-xs font-semibold uppercase text-slate-500 mb-1 ml-1">{t('booking.description_label')}</label>
                             <div className="relative">
                                 <AlignLeft className="absolute left-3 top-3.5 text-slate-400" size={18} />
                                 <textarea 
-                                    placeholder="Describe your project goals, specific features, or questions..." 
+                                    placeholder={t('booking.description_placeholder')} 
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     rows={3}
@@ -467,7 +461,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-blue-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
                         >
                             {loading && <Loader2 size={20} className="animate-spin" />}
-                            {loading ? 'Processing...' : 'Confirm Request'}
+                            {loading ? t('booking.processing') : t('booking.confirm_request')}
                         </button>
                     </div>
                 </div>
@@ -478,26 +472,25 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
             <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-800 p-6 sm:p-8 animate-fadeIn">
                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                          <div className="flex items-center gap-3">
-                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">My Requests</h2>
+                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{t('booking.my_requests')}</h2>
                          <input
                              type="search"
-                             placeholder="Filter requests..."
+                             placeholder={t('admin.filter_requests_placeholder')}
                              value={filterText}
                              onChange={(e) => setFilterText(e.target.value)}
                              className="ml-2 p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"
                          />
                      </div>
                          <div className="flex items-center gap-3">
-                             <button onClick={fetchHistory} disabled={historyLoading} aria-label="Refresh bookings" title="Refresh" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                             <button onClick={fetchHistory} disabled={historyLoading} aria-label={t('booking.refresh_bookings')} title={t('booking.refresh')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
                                  <RefreshCw size={20} className={`text-slate-500 ${historyLoading ? 'animate-spin' : ''}`} />
                              </button>
                              <div className="flex items-center gap-3">
                                  <button
                                      onClick={() => { setClearIncludeFinished(false); setClearDialogOpen(true); }}
-                                     title="Clear history"
                                      className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm"
                                  >
-                                     Clear history
+                                     {t('booking.clear_history')}
                                  </button>
                              </div>
                          </div>
@@ -506,7 +499,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                  {myBookings.length === 0 ? (
                      <div className="text-center py-12 text-slate-500">
                          <CalendarIcon size={48} className="mx-auto mb-4 opacity-20" />
-                         <p>No booking history found.</p>
+                         <p>{t('booking.no_booking_history')}</p>
                      </div>
                  ) : (
                      <div className="space-y-4">
@@ -546,7 +539,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                             rel="noreferrer"
                                             className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20"
                                          >
-                                             <Video size={16} /> Join Meet
+                                             <Video size={16} /> {t('booking.join_meet')}
                                          </a>
                                      )}
                                  </div>
@@ -560,24 +553,24 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
 
         <ConfirmDialog
             open={clearDialogOpen}
-            title="Clear Booking History"
-            message="Remove cancelled/rejected bookings from your history. Optionally include finished bookings."
-            confirmLabel="Clear"
-            cancelLabel="Cancel"
+            title={t('admin.clear_booking_history_title')}
+            message={t('admin.clear_booking_history_message')}
+            confirmLabel={t('admin.clear_confirm')}
+            cancelLabel={t('common_ui.cancel')}
             loading={historyLoading}
             onConfirm={async () => {
                 setHistoryLoading(true);
                 try {
                     await api.clearBookingHistory(user.id, { id: user.id, role: 'client' }, { includeFinished: clearIncludeFinished });
                     await fetchHistory();
-                } catch (e) { console.error(e); alert((e as any)?.message || 'Failed to clear history'); }
+                } catch (e) { console.error(e); alert((e as any)?.message || t('admin.clear_failed')) }
                 finally { setHistoryLoading(false); setClearDialogOpen(false); }
             }}
             onCancel={() => setClearDialogOpen(false)}
         >
             <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={clearIncludeFinished} onChange={e => setClearIncludeFinished(e.target.checked)} />
-                <span className="text-xs text-slate-500">Include finished bookings</span>
+                <span className="text-xs text-slate-500">{t('admin.include_finished')}</span>
             </label>
         </ConfirmDialog>
         </div>
