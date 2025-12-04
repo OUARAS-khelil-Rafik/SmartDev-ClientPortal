@@ -205,6 +205,9 @@ const fr = {
     work_breakdown: 'Répartition du travail',
     done: 'Terminé',
     remaining: 'Restant',
+    services: 'Services',
+    description: 'Description',
+    features: 'Fonctionnalités clés',
     project_not_found: 'Projet introuvable',
     only_planning_delete: "Seuls les projets en 'Planning' peuvent être supprimés. Ce projet est déjà en cours ou terminé.",
     project_has_bookings: 'Ce projet a des réservations associées et ne peut pas être supprimé.',
@@ -305,7 +308,12 @@ const fr = {
   },
   common: {
     back_to_services: 'Retour aux services',
-    request_sent: 'Demande envoyée !'
+    request_sent: 'Demande envoyée !',
+    close: 'Fermer',
+    cancel: 'Annuler',
+    save: 'Enregistrer',
+    saving: 'Enregistrement...',
+    create: 'Créer'
   }
   ,
   
@@ -362,15 +370,27 @@ const fr = {
     form: {
       project_name: 'Nom du projet',
       deadline: 'Date limite',
-      new_project_name: 'Nouveau nom de projet'
+      new_project_name: 'Nouveau nom de projet',
+      description: 'Description',
+      description_placeholder: 'Décrivez les objectifs et exigences de votre projet...',
+      services: 'Services / Fonctionnalités',
+      features: 'Caractéristiques clés',
+      feature_placeholder: 'Ajouter une fonctionnalité...'
     },
     actions: {
       rename: 'Renommer',
-      delete: 'Supprimer'
+      delete: 'Supprimer',
+      details: 'Modifier les détails',
+      add_feature: 'Ajouter une fonctionnalité',
+      remove_feature: 'Supprimer la fonctionnalité'
     },
     card: {
       due: 'Échéance :',
-      status: 'Statut :'
+      status: 'Statut :',
+      show_details: 'Afficher les détails',
+      hide_details: 'Masquer les détails',
+      description: 'Description',
+      features: 'Fonctionnalités'
     },
     dialogs: {
       delete_title: 'Supprimer le projet',
@@ -378,7 +398,8 @@ const fr = {
       delete_suffix: "Cette action est irréversible.",
       delete_generic: "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
       rename_title: 'Renommer le projet',
-      rename_desc_prefix: 'Renommer'
+      rename_desc_prefix: 'Renommer',
+      details_title: 'Détails du projet'
     },
     errors: {
       provide_valid_name: 'Veuillez fournir un nom de projet valide',

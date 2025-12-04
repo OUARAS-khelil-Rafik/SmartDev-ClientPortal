@@ -205,6 +205,9 @@ const en = {
     work_breakdown: 'Work Breakdown',
     done: 'Done',
     remaining: 'Remaining',
+    services: 'Services',
+    description: 'Description',
+    features: 'Key Features',
     project_not_found: 'Project not found',
     only_planning_delete: 'Only projects in Planning can be deleted. This project is already in progress or completed.',
     project_has_bookings: 'This project has associated bookings and cannot be deleted.',
@@ -305,7 +308,12 @@ const en = {
   },
   common: {
     back_to_services: 'Back to Services',
-    request_sent: 'Request Sent!'
+    request_sent: 'Request Sent!',
+    close: 'Close',
+    cancel: 'Cancel',
+    save: 'Save',
+    saving: 'Saving...',
+    create: 'Create'
   }
   ,
   notifications: {
@@ -360,15 +368,27 @@ const en = {
     form: {
       project_name: 'Project name',
       deadline: 'Deadline',
-      new_project_name: 'New project name'
+      new_project_name: 'New project name',
+      description: 'Description',
+      description_placeholder: 'Describe your project goals and requirements...',
+      services: 'Services / Functionalities',
+      features: 'Key Features',
+      feature_placeholder: 'Add a feature...'
     },
     actions: {
       rename: 'Rename',
-      delete: 'Delete'
+      delete: 'Delete',
+      details: 'Edit Details',
+      add_feature: 'Add feature',
+      remove_feature: 'Remove feature'
     },
     card: {
       due: 'Due:',
-      status: 'Status:'
+      status: 'Status:',
+      show_details: 'Show details',
+      hide_details: 'Hide details',
+      description: 'Description',
+      features: 'Features'
     },
     dialogs: {
       delete_title: 'Delete Project',
@@ -376,7 +396,8 @@ const en = {
       delete_suffix: 'This action cannot be undone.',
       delete_generic: 'Are you sure you want to delete this project? This action cannot be undone.',
       rename_title: 'Rename Project',
-      rename_desc_prefix: 'Rename'
+      rename_desc_prefix: 'Rename',
+      details_title: 'Project Details'
     },
     errors: {
       provide_valid_name: 'Please provide a valid project name',

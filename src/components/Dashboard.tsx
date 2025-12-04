@@ -382,9 +382,39 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Project Status */}
             <div className="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                                <div className="flex justify-between items-center mb-6">
+                                <div className="flex justify-between items-center mb-4">
                                         <h1 className="text-xl font-bold text-slate-800 dark:text-white truncate pr-5">{activeProject.name}</h1>  
                                 </div>
+
+                {/* Project Details Section */}
+                {(activeProject.description || (activeProject.services && activeProject.services.length > 0) || (activeProject.features && activeProject.features.length > 0)) && (
+                  <div className="mb-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                    {activeProject.services && activeProject.services.length > 0 && (
+                      <div className="mb-3">
+                        <h4 className="text-xs font-semibold text-slate-500 uppercase mb-2">{t('dashboard.services')}</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {activeProject.services.map(s => (
+                            <span key={s} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-full font-medium">{s}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {activeProject.description && (
+                      <div className="mb-3">
+                        <h4 className="text-xs font-semibold text-slate-500 uppercase mb-1">{t('dashboard.description')}</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">{activeProject.description}</p>
+                      </div>
+                    )}
+                    {activeProject.features && activeProject.features.length > 0 && (
+                      <div>
+                        <h4 className="text-xs font-semibold text-slate-500 uppercase mb-1">{t('dashboard.features')}</h4>
+                        <ul className="text-sm text-slate-600 dark:text-slate-400 list-disc list-inside space-y-0.5">
+                          {activeProject.features.map((f, i) => <li key={i}>{f}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 <div className="mb-8">
                     <div className="flex justify-between text-sm mb-2">

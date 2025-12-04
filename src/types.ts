@@ -29,6 +29,10 @@ export interface Project {
   progress: number;
   deadline: string;
   tasks: Task[];
+  // Project details
+  description?: string; // Project description
+  services?: string[]; // Services/Functionalities (e.g., "Web Development", "Mobile App")
+  features?: string[]; // Key features of the project
 }
 
 export interface Task {

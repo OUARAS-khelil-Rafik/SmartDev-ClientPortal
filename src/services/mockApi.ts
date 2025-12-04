@@ -393,6 +393,34 @@ class MockApi {
     return projects;
   }
 
+  // Update project details (description, services, features)
+  async updateProjectDetails(
+    projectId: string, 
+    details: { description?: string; services?: string[]; features?: string[] },
+    actor?: { id: string, role: 'admin' | 'client' | 'developer' }
+  ): Promise<Project[]> {
+    await delay(300);
+    const projects = this.getStoredProjects();
+    const pIndex = projects.findIndex(p => p.id === projectId);
+    if (pIndex === -1) throw new Error('Project not found');
+
+    const project = projects[pIndex];
+
+    // Only client who owns the project or admin can update details
+    if (!(actor && (actor.role === 'admin' || (actor.role === 'client' && actor.id === project.clientId)))) {
+      throw new Error('You do not have permission to update this project');
+    }
+
+    projects[pIndex] = { 
+      ...project, 
+      description: details.description !== undefined ? details.description : project.description,
+      services: details.services !== undefined ? details.services : project.services,
+      features: details.features !== undefined ? details.features : project.features
+    };
+    this.saveProjects(projects);
+    return projects;
+  }
+
   // Note: Admin create/delete helpers removed to ensure only clients can create/delete their own projects.
 
   async getProjects(userId: string, role: 'admin' | 'client' | 'developer'): Promise<Project[]> {
