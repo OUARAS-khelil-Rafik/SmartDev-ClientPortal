@@ -43,6 +43,8 @@ const App: React.FC = () => {
       setUser(loggedInUser);
       if (loggedInUser.role === 'admin') {
           setView(ViewState.ADMIN_DASHBOARD);
+      } else if (loggedInUser.role === 'developer') {
+          setView(ViewState.DASHBOARD);
       } else {
           setView(ViewState.DASHBOARD);
       }

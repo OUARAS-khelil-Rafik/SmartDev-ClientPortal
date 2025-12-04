@@ -2,12 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Project, User } from '../types';
 import { api } from '../services/mockApi';
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { CheckCircle2, Circle, Clock, Plus, Loader2, Trash, Edit, X } from 'lucide-react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { CheckCircle2, Circle, Plus, Loader2, Trash, Edit, X, GripVertical } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { useI18n } from '../i18n';
-
-const COLORS = ['#3b82f6', '#1e293b'];
 
 interface DashboardProps {
     user: User;
@@ -26,6 +24,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     const [showCreate, setShowCreate] = useState(false);
     const [createName, setCreateName] = useState('');
     const [createDeadline, setCreateDeadline] = useState<string>('');
+    
+    // Check if dark mode is active
+    const [isDark, setIsDark] = useState(false);
+    useEffect(() => {
+        const checkDarkMode = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+        checkDarkMode();
+        const observer = new MutationObserver(checkDarkMode);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        return () => observer.disconnect();
+    }, []);
 
   useEffect(() => {
     if (user) {
@@ -79,6 +89,51 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     } finally {
         setAddingTask(false);
     }
+  };
+
+  // Task drag-and-drop state
+  const [draggedTaskIndex, setDraggedTaskIndex] = useState<number | null>(null);
+  const [dragOverTaskIndex, setDragOverTaskIndex] = useState<number | null>(null);
+
+  const handleTaskDragStart = (index: number) => {
+    setDraggedTaskIndex(index);
+  };
+
+  const handleTaskDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedTaskIndex !== null && draggedTaskIndex !== index) {
+      setDragOverTaskIndex(index);
+    }
+  };
+
+  const handleTaskDragLeave = () => {
+    setDragOverTaskIndex(null);
+  };
+
+  const handleTaskDrop = async (toIndex: number) => {
+    if (draggedTaskIndex === null || draggedTaskIndex === toIndex || !activeProjectId) {
+      setDraggedTaskIndex(null);
+      setDragOverTaskIndex(null);
+      return;
+    }
+    
+    try {
+      const updatedProjects = await api.reorderTasks(activeProjectId, draggedTaskIndex, toIndex);
+      const updatedProject = updatedProjects.find(p => p.id === activeProjectId);
+      if (updatedProject) {
+        setProjects(prev => prev.map(p => p.id === activeProjectId ? updatedProject : p));
+      }
+    } catch (e) {
+      console.error("Failed to reorder tasks", e);
+    } finally {
+      setDraggedTaskIndex(null);
+      setDragOverTaskIndex(null);
+    }
+  };
+
+  const handleTaskDragEnd = () => {
+    setDraggedTaskIndex(null);
+    setDragOverTaskIndex(null);
   };
 
         const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -205,13 +260,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
                         <label className="sr-only" htmlFor="project-select">Select project</label>
-                        <div className="relative w-full">
+                        <div className="select-wrapper group w-full">
+                            <div className="select-glow rounded-full"></div>
                             <select
                                 id="project-select"
                                 title={activeProject?.name ?? (projects.length ? t('dashboard.select_project') : t('dashboard.no_projects'))}
                                 value={activeProjectId ?? ''}
                                 onChange={(e) => setActiveProjectId(e.target.value || null)}
-                                className="appearance-none w-full truncate rounded-full text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300 px-4 py-2 pr-10 shadow-sm transition-all duration-300 hover:border-blue-400"
+                                className="custom-select select-pill truncate"
                             >
                                 {projects.length === 0 && <option value="" disabled>{t('dashboard.no_projects')}</option>}
                                 {projects.length > 0 && <option value="" disabled>{t('dashboard.select_project')}</option>}
@@ -219,11 +275,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                     <option key={p.id} value={p.id}>{p.name}</option>
                                 ))}
                             </select>
-                            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                                <svg className="w-4 h-4 text-slate-500 dark:text-slate-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.12 1.004l-4.25 4.65a.75.75 0 01-1.08 0l-4.25-4.65a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                                </svg>
-                            </div>
+                            <svg className="select-icon !right-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.12 1.004l-4.25 4.65a.75.75 0 01-1.08 0l-4.25-4.65a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                            </svg>
                         </div>
                     </div>
 
@@ -335,10 +389,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 <div className="mb-8">
                     <div className="flex justify-between text-sm mb-2">
                         <span className="text-slate-600 dark:text-slate-400">{t('dashboard.overall_progress')}</span>
-                        <span className="font-bold text-slate-900 dark:text-white">{activeProject.progress}%</span>
+                        <span className="font-bold text-blue-600 dark:text-blue-400">{activeProject.progress}%</span>
                     </div>
-                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-hidden">
-                        <div className={`bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full transition-all duration-1000 ${`w-[${activeProject.progress}%]`}`}></div>
+                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-hidden shadow-inner">
+                        <div 
+                            className="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 dark:from-blue-400 dark:via-blue-500 dark:to-indigo-500 h-3 rounded-full transition-all duration-1000 ease-out shadow-lg shadow-blue-500/30 dark:shadow-blue-400/20"
+                            style={{ width: `${activeProject.progress}%` }}
+                        ></div>
                     </div>
                 </div>
 
@@ -347,22 +404,38 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                     <div>
                         <h4 className="font-semibold text-slate-700 dark:text-slate-200 mb-4 flex justify-between items-center">
                             {t('dashboard.tasks')}
-                            <span className="text-xs font-normal text-slate-500">{t('dashboard.click_to_toggle')}</span>
+                            <span className="text-xs font-normal text-slate-500">{t('dashboard.drag_to_reorder')}</span>
                         </h4>
-                        <div className="space-y-3 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
-                            {activeProject.tasks.map(task => (
+                        <div className="space-y-2 max-h-96 overflow-y-auto overflow-x-visible p-1 -m-1 custom-scrollbar">
+                            {activeProject.tasks.map((task, index) => (
                                 <div 
                                     key={task.id} 
-                                    onClick={() => handleToggleTask(task.id)}
-                                    className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer group"
+                                    draggable
+                                    onDragStart={() => handleTaskDragStart(index)}
+                                    onDragOver={(e) => handleTaskDragOver(e, index)}
+                                    onDragLeave={handleTaskDragLeave}
+                                    onDrop={() => handleTaskDrop(index)}
+                                    onDragEnd={handleTaskDragEnd}
+                                    className={`flex items-center gap-2 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-grab active:cursor-grabbing group
+                                        ${draggedTaskIndex === index ? 'opacity-50 scale-95' : ''}
+                                        ${dragOverTaskIndex === index ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : ''}
+                                    `}
                                 >
-                                    {task.completed ? 
-                                        <CheckCircle2 className="text-green-500 flex-shrink-0" size={20} /> : 
-                                        <Circle className="text-slate-400 group-hover:text-blue-500 transition-colors flex-shrink-0" size={20} />
-                                    }
-                                    <span className={`text-sm ${task.completed ? 'text-slate-500 line-through' : 'text-slate-700 dark:text-slate-200'}`}>
-                                        {task.title}
-                                    </span>
+                                    <div className="flex-shrink-0 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 cursor-grab active:cursor-grabbing">
+                                        <GripVertical size={16} />
+                                    </div>
+                                    <div 
+                                        onClick={() => handleToggleTask(task.id)}
+                                        className="flex items-center gap-3 flex-1 cursor-pointer"
+                                    >
+                                        {task.completed ? 
+                                            <CheckCircle2 className="text-green-500 flex-shrink-0" size={20} /> : 
+                                            <Circle className="text-slate-400 group-hover:text-blue-500 transition-colors flex-shrink-0" size={20} />
+                                        }
+                                        <span className={`text-sm ${task.completed ? 'text-slate-500 line-through' : 'text-slate-700 dark:text-slate-200'}`}>
+                                            {task.title}
+                                        </span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -407,13 +480,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                     paddingAngle={5}
                                     dataKey="value"
                                 >
-
-                
-                                    <Cell fill="#3b82f6" />
-                                    <Cell fill="#1e293b" />
+                                    <Cell fill={isDark ? '#60a5fa' : '#3b82f6'} />
+                                    <Cell fill={isDark ? '#334155' : '#e2e8f0'} />
                                 </Pie>
-                                <Tooltip />
-                                <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="fill-slate-900 dark:fill-white font-bold text-2xl">
+                                <Tooltip 
+                                    contentStyle={{ 
+                                        backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                                        border: `1px solid ${isDark ? '#334155' : '#e2e8f0'}`,
+                                        borderRadius: '8px',
+                                        color: isDark ? '#f1f5f9' : '#1e293b'
+                                    }}
+                                />
+                                <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="font-bold text-2xl" fill={isDark ? '#f1f5f9' : '#1e293b'}>
                                     {activeProject.progress}%
                                 </text>
                             </PieChart>

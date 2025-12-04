@@ -390,15 +390,16 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                         
                          {/* Project Selection (NEW) */}
                                  <div>
-                                     <label className="block text-xs font-semibold uppercase text-slate-500 mb-2 ml-1">{t('booking.related_project_label')}</label>
-                            <div className="relative">
-                                <Briefcase className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                                                    <select
+                                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2.5 ml-1">{t('booking.related_project_label')}</label>
+                            <div className="select-wrapper group">
+                                <div className="select-glow rounded-xl"></div>
+                                <Briefcase className="select-left-icon transition-colors group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400" size={18} />
+                                <select
                                     aria-label={t('booking.related_project_label')}
                                     title={t('booking.related_project_label')}
                                     value={selectedProjectId}
                                     onChange={(e) => setSelectedProjectId(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition text-slate-900 dark:text-white appearance-none cursor-pointer"
+                                    className="custom-select select-lg with-icon"
                                 >
                                     <option value="">{t('booking.select_project_placeholder')}</option>
                                     {userProjects.map(p => {
@@ -411,7 +412,10 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                         );
                                     })}
                                 </select>
-                                {/* Rename button removed from Booking component */}
+                                <svg className="select-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.12 1.004l-4.25 4.65a.75.75 0 01-1.08 0l-4.25-4.65a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                                </svg>
+                                <div className="select-underline"></div>
                             </div>
                         </div>
 
@@ -470,29 +474,27 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
         ) : (
             // History Tab
             <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-800 p-6 sm:p-8 animate-fadeIn">
-                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-                         <div className="flex items-center gap-3">
-                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{t('booking.my_requests')}</h2>
-                         <input
-                             type="search"
-                             placeholder={t('admin.filter_requests_placeholder')}
-                             value={filterText}
-                             onChange={(e) => setFilterText(e.target.value)}
-                             className="ml-2 p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"
-                         />
-                     </div>
-                         <div className="flex items-center gap-3">
-                             <button onClick={fetchHistory} disabled={historyLoading} aria-label={t('booking.refresh_bookings')} title={t('booking.refresh')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                 <div className="flex items-center justify-between gap-4 mb-6 overflow-x-auto pb-2">
+                         <div className="flex items-center gap-3 flex-shrink-0">
+                             <h2 className="text-2xl font-bold text-slate-900 dark:text-white whitespace-nowrap">{t('booking.my_requests')}</h2>
+                         </div>
+                         <div className="flex items-center gap-3 flex-shrink-0">
+                             <input
+                                 type="search"
+                                 placeholder={t('admin.filter_requests_placeholder')}
+                                 value={filterText}
+                                 onChange={(e) => setFilterText(e.target.value)}
+                                 className="custom-input input-filter w-40"
+                             />
+                             <button onClick={fetchHistory} disabled={historyLoading} aria-label={t('booking.refresh_bookings')} title={t('booking.refresh')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors flex-shrink-0">
                                  <RefreshCw size={20} className={`text-slate-500 ${historyLoading ? 'animate-spin' : ''}`} />
                              </button>
-                             <div className="flex items-center gap-3">
-                                 <button
-                                     onClick={() => { setClearIncludeFinished(false); setClearDialogOpen(true); }}
-                                     className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm"
-                                 >
-                                     {t('booking.clear_history')}
-                                 </button>
-                             </div>
+                             <button
+                                 onClick={() => { setClearIncludeFinished(false); setClearDialogOpen(true); }}
+                                 className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md text-sm whitespace-nowrap flex-shrink-0"
+                             >
+                                 {t('booking.clear_history')}
+                             </button>
                          </div>
                  </div>
 

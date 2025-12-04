@@ -5,7 +5,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'client';
+  role: 'admin' | 'client' | 'developer';
   avatar?: string;
   // Optional approval status for admin moderation
   status?: 'pending' | 'approved' | 'rejected';
@@ -24,6 +24,7 @@ export interface Project {
   id: string;
   name: string;
   clientId: string; // Link project to specific user
+  developerId?: string; // Assigned developer (optional)
   status: 'Planning' | 'In Progress' | 'Review' | 'Completed';
   progress: number;
   deadline: string;

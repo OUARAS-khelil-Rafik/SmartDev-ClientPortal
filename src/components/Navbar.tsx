@@ -28,7 +28,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
       if (user.role === 'admin') {
         navItems.push({ id: ViewState.ADMIN_DASHBOARD, label: t('nav.admin_panel'), icon: <Shield size={18} /> });
         // Admins do not book meetings, so we skip adding the Booking link
+      } else if (user.role === 'developer') {
+        // Developers see "Projects" (not "My Projects") and cannot book meetings
+        navItems.push({ id: ViewState.DASHBOARD, label: t('nav.projects'), icon: <LayoutDashboard size={18} /> });
       } else {
+        // Clients see "My Projects" and can book meetings
         navItems.push({ id: ViewState.DASHBOARD, label: t('nav.my_projects'), icon: <LayoutDashboard size={18} /> });
         navItems.push({ id: ViewState.BOOKING, label: t('nav.bookings'), icon: <Calendar size={18} /> });
       }

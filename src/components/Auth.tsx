@@ -136,12 +136,20 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                         >
                             {isLogin ? t('auth.dont_have') : t('auth.already_have')}
                         </button>
+                        {!isLogin && (
+                            <p className="mt-2 text-xs text-slate-500 dark:text-slate-500">
+                                {t('auth.developer_note')}
+                            </p>
+                        )}
                     </div>
                 </div>
                 
                 {/* Admin Tip */}
                 <p className="mt-8 text-center text-xs text-slate-400 animate-fade-in animation-delay-500">
                     {t('auth.admin_tip')}
+                </p>
+                <p className="mt-2 text-center text-xs text-slate-400 animate-fade-in animation-delay-500">
+                    {t('auth.developer_tip')}
                 </p>
             </div>
         </div>

@@ -33,10 +33,14 @@ class MockApi {
     localStorage.setItem('nexus_users', JSON.stringify(users));
   }
 
-  // Public method for Admin Dashboard to list clients
-  async getAllUsers(): Promise<User[]> {
+  // Public method for Admin Dashboard to list users
+  async getAllUsers(roleFilter?: 'client' | 'developer'): Promise<User[]> {
       await delay(500);
-      return this.getUsers();
+      const users = this.getUsers();
+      if (roleFilter) {
+        return users.filter(u => u.role === roleFilter);
+      }
+      return users;
   }
 
   async login(email: string): Promise<User> {
@@ -46,9 +50,12 @@ class MockApi {
     
     // For demo purposes, we accept any password, but check email existence
     if (!user) throw new Error('User not found. Please sign up.');
-    // Block login for users that are pending or rejected
-    if ((user as any).status === 'pending') throw new Error('Your account is pending approval by an administrator.');
-    if ((user as any).status === 'rejected') throw new Error('Your account registration was rejected.');
+    // Block login for users that are pending or rejected (only for clients, not developers)
+    if (user.role === 'client') {
+      if ((user as any).status === 'pending') throw new Error('Your account is pending approval by an administrator.');
+      if ((user as any).status === 'rejected') throw new Error('Your account registration was rejected.');
+    }
+    // Developers created by admin are always approved
     return user;
   }
 
@@ -142,6 +149,93 @@ class MockApi {
     return users;
   }
 
+  // --- Developer Management (Admin only) ---
+
+  async createDeveloper(name: string, email: string): Promise<User> {
+    await delay(600);
+    const users = this.getUsers();
+    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+      throw new Error('Email already exists');
+    }
+
+    const newDeveloper: User = {
+      id: Date.now().toString(),
+      name,
+      email,
+      role: 'developer',
+      status: 'approved' // Developers created by admin are auto-approved
+    };
+    users.push(newDeveloper);
+    this.saveUsers(users);
+    return newDeveloper;
+  }
+
+  async updateDeveloper(developerId: string, updates: { name?: string; email?: string }): Promise<User[]> {
+    await delay(400);
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.id === developerId && u.role === 'developer');
+    if (idx === -1) throw new Error('Developer not found');
+
+    if (updates.email) {
+      const emailExists = users.find(u => u.email.toLowerCase() === updates.email!.toLowerCase() && u.id !== developerId);
+      if (emailExists) throw new Error('Email already in use');
+      users[idx].email = updates.email;
+    }
+    if (updates.name) {
+      users[idx].name = updates.name;
+    }
+
+    this.saveUsers(users);
+    return users.filter(u => u.role === 'developer');
+  }
+
+  async deleteDeveloper(developerId: string): Promise<User[]> {
+    await delay(300);
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.id === developerId && u.role === 'developer');
+    if (idx !== -1) {
+      users.splice(idx, 1);
+      this.saveUsers(users);
+
+      // Remove developer assignment from projects
+      const projects = this.getStoredProjects();
+      let changed = false;
+      for (const p of projects) {
+        if (p.developerId === developerId) {
+          p.developerId = undefined;
+          changed = true;
+        }
+      }
+      if (changed) this.saveProjects(projects);
+    }
+    return users.filter(u => u.role === 'developer');
+  }
+
+  // Assign a developer to a project (Admin only)
+  async assignDeveloperToProject(projectId: string, developerId: string | null): Promise<Project[]> {
+    await delay(400);
+    const projects = this.getStoredProjects();
+    const pIdx = projects.findIndex(p => p.id === projectId);
+    if (pIdx === -1) throw new Error('Project not found');
+
+    if (developerId) {
+      const users = this.getUsers();
+      const developer = users.find(u => u.id === developerId && u.role === 'developer');
+      if (!developer) throw new Error('Developer not found');
+    }
+
+    projects[pIdx].developerId = developerId || undefined;
+    this.saveProjects(projects);
+    return projects;
+  }
+
+  // Get projects for a developer
+  async getDeveloperProjects(developerId: string): Promise<Project[]> {
+    await delay(500);
+    const allProjects = this.getStoredProjects();
+    return allProjects.filter(p => p.developerId === developerId);
+  }
+
 
   // --- Projects ---
 
@@ -160,7 +254,7 @@ class MockApi {
   // Only a client can create a project for themselves via this method.
   async createProject(
     projectData: { name: string, clientId: string, deadline: string, status: Project['status'] },
-    actor?: { id: string, role: 'admin' | 'client' }
+    actor?: { id: string, role: 'admin' | 'client' | 'developer' }
   ): Promise<Project> {
       await delay(600);
       // Enforce that only the client themselves can create their project through this method
@@ -201,7 +295,7 @@ class MockApi {
 
   // Delete project (client action)
   // Only the client that owns the project may delete it via this method.
-  async deleteProject(projectId: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Project[]> {
+  async deleteProject(projectId: string, actor?: { id: string, role: 'admin' | 'client' | 'developer' }): Promise<Project[]> {
     await delay(300);
     const projects = this.getStoredProjects();
     const idx = projects.findIndex(p => p.id === projectId);
@@ -276,7 +370,7 @@ class MockApi {
   }
 
   // Rename a project. Admins can rename any project; clients can rename their own projects.
-  async renameProject(projectId: string, newName: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Project[]> {
+  async renameProject(projectId: string, newName: string, actor?: { id: string, role: 'admin' | 'client' | 'developer' }): Promise<Project[]> {
     await delay(300);
     if (!newName || !newName.trim()) throw new Error('Project name cannot be empty');
     const projects = this.getStoredProjects();
@@ -301,10 +395,11 @@ class MockApi {
 
   // Note: Admin create/delete helpers removed to ensure only clients can create/delete their own projects.
 
-  async getProjects(userId: string, role: 'admin' | 'client'): Promise<Project[]> {
+  async getProjects(userId: string, role: 'admin' | 'client' | 'developer'): Promise<Project[]> {
     await delay(500);
     const allProjects = this.getStoredProjects();
     if (role === 'admin') return allProjects;
+    if (role === 'developer') return allProjects.filter(p => p.developerId === userId);
     return allProjects.filter(p => p.clientId === userId);
   }
 
@@ -342,6 +437,21 @@ class MockApi {
           completed: false,
           assignee: 'Unassigned'
       });
+      this.saveProjects(projects);
+      return projects;
+  }
+
+  async reorderTasks(projectId: string, fromIndex: number, toIndex: number): Promise<Project[]> {
+      await delay(200);
+      const projects = this.getStoredProjects();
+      const pIndex = projects.findIndex(p => p.id === projectId);
+      if (pIndex === -1) throw new Error('Project not found');
+      
+      const tasks = [...projects[pIndex].tasks];
+      const [movedTask] = tasks.splice(fromIndex, 1);
+      tasks.splice(toIndex, 0, movedTask);
+      projects[pIndex].tasks = tasks;
+      
       this.saveProjects(projects);
       return projects;
   }
@@ -411,7 +521,7 @@ class MockApi {
       .map(b => ({ date: b.date, time: b.time }));
   }
 
-  async getBookings(userId: string, role: 'admin' | 'client'): Promise<Booking[]> {
+  async getBookings(userId: string, role: 'admin' | 'client' | 'developer'): Promise<Booking[]> {
     await delay(600);
     // Before returning, auto-finish any confirmed bookings whose date/time have passed
     const bookings = this.getStoredBookings();
@@ -432,6 +542,8 @@ class MockApi {
     if (changed) this.saveBookings(bookings);
 
     if (role === 'admin') return bookings;
+    // Developers don't have bookings, but return empty for safety
+    if (role === 'developer') return [];
     return bookings.filter(b => b.userId === userId);
   }
 
@@ -441,7 +553,7 @@ class MockApi {
   // - If called by an admin with a userId, clears cancelled/rejected bookings for that user.
   async clearBookingHistory(
     userId?: string,
-    actor?: { id: string, role: 'admin' | 'client' },
+    actor?: { id: string, role: 'admin' | 'client' | 'developer' },
     options?: { includeFinished?: boolean }
   ): Promise<Booking[]> {
     await delay(400);
@@ -508,7 +620,7 @@ class MockApi {
   }
 
   // Cancel booking (admin can cancel any booking; client can cancel own booking)
-  async cancelBooking(bookingId: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Booking[]> {
+  async cancelBooking(bookingId: string, actor?: { id: string, role: 'admin' | 'client' | 'developer' }): Promise<Booking[]> {
     await delay(400);
     const bookings = this.getStoredBookings();
     const idx = bookings.findIndex(b => b.id === bookingId);
@@ -520,8 +632,8 @@ class MockApi {
       booking.status = 'cancelled';
       booking.meetLink = undefined;
     } else {
-      // Client may cancel their own bookings
-      if (!actor || actor.id !== booking.userId) throw new Error('You do not have permission to cancel this booking');
+      // Client may cancel their own bookings, developers cannot cancel
+      if (!actor || actor.id !== booking.userId || actor.role === 'developer') throw new Error('You do not have permission to cancel this booking');
       booking.status = 'cancelled';
       booking.meetLink = undefined;
     }
@@ -530,7 +642,7 @@ class MockApi {
   }
 
   // Admin marks booking as finished manually
-  async finishBooking(bookingId: string, actor?: { id: string, role: 'admin' | 'client' }): Promise<Booking[]> {
+  async finishBooking(bookingId: string, actor?: { id: string, role: 'admin' | 'client' | 'developer' }): Promise<Booking[]> {
     await delay(400);
     const bookings = this.getStoredBookings();
     const idx = bookings.findIndex(b => b.id === bookingId);
@@ -576,7 +688,7 @@ class MockApi {
     return n;
   }
 
-  async getNotifications(userId?: string, role?: 'admin' | 'client') {
+  async getNotifications(userId?: string, role?: 'admin' | 'client' | 'developer') {
     await delay(300);
     const notifications = this.getStoredNotifications();
     // If caller is admin, return all notifications newest first
