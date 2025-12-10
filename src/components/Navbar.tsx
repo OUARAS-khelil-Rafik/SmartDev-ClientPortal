@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useI18n } from '../i18n';
 import { ViewState, User } from '../types';
-import { Sun, Moon, Hexagon, LayoutDashboard, Calendar, Sparkles, Monitor, LogOut, User as UserIcon, Shield, ChevronDown, Check } from 'lucide-react';
+import { Sun, Moon, Hexagon, LayoutDashboard, Calendar, Sparkles, Monitor, LogOut, User as UserIcon, Shield, ChevronDown, Check, Globe } from 'lucide-react';
 import Notifications from './Notifications';
 
 interface NavbarProps {

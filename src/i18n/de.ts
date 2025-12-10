@@ -43,7 +43,7 @@ const de = {
     why_choose_suffix: 'Team besteht aus Branchenveteranen, die sich Ihrem Erfolg verschrieben haben.',
     items: {
       ai: {
-        title: 'KI & Maschinelles Lernen',
+        title: 'Künstliche Intelligenz Lösungen',
         description: 'Maßgeschneiderte LLM-Integration, prädiktive Analysen und automatisierte Entscheidungssysteme.',
         longDescription: 'Nutzen Sie die Kraft von Generativer KI und Machine Learning, um Ihre Geschäftsabläufe zu transformieren. Wir entwickeln maßgeschneiderte Modelle für Ihre spezifischen Datensätze, die prädiktive Einblicke, automatisierte Inhaltserstellung und intelligente Agenten ermöglichen.',
         features: {
@@ -54,64 +54,16 @@ const de = {
           '4': 'KI-gesteuerte Automatisierungs-Agenten'
         }
       },
-      sec: {
-        title: 'Cybersicherheit',
-        description: 'Penetrationstests, Sicherheitsaudits und sicheres Architekturdesign zum Schutz von Assets.',
-        longDescription: 'In einer Ära zunehmender digitaler Bedrohungen stellen unsere Cybersicherheitsdienste sicher, dass Ihre Infrastruktur undurchdringlich ist. Wir setzen ethisches Hacking, Echtzeit-Monitoring und Zero-Trust-Architekturen ein, um Ihre Daten zu schützen.',
-        features: {
-          '0': 'Penetrationstests & Audits',
-          '1': 'Zero Trust Architektur',
-          '2': 'Echtzeit-Bedrohungsüberwachung',
-          '3': 'DSGVO & SOC2 Compliance',
-          '4': 'Incident Response Planung'
-        }
-      },
       web: {
-        title: 'Webentwicklung',
-        description: 'Hochleistungs-React & Next.js Anwendungen mit beeindruckenden Visuals.',
-        longDescription: 'Wir erstellen visuell beeindruckende und hochleistungsfähige Webanwendungen. Mit modernen Frameworks wie React, Next.js und Tailwind CSS stellen wir sicher, dass Ihre digitale Präsenz schnell, zugänglich und SEO-optimiert ist.',
+        title: 'Web-, Mobil- & Desktop-Lösungen',
+        description: 'Hochleistungsanwendungen für Web-, Mobil- und Desktop-Plattformen.',
+        longDescription: 'Wir erstellen visuell beeindruckende und hochleistungsfähige Anwendungen auf allen Plattformen. Mit modernen Frameworks wie React, Next.js, React Native, Flutter und Electron stellen wir sicher, dass Ihre digitale Präsenz schnell, zugänglich und für jedes Gerät optimiert ist.',
         features: {
-          '0': 'React & Next.js Entwicklung',
-          '1': 'Progressive Web Apps (PWA)',
-          '2': '3D WebGL Erlebnisse',
-          '3': 'Headless CMS Integration',
-          '4': 'Performance-Optimierung'
-        }
-      },
-      mob: {
-        title: 'Mobile Lösungen',
-        description: 'Native und plattformübergreifende mobile Apps für nahtlose Erlebnisse.',
-        longDescription: 'Erreichen Sie Ihre Kunden überall mit unseren mobilen Entwicklungsdiensten. Wir entwickeln native iOS/Android Apps und plattformübergreifende Lösungen mit React Native und Flutter für ein nahtloses Benutzererlebnis.',
-        features: {
-          '0': 'iOS & Android Native Apps',
-          '1': 'Plattformübergreifend (Flutter/React Native)',
-          '2': 'Mobile UI/UX Design',
-          '3': 'App Store Optimierung',
-          '4': 'Offline-Fähigkeiten'
-        }
-      },
-      cloud: {
-        title: 'Cloud-Infrastruktur',
-        description: 'Skalierbare AWS/Azure/GCP Architektur-Setup, Serverless-Deployment und DevOps.',
-        longDescription: 'Skalieren Sie mühelos mit unseren Cloud-Infrastrukturdiensten. Wir entwerfen resiliente Cloud-Architekturen auf AWS, Azure und Google Cloud mit Serverless-Technologien und Containerisierung für maximale Effizienz.',
-        features: {
-          '0': 'Cloud-Migrationsstrategie',
-          '1': 'Serverless-Architektur',
-          '2': 'Kubernetes & Docker Orchestrierung',
-          '3': 'CI/CD Pipeline Automatisierung',
-          '4': 'Kostenoptimierung'
-        }
-      },
-      data: {
-        title: 'Big Data',
-        description: 'Data Warehousing, ETL-Pipeline-Konstruktion und Echtzeit-Analytics-Dashboards.',
-        longDescription: 'Erschließen Sie den Wert Ihrer Daten. Unsere Big-Data-Ingenieure bauen robuste Pipelines, um massive Datensätze zu erfassen, zu verarbeiten und zu visualisieren, und liefern Ihnen handlungsrelevante Einblicke in Echtzeit.',
-        features: {
-          '0': 'Data Warehousing (Snowflake/BigQuery)',
-          '1': 'ETL/ELT Pipelines',
-          '2': 'Echtzeit Streaming Analytics',
-          '3': 'Business Intelligence Dashboards',
-          '4': 'Data Governance & Qualität'
+          '0': 'React & Next.js Webentwicklung',
+          '1': 'iOS & Android Mobile Apps',
+          '2': 'Plattformübergreifende Desktop-Anwendungen',
+          '3': 'Progressive Web Apps (PWA)',
+          '4': 'UI/UX Design & Optimierung'
         }
       }
     }

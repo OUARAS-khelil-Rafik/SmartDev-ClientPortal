@@ -43,7 +43,7 @@ const nl = {
     why_choose_suffix: 'team bestaat uit ervaren professionals die zich inzetten voor uw succes.',
     items: {
       ai: {
-        title: 'AI & Machine Learning',
+        title: 'Kunstmatige Intelligentie Oplossingen',
         description: 'Aangepaste LLM-integratie, voorspellende analyses en geautomatiseerde besluitvormingssystemen.',
         longDescription: 'Benut de kracht van Generatieve AI en Machine Learning om uw bedrijfsvoering te transformeren. Wij bouwen aangepaste modellen op maat van uw specifieke datasets, waardoor voorspellende inzichten, geautomatiseerde contentgeneratie en intelligente agents mogelijk worden.',
         features: {
@@ -54,64 +54,16 @@ const nl = {
           '4': 'AI-gestuurde Automatisering Agents'
         }
       },
-      sec: {
-        title: 'Cybersecurity',
-        description: 'Penetratietesten, beveiligingsaudits en veilige architectuurontwerpen om uw assets te beschermen.',
-        longDescription: 'In een tijdperk van toenemende digitale dreigingen zorgen onze cybersecurity-diensten ervoor dat uw infrastructuur ondoordringbaar is. Wij gebruiken ethisch hacken, realtime monitoring en zero-trust architecturen om uw data te beschermen.',
-        features: {
-          '0': 'Penetratietesten & Audits',
-          '1': 'Zero Trust Architectuur',
-          '2': 'Realtime Dreigingsmonitoring',
-          '3': 'GDPR & SOC2 Compliance',
-          '4': 'Incident Response Planning'
-        }
-      },
       web: {
-        title: 'Webontwikkeling',
-        description: 'Hoogwaardige React & Next.js applicaties met verbluffende visuals.',
-        longDescription: 'Wij creëren visueel verbluffende en hoogwaardige webapplicaties. Met moderne frameworks zoals React, Next.js en Tailwind CSS zorgen wij ervoor dat uw digitale aanwezigheid snel, toegankelijk en SEO-geoptimaliseerd is.',
+        title: 'Web, Mobiele & Desktop Oplossingen',
+        description: 'Hoogwaardige applicaties voor web, mobiel en desktop platforms.',
+        longDescription: 'Wij creëren visueel verbluffende en hoogwaardige applicaties op alle platforms. Met moderne frameworks zoals React, Next.js, React Native, Flutter en Electron zorgen wij ervoor dat uw digitale aanwezigheid snel, toegankelijk en geoptimaliseerd is voor elk apparaat.',
         features: {
-          '0': 'React & Next.js Ontwikkeling',
-          '1': 'Progressive Web Apps (PWA)',
-          '2': '3D WebGL Ervaringen',
-          '3': 'Headless CMS Integratie',
-          '4': 'Prestatie Optimalisatie'
-        }
-      },
-      mob: {
-        title: 'Mobiele Oplossingen',
-        description: 'Native en cross-platform mobiele apps die naadloze ervaringen bieden.',
-        longDescription: 'Bereik uw klanten waar ze ook zijn met onze mobiele ontwikkelingsdiensten. Wij bouwen native iOS/Android apps en cross-platform oplossingen met React Native en Flutter voor een naadloze gebruikerservaring.',
-        features: {
-          '0': 'iOS & Android Native Apps',
-          '1': 'Cross-Platform (Flutter/React Native)',
-          '2': 'Mobiele UI/UX Design',
-          '3': 'App Store Optimalisatie',
-          '4': 'Offline Mogelijkheden'
-        }
-      },
-      cloud: {
-        title: 'Cloud Infrastructuur',
-        description: 'Schaalbare AWS/Azure/GCP architectuur setup, serverless deployment en DevOps.',
-        longDescription: 'Schaal moeiteloos op met onze cloud infrastructuur diensten. Wij ontwerpen veerkrachtige cloud architecturen op AWS, Azure en Google Cloud, met serverless technologieën en containerisatie voor maximale efficiëntie.',
-        features: {
-          '0': 'Cloud Migratie Strategie',
-          '1': 'Serverless Architectuur',
-          '2': 'Kubernetes & Docker orchestratie',
-          '3': 'CI/CD Pipeline Automatisering',
-          '4': 'Kostenoptimalisatie'
-        }
-      },
-      data: {
-        title: 'Big Data',
-        description: 'Data warehousing, ETL pipeline constructie en realtime analytics dashboards.',
-        longDescription: 'Ontgrendel de waarde van uw data. Onze Big Data engineers bouwen robuuste pipelines om massale datasets te verwerken, verwerken en visualiseren, waardoor u bruikbare inzichten in realtime krijgt.',
-        features: {
-          '0': 'Data Warehousing (Snowflake/BigQuery)',
-          '1': 'ETL/ELT Pipelines',
-          '2': 'Realtime Streaming Analytics',
-          '3': 'Business Intelligence Dashboards',
-          '4': 'Data Governance & Kwaliteit'
+          '0': 'React & Next.js Webontwikkeling',
+          '1': 'iOS & Android Mobiele Apps',
+          '2': 'Cross-Platform Desktop Applicaties',
+          '3': 'Progressive Web Apps (PWA)',
+          '4': 'UI/UX Design & Optimalisatie'
         }
       }
     }

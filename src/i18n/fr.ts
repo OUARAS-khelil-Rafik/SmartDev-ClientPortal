@@ -45,7 +45,7 @@ const fr = {
   ,
     items: {
       ai: {
-        title: 'IA & Apprentissage automatique',
+        title: 'Solutions d\'Intelligence Artificielle',
         description: "Intégration LLM personnalisée, analyses prédictives et systèmes de prise de décision automatisés.",
         longDescription: "Exploitez la puissance de l'IA générative et du Machine Learning pour transformer vos opérations. Nous construisons des modèles personnalisés adaptés à vos jeux de données, offrant des insights prédictifs, de la génération de contenu automatisée et des agents intelligents.",
         features: {
@@ -56,64 +56,16 @@ const fr = {
           '4': "Agents d'automatisation pilotés par l'IA"
         }
       },
-      sec: {
-        title: 'Cybersécurité',
-        description: "Tests d'intrusion, audits de sécurité et conception d'architectures sécurisées pour protéger les actifs.",
-        longDescription: "À l'ère des menaces numériques croissantes, nos services de cybersécurité garantissent que votre infrastructure est imperméable. Nous utilisons le hacking éthique, la surveillance en temps réel et des architectures zero-trust pour protéger vos données.",
-        features: {
-          '0': "Tests d'intrusion et audits",
-          '1': 'Architecture Zero Trust',
-          '2': 'Surveillance des menaces en temps réel',
-          '3': 'Conformité GDPR & SOC2',
-          '4': "Planification de la réponse aux incidents"
-        }
-      },
       web: {
-        title: 'Développement Web',
-        description: "Applications React & Next.js haute performance avec un rendu visuel soigné.",
-        longDescription: "Nous concevons des applications Web esthétiques et performantes. En utilisant des frameworks modernes comme React, Next.js et Tailwind CSS, nous veillons à ce que votre présence digitale soit rapide, accessible et optimisée pour le référencement.",
+        title: 'Solutions Web, Mobile & Bureau',
+        description: "Applications haute performance pour web, mobile et bureau.",
+        longDescription: "Nous concevons des applications esthétiques et performantes sur toutes les plateformes. En utilisant des frameworks modernes comme React, Next.js, React Native, Flutter et Electron, nous garantissons une présence digitale rapide, accessible et optimisée pour chaque appareil.",
         features: {
-          '0': 'Développement React & Next.js',
-          '1': 'Progressive Web Apps (PWA)',
-          '2': 'Expériences 3D WebGL',
-          '3': 'Intégration Headless CMS',
-          '4': "Optimisation des performances"
-        }
-      },
-      mob: {
-        title: 'Solutions Mobiles',
-        description: "Applications mobiles natives et cross-platform offrant des expériences fluides.",
-        longDescription: "Atteignez vos clients où qu'ils soient grâce à nos services mobiles. Nous construisons des applications natives iOS/Android et des solutions cross-platform avec React Native et Flutter.",
-        features: {
-          '0': 'Applications natives iOS & Android',
-          '1': 'Cross-Platform (Flutter/React Native)',
-          '2': 'Conception UI/UX mobile',
-          '3': "Optimisation pour les stores d'applications",
-          '4': 'Fonctionnalités hors ligne'
-        }
-      },
-      cloud: {
-        title: 'Infrastructure Cloud',
-        description: "Mise en place d'architectures AWS/Azure/GCP évolutives, déploiement serverless et DevOps.",
-        longDescription: "Montez en charge facilement grâce à nos services d'infrastructure cloud. Nous concevons des architectures résilientes sur AWS, Azure et Google Cloud, en utilisant serverless et la containerisation pour une efficacité maximale.",
-        features: {
-          '0': 'Stratégie de migration cloud',
-          '1': 'Architecture serverless',
-          '2': "Orchestration Kubernetes & Docker",
-          '3': 'Automatisation CI/CD',
-          '4': 'Optimisation des coûts'
-        }
-      },
-      data: {
-        title: 'Big Data',
-        description: "Entrepôts de données, construction de pipelines ETL et tableaux de bord analytiques en temps réel.",
-        longDescription: "Exploitez la valeur de vos données. Nos ingénieurs Big Data construisent des pipelines robustes pour ingérer, traiter et visualiser de larges jeux de données, fournissant des insights exploitables en temps réel.",
-        features: {
-          '0': "Entrepôts de données (Snowflake/BigQuery)",
-          '1': 'Pipelines ETL/ELT',
-          '2': 'Analyse en streaming en temps réel',
-          '3': "Tableaux de bord Business Intelligence",
-          '4': "Gouvernance et qualité des données"
+          '0': 'Développement Web React & Next.js',
+          '1': 'Applications mobiles iOS & Android',
+          '2': 'Applications bureau cross-platform',
+          '3': 'Progressive Web Apps (PWA)',
+          '4': 'Conception et optimisation UI/UX'
         }
       }
     }

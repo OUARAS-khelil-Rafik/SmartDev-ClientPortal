@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useI18n } from '../i18n';
-import { Brain, Shield, Globe, Smartphone, Cloud, Database, ArrowLeft, CheckCircle2, Zap } from 'lucide-react';
+import { Brain, Globe, ArrowLeft, CheckCircle2, Zap } from 'lucide-react';
 import { Service } from '../types';
 
 // Service texts are localized at runtime using `t('services.items.<id>...')`
@@ -26,20 +26,6 @@ const Services: React.FC = () => {
       ]
     },
     {
-      id: 'sec',
-      icon: <Shield size={40} className="text-emerald-500" />,
-      title: t('services.items.sec.title'),
-      description: t('services.items.sec.description'),
-      longDescription: t('services.items.sec.longDescription'),
-      features: [
-        t('services.items.sec.features.0'),
-        t('services.items.sec.features.1'),
-        t('services.items.sec.features.2'),
-        t('services.items.sec.features.3'),
-        t('services.items.sec.features.4')
-      ]
-    },
-    {
       id: 'web',
       icon: <Globe size={40} className="text-blue-500" />,
       title: t('services.items.web.title'),
@@ -51,48 +37,6 @@ const Services: React.FC = () => {
         t('services.items.web.features.2'),
         t('services.items.web.features.3'),
         t('services.items.web.features.4')
-      ]
-    },
-    {
-      id: 'mob',
-      icon: <Smartphone size={40} className="text-orange-500" />,
-      title: t('services.items.mob.title'),
-      description: t('services.items.mob.description'),
-      longDescription: t('services.items.mob.longDescription'),
-      features: [
-        t('services.items.mob.features.0'),
-        t('services.items.mob.features.1'),
-        t('services.items.mob.features.2'),
-        t('services.items.mob.features.3'),
-        t('services.items.mob.features.4')
-      ]
-    },
-    {
-      id: 'cloud',
-      icon: <Cloud size={40} className="text-sky-500" />,
-      title: t('services.items.cloud.title'),
-      description: t('services.items.cloud.description'),
-      longDescription: t('services.items.cloud.longDescription'),
-      features: [
-        t('services.items.cloud.features.0'),
-        t('services.items.cloud.features.1'),
-        t('services.items.cloud.features.2'),
-        t('services.items.cloud.features.3'),
-        t('services.items.cloud.features.4')
-      ]
-    },
-    {
-      id: 'data',
-      icon: <Database size={40} className="text-red-500" />,
-      title: t('services.items.data.title'),
-      description: t('services.items.data.description'),
-      longDescription: t('services.items.data.longDescription'),
-      features: [
-        t('services.items.data.features.0'),
-        t('services.items.data.features.1'),
-        t('services.items.data.features.2'),
-        t('services.items.data.features.3'),
-        t('services.items.data.features.4')
       ]
     }
   ];
