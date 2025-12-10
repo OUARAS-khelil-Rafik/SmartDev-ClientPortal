@@ -22,7 +22,7 @@ class MockApi {
     const stored = localStorage.getItem('nexus_users');
     // Default Admin User if empty
     if (!stored) {
-        const admin: User = { id: 'admin1', name: 'Nexus Admin', email: 'admin@nexus.dev', role: 'admin' };
+        const admin: User = { id: 'admin1', name: 'SYNARIZMIE Admin', email: 'admin@synarizmie.dev', role: 'admin' };
         this.saveUsers([admin]);
         return [admin];
     }

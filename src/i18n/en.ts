@@ -22,7 +22,7 @@ const en = {
     accepting: 'Accepting New Projects for 2025',
     title_line1: 'Building the',
     title_highlight: 'Digital Future',
-    subtitle: 'We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, Nexus delivers excellence in every line of code.',
+    subtitle: 'We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, SYNARIZMIE delivers excellence in every line of code.',
     start_project: 'Start Your Project',
     explore_services: 'Explore Services'
     ,
@@ -39,7 +39,7 @@ const en = {
     engineering_excellence: 'Engineering Excellence',
     subtitle: 'We combine creativity with technical prowess to deliver solutions that scale.',
     view_details: 'View Details',
-    why_choose: 'Why Choose Nexus?',
+    why_choose: 'Why Choose SYNARIZMIE?',
     why_choose_prefix: "We don't just write code; we architect solutions that drive growth. Our",
     why_choose_suffix: 'team consists of industry veterans dedicated to your success.'
   ,
@@ -122,7 +122,7 @@ const en = {
     welcome_back: 'Welcome Back',
     create_account: 'Create Account',
     access_portal: 'Access your client portal',
-    start_journey: 'Start your journey with Nexus',
+    start_journey: 'Start your journey with SYNARIZMIE',
     full_name: 'Full Name',
     email: 'Email Address',
     password: 'Password',
@@ -130,7 +130,7 @@ const en = {
     create_account_cta: 'Create Account',
     dont_have: "Don't have an account? Sign up",
     already_have: 'Already have an account? Sign in',
-    admin_tip: 'Tip: Use admin@nexus.dev to login as Administrator.',
+    admin_tip: 'Tip: Use admin@synarizmie.dev to login as Administrator.',
     developer_tip: 'Developers: Contact your administrator for login credentials.',
     developer_note: 'Note: Sign up is only for clients. Developers are created by administrators.'
   },
@@ -346,7 +346,7 @@ const en = {
   }
   ,
   ai_consultant: {
-    welcome: "Hello! I'm the Nexus AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
+    welcome: "Hello! I'm the SYNARIZMIE AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
     title: 'AI Architect',
     subtitle: 'Powered by Gemini 2.5 Flash',
     status: {
@@ -413,8 +413,8 @@ const en = {
     }
   },
   copilot: {
-    name: 'Nexus Copilot',
-    init_text: "Hi! I'm Nexus Copilot. How can I assist you today?",
+    name: 'SYNARIZMIE Copilot',
+    init_text: "Hi! I'm SYNARIZMIE Copilot. How can I assist you today?",
     open: 'Open Copilot',
     close: 'Close Copilot',
     thinking: 'Thinking...',

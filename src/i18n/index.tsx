@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useMemo } from 'react';
 import en from './en';
 import fr from './fr';
+import nl from './nl';
+import de from './de';
 
-type Lang = 'en' | 'fr';
+type Lang = 'en' | 'fr' | 'nl' | 'de';
 
-const translations: Record<Lang, any> = { en, fr };
+const translations: Record<Lang, any> = { en, fr, nl, de };
 
 interface I18nContextValue {
   lang: Lang;

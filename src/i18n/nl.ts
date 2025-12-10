@@ -1,0 +1,419 @@
+const nl = {
+  nav: {
+    home: 'Home',
+    services: 'Diensten',
+    ai: 'AI Architect',
+    admin_panel: 'Beheerpaneel',
+    my_projects: 'Mijn Projecten',
+    projects: 'Projecten',
+    bookings: 'Boekingen',
+    book_meeting: 'Vergadering Boeken',
+    sign_in: 'Inloggen',
+    logout: 'Uitloggen',
+    switch_to_fr: 'Naar Frans wisselen',
+    switch_to_en: 'Naar Engels wisselen',
+    toggle_language: 'Taal wisselen'
+  },
+  theme: {
+    switch_light: 'Naar lichte modus wisselen',
+    switch_dark: 'Naar donkere modus wisselen'
+  },
+  hero: {
+    accepting: 'Nieuwe Projecten Accepteren voor 2025',
+    title_line1: 'De',
+    title_highlight: 'Digitale Toekomst',
+    subtitle: 'Wij ontwikkelen robuuste, schaalbare en veilige softwareoplossingen. Van AI-integratie tot enterprise security, SYNARIZMIE levert excellentie in elke regel code.',
+    start_project: 'Start Uw Project',
+    explore_services: 'Ontdek Diensten',
+    modern_stack: {
+      title: 'Moderne Stack'
+    },
+    enterprise_security: {
+      title: 'Enterprise Security',
+      desc: 'SOC2-conforme infrastructuur met end-to-end encryptie.'
+    }
+  },
+  services: {
+    our_expertise: 'Onze Expertise',
+    engineering_excellence: 'Engineering Excellentie',
+    subtitle: 'Wij combineren creativiteit met technische bekwaamheid om schaalbare oplossingen te leveren.',
+    view_details: 'Details Bekijken',
+    why_choose: 'Waarom Kiezen voor SYNARIZMIE?',
+    why_choose_prefix: 'Wij schrijven niet alleen code; wij ontwerpen oplossingen die groei stimuleren. Ons',
+    why_choose_suffix: 'team bestaat uit ervaren professionals die zich inzetten voor uw succes.',
+    items: {
+      ai: {
+        title: 'AI & Machine Learning',
+        description: 'Aangepaste LLM-integratie, voorspellende analyses en geautomatiseerde besluitvormingssystemen.',
+        longDescription: 'Benut de kracht van Generatieve AI en Machine Learning om uw bedrijfsvoering te transformeren. Wij bouwen aangepaste modellen op maat van uw specifieke datasets, waardoor voorspellende inzichten, geautomatiseerde contentgeneratie en intelligente agents mogelijk worden.',
+        features: {
+          '0': 'Aangepaste LLM Fine-tuning',
+          '1': 'Voorspellende Analyse Dashboards',
+          '2': 'Natural Language Processing (NLP)',
+          '3': 'Computer Vision Systemen',
+          '4': 'AI-gestuurde Automatisering Agents'
+        }
+      },
+      sec: {
+        title: 'Cybersecurity',
+        description: 'Penetratietesten, beveiligingsaudits en veilige architectuurontwerpen om uw assets te beschermen.',
+        longDescription: 'In een tijdperk van toenemende digitale dreigingen zorgen onze cybersecurity-diensten ervoor dat uw infrastructuur ondoordringbaar is. Wij gebruiken ethisch hacken, realtime monitoring en zero-trust architecturen om uw data te beschermen.',
+        features: {
+          '0': 'Penetratietesten & Audits',
+          '1': 'Zero Trust Architectuur',
+          '2': 'Realtime Dreigingsmonitoring',
+          '3': 'GDPR & SOC2 Compliance',
+          '4': 'Incident Response Planning'
+        }
+      },
+      web: {
+        title: 'Webontwikkeling',
+        description: 'Hoogwaardige React & Next.js applicaties met verbluffende visuals.',
+        longDescription: 'Wij creëren visueel verbluffende en hoogwaardige webapplicaties. Met moderne frameworks zoals React, Next.js en Tailwind CSS zorgen wij ervoor dat uw digitale aanwezigheid snel, toegankelijk en SEO-geoptimaliseerd is.',
+        features: {
+          '0': 'React & Next.js Ontwikkeling',
+          '1': 'Progressive Web Apps (PWA)',
+          '2': '3D WebGL Ervaringen',
+          '3': 'Headless CMS Integratie',
+          '4': 'Prestatie Optimalisatie'
+        }
+      },
+      mob: {
+        title: 'Mobiele Oplossingen',
+        description: 'Native en cross-platform mobiele apps die naadloze ervaringen bieden.',
+        longDescription: 'Bereik uw klanten waar ze ook zijn met onze mobiele ontwikkelingsdiensten. Wij bouwen native iOS/Android apps en cross-platform oplossingen met React Native en Flutter voor een naadloze gebruikerservaring.',
+        features: {
+          '0': 'iOS & Android Native Apps',
+          '1': 'Cross-Platform (Flutter/React Native)',
+          '2': 'Mobiele UI/UX Design',
+          '3': 'App Store Optimalisatie',
+          '4': 'Offline Mogelijkheden'
+        }
+      },
+      cloud: {
+        title: 'Cloud Infrastructuur',
+        description: 'Schaalbare AWS/Azure/GCP architectuur setup, serverless deployment en DevOps.',
+        longDescription: 'Schaal moeiteloos op met onze cloud infrastructuur diensten. Wij ontwerpen veerkrachtige cloud architecturen op AWS, Azure en Google Cloud, met serverless technologieën en containerisatie voor maximale efficiëntie.',
+        features: {
+          '0': 'Cloud Migratie Strategie',
+          '1': 'Serverless Architectuur',
+          '2': 'Kubernetes & Docker orchestratie',
+          '3': 'CI/CD Pipeline Automatisering',
+          '4': 'Kostenoptimalisatie'
+        }
+      },
+      data: {
+        title: 'Big Data',
+        description: 'Data warehousing, ETL pipeline constructie en realtime analytics dashboards.',
+        longDescription: 'Ontgrendel de waarde van uw data. Onze Big Data engineers bouwen robuuste pipelines om massale datasets te verwerken, verwerken en visualiseren, waardoor u bruikbare inzichten in realtime krijgt.',
+        features: {
+          '0': 'Data Warehousing (Snowflake/BigQuery)',
+          '1': 'ETL/ELT Pipelines',
+          '2': 'Realtime Streaming Analytics',
+          '3': 'Business Intelligence Dashboards',
+          '4': 'Data Governance & Kwaliteit'
+        }
+      }
+    }
+  },
+  auth: {
+    welcome_back: 'Welkom Terug',
+    create_account: 'Account Aanmaken',
+    access_portal: 'Toegang tot uw klantenportaal',
+    start_journey: 'Begin uw reis met SYNARIZMIE',
+    full_name: 'Volledige Naam',
+    email: 'E-mailadres',
+    password: 'Wachtwoord',
+    sign_in: 'Inloggen',
+    create_account_cta: 'Account Aanmaken',
+    dont_have: 'Heeft u geen account? Registreer',
+    already_have: 'Heeft u al een account? Inloggen',
+    admin_tip: 'Tip: Gebruik admin@synarizmie.dev om in te loggen als Beheerder.',
+    developer_tip: 'Ontwikkelaars: Neem contact op met uw beheerder voor inloggegevens.',
+    developer_note: 'Opmerking: Registratie is alleen voor klanten. Ontwikkelaars worden aangemaakt door beheerders.'
+  },
+  booking: {
+    login_required: 'Inloggen Vereist',
+    please_log_in: 'Log in of maak een account aan om een consultatie met onze experts te plannen.',
+    go_to_login: 'Naar Inloggen',
+    admin_restricted: 'Beheerderstoegang Beperkt',
+    admin_restricted_msg: 'Beheerders kunnen geen vergaderingen boeken. Schakel over naar een klantaccount om de boekingsfunctionaliteit te testen.',
+    new_reservation: 'Nieuwe Reservering',
+    my_requests: 'Mijn Aanvragen',
+    request_received_prefix: 'Wij hebben uw aanvraag ontvangen voor ',
+    google_meet_integration: 'Google Meet Integratie',
+    google_meet_msg_prefix: 'Zodra een beheerder uw aanvraag goedkeurt, wordt een functionele Google Meet link gegenereerd en verzonden naar ',
+    google_meet_msg_suffix: '.',
+    select_services_hint: 'Selecteer een of meer diensten waarin u geïnteresseerd bent. Wij controleren de beschikbaarheid in onze agenda en reserveren uw tijdslot.',
+    live_availability: 'Live Beschikbaarheid',
+    real_time_checking: 'Realtime tijdslot controle',
+    select_project_required: 'Selecteer of maak een gerelateerd project aan voordat u de aanvraag bevestigt.',
+    schedule_consultation: 'Plan een Consultatie',
+    agenda_for: 'Agenda voor',
+    unique_link_text: 'Een unieke Meet link wordt verstrekt na goedkeuring.',
+    select_date: 'Selecteer Datum',
+    pick_date_hint: 'Kies een datum om de agenda en beschikbare uren te bekijken.',
+    occupied_slots: 'Bezette Tijdslots',
+    no_bookings: 'Geen boekingen',
+    select_time: 'Selecteer Tijd',
+    select_project_placeholder: 'Selecteer gerelateerd project...',
+    services_label: 'Diensten',
+    description_label: 'Beschrijving',
+    description_placeholder: 'Beschrijf de doelen en context voor deze vergadering...',
+    related_project_label: 'Gerelateerd Project',
+    not_eligible_suffix: ' — niet geschikt',
+    logged_in_as: 'Ingelogd als:',
+    clear_history: 'Geschiedenis wissen',
+    refresh: 'Vernieuwen',
+    refresh_bookings: 'Boekingen vernieuwen',
+    book_another: 'Nog Een Boeken',
+    view_my_requests: 'Mijn Aanvragen Bekijken',
+    confirm_request: 'Aanvraag Bevestigen',
+    processing: 'Verwerken...',
+    no_booking_history: 'Geen boekingsgeschiedenis',
+    join_meet: 'Deelnemen aan Meet',
+    booking_failed: 'Boeking mislukt'
+  },
+  dashboard: {
+    title: 'Klantenportaal',
+    developer_title: 'Ontwikkelaarsportaal',
+    welcome_back: 'Welkom terug,',
+    assigned_projects: 'Uw toegewezen projecten',
+    no_assigned_projects: 'Er zijn nog geen projecten aan u toegewezen.',
+    contact_admin: 'Neem contact op met uw beheerder voor projecttoewijzingen.',
+    select_project: 'Selecteer een project',
+    no_projects: 'Geen projecten',
+    no_project_selected: 'Geen project geselecteerd',
+    deadline_label: 'Deadline:',
+    close_create_form: 'Aanmaakformulier sluiten',
+    create_project: 'Project aanmaken',
+    rename_project: 'Project hernoemen',
+    delete_project: 'Project verwijderen',
+    project_name: 'Projectnaam',
+    deadline: 'Deadline',
+    create: 'Aanmaken',
+    cancel: 'Annuleren',
+    overall_progress: 'Algehele Voortgang',
+    tasks: 'Taken',
+    click_to_toggle: 'Klik om te wisselen',
+    drag_to_reorder: 'Sleep om te herordenen',
+    add_new_task_placeholder: 'Nieuwe taak toevoegen...',
+    work_breakdown: 'Werkverdeling',
+    done: 'Gereed',
+    remaining: 'Resterend',
+    services: 'Diensten',
+    description: 'Beschrijving',
+    features: 'Belangrijkste Kenmerken',
+    project_not_found: 'Project niet gevonden',
+    only_planning_delete: 'Alleen projecten in Planning kunnen worden verwijderd. Dit project is al in uitvoering of voltooid.',
+    project_has_bookings: 'Dit project heeft gekoppelde boekingen en kan niet worden verwijderd.',
+    provide_valid_project_name: 'Geef een geldige projectnaam op',
+    duplicate_project_name: 'U heeft al een project met die naam. Kies een andere naam.',
+    failed_to_create_project: 'Aanmaken van project mislukt'
+  },
+  dashboard_extra: {
+    failed_to_rename_project: 'Hernoemen van project mislukt'
+  },
+  common_ui: {
+    cancel: 'Annuleren',
+    save: 'Opslaan',
+    saving: 'Opslaan...',
+    delete: 'Verwijderen'
+  },
+  empty: {
+    no_active_projects: 'U heeft nog geen actieve projecten.',
+    book_consultation: 'Boek een consultatie om te beginnen.'
+  },
+  confirm: {
+    delete_confirm_with_name: 'Weet u zeker dat u "{name}" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.',
+    delete_confirm: 'Weet u zeker dat u dit project wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.',
+    default_title: 'Bevestigen',
+    confirm_label: 'Bevestigen',
+    cancel_label: 'Annuleren',
+    processing: 'Verwerken...'
+  },
+  admin: {
+    title: 'Admin Controlecentrum',
+    subtitle: 'Beheer klantvergaderingen, goedkeuringen en projecten.',
+    pending_bookings: 'Openstaande Boekingen',
+    active_clients: 'Actieve Klanten',
+    total_projects: 'Totale Projecten',
+    active_developers: 'Actieve Ontwikkelaars',
+    manage_users: 'Gebruikers Beheren',
+    manage_clients: 'Klanten Beheren',
+    manage_developers: 'Ontwikkelaars Beheren',
+    add_developer: 'Ontwikkelaar Toevoegen',
+    edit_developer: 'Ontwikkelaar Bewerken',
+    developer_name: 'Ontwikkelaarsnaam',
+    developer_email: 'Ontwikkelaars E-mail',
+    create_developer: 'Ontwikkelaar Aanmaken',
+    update_developer: 'Ontwikkelaar Bijwerken',
+    assign_developer: 'Ontwikkelaar Toewijzen',
+    unassign_developer: 'Ontwikkelaar Verwijderen',
+    select_developer: 'Selecteer Ontwikkelaar',
+    no_developer_assigned: 'Geen ontwikkelaar toegewezen',
+    developer_assigned: 'Ontwikkelaar succesvol toegewezen',
+    approve_remove_tip: 'Keur klantaccounts goed of verwijder ze',
+    name: 'Naam',
+    email: 'E-mail',
+    status: 'Status',
+    actions: 'Acties',
+    activate: 'Activeren',
+    no_users_found: 'Geen gebruikers gevonden.',
+    no_developers_found: 'Geen ontwikkelaars gevonden.',
+    meeting_requests: 'Vergaderaanvragen',
+    manage_projects: 'Projecten Beheren',
+    filter_requests_placeholder: 'Aanvragen filteren...',
+    filter_clients_placeholder: 'Klanten filteren...',
+    filter_developers_placeholder: 'Ontwikkelaars filteren...',
+    filter_by_name: 'Filteren op naam...',
+    filter_by_client: 'Filteren op klant',
+    filter_by_developer: 'Filteren op ontwikkelaar',
+    all_clients: 'Alle Klanten',
+    all_developers: 'Alle Ontwikkelaars',
+    clear_history: 'Geschiedenis wissen',
+    showing_requests: '{count} aanvragen weergeven',
+    client_label: 'Klant',
+    services_description: 'Diensten / Beschrijving',
+    date_time: 'Datum & Tijd',
+    no_booking_requests: 'Geen boekingsaanvragen gevonden.',
+    clear_booking_history_title: 'Boekingsgeschiedenis Wissen',
+    clear_booking_history_message: 'Verwijder geannuleerde/afgewezen boekingen uit het systeem. Optioneel ook voltooide boekingen opnemen.',
+    clear_confirm: 'Wissen',
+    clear_failed: 'Wissen van boekingsgeschiedenis mislukt',
+    include_finished: 'Voltooide boekingen opnemen',
+    show_description: 'Beschrijving tonen',
+    approve_send_link: 'Goedkeuren & Link Verzenden',
+    reject: 'Afwijzen',
+    mark_finished: 'Markeren als voltooid',
+    cancel_booking: 'Boeking annuleren',
+    no_description_provided: 'Geen beschrijving verstrekt.',
+    all_projects: 'Alle Projecten',
+    clients_create_note: 'Klanten maken en verwijderen hun eigen projecten in Mijn Projecten.',
+    client_label_short: 'Klant:',
+    developer_label_short: 'Ontwikkelaar:',
+    due_label: 'Vervaldatum:',
+    rename: 'Hernoemen',
+    delete: 'Verwijderen',
+    deactivate: 'Deactiveren',
+    rename_project: 'Project Hernoemen',
+    provide_valid_project_name: 'Geef een geldige projectnaam op',
+    failed_to_rename: 'Hernoemen mislukt',
+    edit: 'Bewerken'
+  },
+  common: {
+    back_to_services: 'Terug naar Diensten',
+    request_sent: 'Aanvraag Verzonden!',
+    close: 'Sluiten',
+    cancel: 'Annuleren',
+    save: 'Opslaan',
+    saving: 'Opslaan...',
+    create: 'Aanmaken'
+  },
+  notifications: {
+    bell_label: 'Meldingen',
+    bell_title: 'Meldingen',
+    title: 'Meldingen',
+    refresh: 'Vernieuwen',
+    mark_all: 'Alles markeren',
+    clear: 'Wissen',
+    show_all: 'Alles tonen',
+    clear_all: 'Alles Wissen',
+    close: 'Meldingen sluiten',
+    loading: 'Laden...',
+    no_notifications: 'Geen meldingen',
+    mark_as_read: 'Markeren als gelezen',
+    mark_as_unread: 'Markeren als ongelezen',
+    delete_notification: 'Melding verwijderen',
+    read: 'Gelezen'
+  },
+  all_components: {
+    navbar: 'Navigatiebalk',
+    hero: 'Hero',
+    services: 'Diensten',
+    dashboard: 'Dashboard',
+    booking: 'Boeking',
+    ai_consultant: 'AI Consultant',
+    auth: 'Authenticatie',
+    admin_dashboard: 'Admin Dashboard',
+    floating_copilot: 'Zwevende Copilot'
+  },
+  ai_consultant: {
+    welcome: 'Hallo! Ik ben de SYNARIZMIE AI Architect. Vertel me over uw software-idee, en ik help u de technische vereisten, stack suggesties en geschatte scope uit te werken.',
+    title: 'AI Architect',
+    subtitle: 'Aangedreven door Gemini 2.5 Flash',
+    status: {
+      online: 'Online'
+    },
+    thinking: 'Nadenken...',
+    placeholder: "Beschrijf uw projectidee (bijv. 'Ik wil een mobiele app voor het bijhouden van fitnessdoelen met sociale functies')...",
+    send: 'Bericht verzenden',
+    caution: 'AI-antwoorden kunnen onnauwkeurig zijn. Raadpleeg onze menselijke engineers voor definitieve contracten.'
+  },
+  my_projects: {
+    access_restricted: {
+      title: 'Toegang Beperkt',
+      desc: 'Alleen klantaccounts kunnen hier projecten aanmaken of verwijderen. Beheerders beheren projecten vanuit het Admin Controlecentrum.'
+    },
+    title: 'Mijn Projecten',
+    create_project: 'Project aanmaken',
+    empty: 'U heeft nog geen projecten.',
+    form: {
+      project_name: 'Projectnaam',
+      deadline: 'Deadline',
+      new_project_name: 'Nieuwe projectnaam',
+      description: 'Beschrijving',
+      description_placeholder: 'Beschrijf uw projectdoelen en vereisten...',
+      services: 'Diensten / Functionaliteiten',
+      features: 'Belangrijkste Kenmerken',
+      feature_placeholder: 'Voeg een kenmerk toe...'
+    },
+    actions: {
+      rename: 'Hernoemen',
+      delete: 'Verwijderen',
+      details: 'Details Bewerken',
+      add_feature: 'Kenmerk toevoegen',
+      remove_feature: 'Kenmerk verwijderen'
+    },
+    card: {
+      due: 'Vervaldatum:',
+      status: 'Status:',
+      show_details: 'Details tonen',
+      hide_details: 'Details verbergen',
+      description: 'Beschrijving',
+      features: 'Kenmerken'
+    },
+    dialogs: {
+      delete_title: 'Project Verwijderen',
+      delete_with_name_prefix: 'Weet u zeker dat u wilt verwijderen',
+      delete_suffix: 'Deze actie kan niet ongedaan worden gemaakt.',
+      delete_generic: 'Weet u zeker dat u dit project wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.',
+      rename_title: 'Project Hernoemen',
+      rename_desc_prefix: 'Hernoemen',
+      details_title: 'Projectdetails'
+    },
+    errors: {
+      provide_valid_name: 'Geef een geldige projectnaam op',
+      failed_rename: 'Hernoemen mislukt',
+      provide_name: 'Geef een projectnaam op',
+      duplicate_name: 'U heeft al een project met die naam. Kies een andere naam.',
+      failed_create: 'Aanmaken van project mislukt',
+      project_not_found: 'Project niet gevonden',
+      only_delete_own: 'U kunt alleen uw eigen projecten verwijderen',
+      only_planning_delete: 'Alleen projecten in Planning kunnen worden verwijderd. Neem contact op met Admin voor beveiligde projecten.',
+      has_bookings: 'Dit project heeft gekoppelde boekingen en kan niet worden verwijderd.',
+      failed_delete: 'Verwijderen van project mislukt'
+    }
+  },
+  copilot: {
+    name: 'SYNARIZMIE Copilot',
+    init_text: 'Hallo! Ik ben SYNARIZMIE Copilot. Hoe kan ik u vandaag helpen?',
+    open: 'Copilot openen',
+    close: 'Copilot sluiten',
+    thinking: 'Nadenken...',
+    placeholder: 'Stel een vraag...',
+    send: 'Bericht verzenden'
+  }
+};
+
+export default nl;

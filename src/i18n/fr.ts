@@ -22,7 +22,7 @@ const fr = {
     accepting: "Acceptation de nouveaux projets pour 2025",
     title_line1: 'Construire le',
     title_highlight: 'Futur Numérique',
-    subtitle: "Nous concevons des solutions logicielles robustes, évolutives et sécurisées. De l'intégration IA à la sécurité d'entreprise, Nexus offre l'excellence à chaque ligne de code.",
+    subtitle: "Nous concevons des solutions logicielles robustes, évolutives et sécurisées. De l'intégration IA à la sécurité d'entreprise, SYNARIZMIE offre l'excellence à chaque ligne de code.",
     start_project: 'Démarrer votre projet',
     explore_services: 'Explorer les services'
     ,
@@ -39,7 +39,7 @@ const fr = {
     engineering_excellence: "L'Excellence d'ingénierie",
     subtitle: "Nous combinons créativité et expertise technique pour fournir des solutions évolutives.",
     view_details: 'Voir les détails',
-    why_choose: 'Pourquoi choisir Nexus ?',
+    why_choose: 'Pourquoi choisir SYNARIZMIE ?',
     why_choose_prefix: "Nous n'écrivons pas seulement du code ; nous concevons des solutions qui stimulent la croissance. Notre",
     why_choose_suffix: "équipe est composée de vétérans de l'industrie dédiés à votre réussite."
   ,
@@ -122,7 +122,7 @@ const fr = {
     welcome_back: 'Bon retour',
     create_account: 'Créer un compte',
     access_portal: 'Accédez à votre espace client',
-    start_journey: "Commencez votre voyage avec Nexus",
+    start_journey: "Commencez votre voyage avec SYNARIZMIE",
     full_name: 'Nom complet',
     email: 'Adresse e-mail',
     password: 'Mot de passe',
@@ -130,7 +130,7 @@ const fr = {
     create_account_cta: 'Créer un compte',
     dont_have: "Vous n'avez pas de compte ? Inscrivez-vous",
     already_have: 'Vous avez déjà un compte ? Connectez-vous',
-    admin_tip: "Astuce : utilisez admin@nexus.dev pour vous connecter en tant qu'administrateur.",
+    admin_tip: "Astuce : utilisez admin@synarizmie.dev pour vous connecter en tant qu'administrateur.",
     developer_tip: 'Développeurs : Contactez votre administrateur pour obtenir vos identifiants.',
     developer_note: 'Note : L\'inscription est réservée aux clients. Les développeurs sont créés par les administrateurs.'
   },
@@ -348,7 +348,7 @@ const fr = {
   }
   ,
   ai_consultant: {
-    welcome: "Bonjour ! Je suis l'Architecte IA de Nexus. Parlez-moi de votre idée logicielle et je vous aiderai à définir les exigences techniques, les suggestions de stack et l'estimation de l'envergure.",
+    welcome: "Bonjour ! Je suis l'Architecte IA de SYNARIZMIE. Parlez-moi de votre idée logicielle et je vous aiderai à définir les exigences techniques, les suggestions de stack et l'estimation de l'envergure.",
     title: 'Architecte IA',
     subtitle: 'Propulsé par Gemini 2.5 Flash',
     status: {
@@ -415,8 +415,8 @@ const fr = {
     }
   },
   copilot: {
-    name: 'Copilot Nexus',
-    init_text: "Bonjour ! Je suis le Copilot de Nexus. Comment puis-je vous aider aujourd'hui ?",
+    name: 'Copilot SYNARIZMIE',
+    init_text: "Bonjour ! Je suis le Copilot de SYNARIZMIE. Comment puis-je vous aider aujourd'hui ?",
     open: 'Ouvrir le Copilot',
     close: 'Fermer le Copilot',
     thinking: 'Réflexion...',
