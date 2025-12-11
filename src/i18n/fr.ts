@@ -56,7 +56,7 @@ const fr = {
       experiences: {
         title: 'Web · Mobile · Desktop',
         highlight: 'Produit',
-        desc: 'Expériences premium en React, Next.js, React Native, Flutter, Electron — rapides, accessibles et on-brand.'
+        desc: 'Expériences premium en React, Next.js, React Native, Flutter, Electron - rapides, accessibles et on-brand.'
       },
       platforms: {
         title: 'Cloud & Data Platforms',
