@@ -71,7 +71,36 @@ const en = {
     },
     stack_title: 'Stacks we master',
     stack_subtitle: 'Real languages, frameworks, and clouds',
-    stack_caption: 'Production-ready expertise with the tools that actually run the modern internet.'
+    stack_caption: 'Production-ready expertise with the tools that actually run the modern internet.',
+    devices: {
+      badge: 'Cross-platform delivery',
+      title: 'Mobile, tablet, desktop — one seamless product',
+      subtitle: 'We craft responsive, offline-ready experiences that feel native on every screen and input method.',
+      systemsTitle: 'Operating systems we build for',
+      systemsCopy: 'Windows, macOS, and Linux builds with device-aware optimizations, secure packaging, and deployment pipelines.',
+      laptopScreen: 'Desktop workspace',
+      tabletScreen: 'Tablet collaboration',
+      mobileScreen: 'Pocket controls',
+      points: {
+        p1: 'Adaptive layouts with fluid typography and auto-layout grids.',
+        p2: 'Keyboard, mouse, touch, stylus, and accessibility covered by design.',
+        p3: 'Performance budgets tuned for high-end rigs and low-power devices alike.'
+      },
+      deviceCards: {
+        desktop: {
+          title: 'Desktop',
+          desc: 'Enterprise dashboards, electron shells, and progressive web apps for full workstations.'
+        },
+        tablet: {
+          title: 'Tablet',
+          desc: 'Whiteboard-ready layouts, gesture-friendly UI, and hand-off from laptop to lap mode.'
+        },
+        mobile: {
+          title: 'Mobile',
+          desc: 'Native-feel experiences with offline caching, biometrics, and ergonomic touch targets.'
+        }
+      }
+    }
   },
   auth: {
     welcome_back: 'Welcome Back',

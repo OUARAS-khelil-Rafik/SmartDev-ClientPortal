@@ -326,6 +326,22 @@ const AppsShowcase: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Close lightbox with Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+      }
+    };
+
+    if (isLightboxOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isLightboxOpen]);
+
   // Auto-rotate project images
   useEffect(() => {
     const pointageInterval = setInterval(() => {
@@ -339,20 +355,6 @@ const AppsShowcase: React.FC = () => {
       clearInterval(brailleInterval);
     };
   }, [translatedPointageImages.length, translatedBrailleImages.length]);
-
-  // Navigation functions for each project
-  const nextPointageImage = () => {
-    setPointageImageIndex((prev) => (prev + 1) % translatedPointageImages.length);
-  };
-  const prevPointageImage = () => {
-    setPointageImageIndex((prev) => (prev - 1 + translatedPointageImages.length) % translatedPointageImages.length);
-  };
-  const nextBrailleImage = () => {
-    setBrailleImageIndex((prev) => (prev + 1) % translatedBrailleImages.length);
-  };
-  const prevBrailleImage = () => {
-    setBrailleImageIndex((prev) => (prev - 1 + translatedBrailleImages.length) % translatedBrailleImages.length);
-  };
 
   const openLightbox = (index: number, project: 'pointage' | 'braille') => {
     setLightboxImage(index);
@@ -534,7 +536,10 @@ const AppsShowcase: React.FC = () => {
                 </div>
                 
                 {/* Image container with aspect ratio */}
-                <div className="relative aspect-[16/10] bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                <div
+                  className="relative aspect-[16/10] bg-slate-200 dark:bg-slate-800 overflow-hidden cursor-pointer"
+                  onClick={() => openLightbox(pointageImageIndex, 'pointage')}
+                >
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={`pointage-${pointageImageIndex}`}
@@ -565,30 +570,6 @@ const AppsShowcase: React.FC = () => {
                     </motion.div>
                   </AnimatePresence>
                   
-                  {/* Navigation arrows */}
-                  <button 
-                    onClick={prevPointageImage}
-                    aria-label="Previous image"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 dark:bg-slate-800/95 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-slate-700 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-200 hover:scale-110 border border-slate-200/50 dark:border-slate-600/50"
-                  >
-                    <ArrowLeft className="w-5 h-5 text-slate-700 dark:text-slate-200" />
-                  </button>
-                  <button 
-                    onClick={nextPointageImage}
-                    aria-label="Next image"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 dark:bg-slate-800/95 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-slate-700 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-200 hover:scale-110 border border-slate-200/50 dark:border-slate-600/50"
-                  >
-                    <ArrowRight className="w-5 h-5 text-slate-700 dark:text-slate-200" />
-                  </button>
-                  
-                  <button
-                    onClick={() => openLightbox(pointageImageIndex, 'pointage')}
-                    aria-label={t('appsShowcase.viewAll')}
-                    className="absolute bottom-4 right-4 px-4 py-2 rounded-lg bg-blue-500 text-white text-sm font-medium flex items-center gap-2 hover:bg-blue-600 transition-all shadow-lg hover:scale-105"
-                  >
-                    <Eye className="w-4 h-4" />
-                    {t('appsShowcase.viewAll')}
-                  </button>
                 </div>
               </div>
               
@@ -767,7 +748,10 @@ const AppsShowcase: React.FC = () => {
                 </div>
                 
                 {/* Image container with aspect ratio */}
-                <div className="relative aspect-[16/10] bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                <div
+                  className="relative aspect-[16/10] bg-slate-200 dark:bg-slate-800 overflow-hidden cursor-pointer"
+                  onClick={() => openLightbox(brailleImageIndex, 'braille')}
+                >
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={`braille-${brailleImageIndex}`}
@@ -798,30 +782,6 @@ const AppsShowcase: React.FC = () => {
                     </motion.div>
                   </AnimatePresence>
                   
-                  {/* Navigation arrows */}
-                  <button 
-                    onClick={prevBrailleImage}
-                    aria-label="Previous image"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 dark:bg-slate-800/95 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-slate-700 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-200 hover:scale-110 border border-slate-200/50 dark:border-slate-600/50"
-                  >
-                    <ArrowLeft className="w-5 h-5 text-slate-700 dark:text-slate-200" />
-                  </button>
-                  <button 
-                    onClick={nextBrailleImage}
-                    aria-label="Next image"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 dark:bg-slate-800/95 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-slate-700 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-200 hover:scale-110 border border-slate-200/50 dark:border-slate-600/50"
-                  >
-                    <ArrowRight className="w-5 h-5 text-slate-700 dark:text-slate-200" />
-                  </button>
-                  
-                  <button
-                    onClick={() => openLightbox(brailleImageIndex, 'braille')}
-                    aria-label={t('appsShowcase.viewAll')}
-                    className="absolute bottom-4 right-4 px-4 py-2 rounded-lg bg-cyan-500 text-white text-sm font-medium flex items-center gap-2 hover:bg-cyan-600 transition-all shadow-lg hover:scale-105"
-                  >
-                    <Eye className="w-4 h-4" />
-                    {t('appsShowcase.viewAll')}
-                  </button>
                 </div>
               </div>
               

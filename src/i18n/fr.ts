@@ -71,7 +71,36 @@ const fr = {
     },
     stack_title: 'Stacks que nous maîtrisons',
     stack_subtitle: 'Vrais langages, frameworks et clouds',
-    stack_caption: "Une expertise prête pour la production avec les outils qui font tourner l'internet moderne."
+    stack_caption: "Une expertise prête pour la production avec les outils qui font tourner l'internet moderne.",
+    devices: {
+      badge: 'Multi-plateforme',
+      title: 'Mobile, tablette, desktop — un seul produit fluide',
+      subtitle: 'Nous créons des expériences responsives et offline-ready qui semblent natives sur chaque écran et méthode de saisie.',
+      systemsTitle: 'Systèmes que nous couvrons',
+      systemsCopy: 'Windows, macOS et Linux avec optimisations matérielles, packaging sécurisé et chaînes de déploiement.',
+      laptopScreen: 'Espace bureau',
+      tabletScreen: 'Collaboration tablette',
+      mobileScreen: 'Contrôles mobiles',
+      points: {
+        p1: 'Mises en page adaptatives avec typographie fluide et grilles auto-layout.',
+        p2: 'Clavier, souris, tactile, stylet et accessibilité pris en compte dès la conception.',
+        p3: 'Budgets de performance pour machines puissantes et appareils basse consommation.'
+      },
+      deviceCards: {
+        desktop: {
+          title: 'Desktop',
+          desc: 'Tableaux de bord entreprise, shells Electron et PWAs pour postes de travail.'
+        },
+        tablet: {
+          title: 'Tablette',
+          desc: 'Interfaces gestuelles prêtes pour le tableau blanc et passage laptop -> mode canapé.'
+        },
+        mobile: {
+          title: 'Mobile',
+          desc: 'Expériences natives avec cache hors ligne, biométrie et cibles tactiles ergonomiques.'
+        }
+      }
+    }
   },
   auth: {
     welcome_back: 'Bon retour',

@@ -70,7 +70,36 @@ const de = {
     },
     stack_title: 'Stacks, die wir beherrschen',
     stack_subtitle: 'Echte Sprachen, Frameworks und Clouds',
-    stack_caption: 'Produktionsreife Expertise mit den Werkzeugen, die das moderne Internet antreiben.'
+    stack_caption: 'Produktionsreife Expertise mit den Werkzeugen, die das moderne Internet antreiben.',
+    devices: {
+      badge: 'Cross-Platform Delivery',
+      title: 'Mobile, Tablet, Desktop – ein nahtloses Produkt',
+      subtitle: 'Wir bauen responsive, offline-fähige Experiences, die sich auf jedem Screen nativ anfühlen.',
+      systemsTitle: 'Betriebssysteme, die wir abdecken',
+      systemsCopy: 'Windows, macOS und Linux mit hardwarebewussten Optimierungen, sicherem Packaging und Deployment-Pipelines.',
+      laptopScreen: 'Desktop-Workspace',
+      tabletScreen: 'Tablet-Collaboration',
+      mobileScreen: 'Pocket Controls',
+      points: {
+        p1: 'Adaptive Layouts mit fließender Typografie und Auto-Layout-Grids.',
+        p2: 'Tastatur, Maus, Touch, Stift und Accessibility sind von Anfang an berücksichtigt.',
+        p3: 'Performance-Budgets für High-End-Rechner und Low-Power-Geräte.'
+      },
+      deviceCards: {
+        desktop: {
+          title: 'Desktop',
+          desc: 'Enterprise-Dashboards, Electron-Shells und PWAs für vollwertige Workstations.'
+        },
+        tablet: {
+          title: 'Tablet',
+          desc: 'Gestenfreundliche UI, Whiteboard-Ready und fließender Wechsel zwischen Laptop und Couch-Modus.'
+        },
+        mobile: {
+          title: 'Mobile',
+          desc: 'Native User Experience mit Offline-Cache, Biometrie und ergonomischen Touch-Zielen.'
+        }
+      }
+    }
   },
   auth: {
     welcome_back: 'Willkommen Zurück',

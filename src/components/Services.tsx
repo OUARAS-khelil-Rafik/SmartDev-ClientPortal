@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useI18n } from '../i18n';
 import { Sparkles, BotMessageSquare, PanelsTopLeft, Rocket } from 'lucide-react';
 
@@ -58,10 +58,44 @@ const marqueeRows = [
   techLogos.slice(14).concat(techLogos.slice(0, 6))
 ];
 
+const systemLogos = [
+  { name: 'Windows', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg' },
+  { name: 'macOS', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg' },
+  { name: 'Linux', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' }
+];
+
+const deviceHighlights = [
+  {
+    title: 'Pixel-perfect across screens',
+    desc: 'From pocket to desktop, layouts, motions, and gestures adapt instantly.'
+  },
+  {
+    title: 'Native-grade performance',
+    desc: 'Hardware-accelerated UI, smooth 120fps-ready transitions, and offline-first caching.'
+  },
+  {
+    title: 'Security + compliance built-in',
+    desc: 'SSO, device posture checks, encryption at rest/in transit, and audit-ready logging.'
+  },
+  {
+    title: 'Ship once, run everywhere',
+    desc: 'Unified design system for iOS, Android, Windows, macOS, and Linux workspaces.'
+  }
+];
+
 const Services: React.FC = () => {
   const { t } = useI18n();
   const marketingLinesRaw = t('services.marketingLines');
   const marketingLines = Array.isArray(marketingLinesRaw) ? marketingLinesRaw : [];
+
+  const [currentOsIndex, setCurrentOsIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentOsIndex((prev) => (prev + 1) % systemLogos.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   const capabilityCards = [
     {
@@ -158,6 +192,123 @@ const Services: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="mt-16 grid lg:grid-cols-[1.1fr,0.9fr] gap-8 items-center animate-fade-in-up">
+          <div className="relative p-6 sm:p-8 rounded-3xl border border-slate-200/70 dark:border-white/10 bg-white/95 dark:bg-slate-900/85 shadow-2xl overflow-hidden">
+            <div className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-blue-500/12 dark:bg-blue-500/18 blur-3xl" aria-hidden="true" />
+            <div className="absolute -right-16 bottom-6 h-44 w-44 rounded-full bg-emerald-400/10 dark:bg-emerald-400/18 blur-3xl" aria-hidden="true" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_42%,rgba(59,130,246,0.08),transparent_46%),radial-gradient(circle_at_72%_28%,rgba(16,185,129,0.08),transparent_40%),radial-gradient(circle_at_52%_78%,rgba(236,72,153,0.05),transparent_34%)] dark:bg-[radial-gradient(circle_at_28%_42%,rgba(59,130,246,0.14),transparent_46%),radial-gradient(circle_at_72%_28%,rgba(16,185,129,0.14),transparent_40%),radial-gradient(circle_at_52%_78%,rgba(236,72,153,0.08),transparent_34%)]" aria-hidden="true" />
+
+            <div className="relative h-[370px] sm:h-[440px] flex items-center justify-center">
+              <div className="absolute -top-2 left-6 flex items-center gap-3 rounded-full bg-white dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-700 border border-slate-200/70 dark:border-white/10 px-4 py-2 backdrop-blur-sm shadow-lg device-bounce z-50">
+                <div className="relative h-5 w-5 overflow-hidden">
+                  {systemLogos.map((os, idx) => (
+                    <img
+                      key={os.name}
+                      src={os.src}
+                      alt={os.name}
+                      className={`absolute inset-0 h-5 w-5 object-contain transition-all duration-500 ${idx === currentOsIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+                <span className="text-xs font-semibold text-slate-800 dark:text-white/90">Runs on every OS</span>
+              </div>
+
+              <div className="relative w-full max-w-3xl">
+                {/* Tablet front-left */}
+                <div className="absolute -left-8 sm:-left-4 bottom-4 sm:bottom-8 w-36 sm:w-40 rounded-[26px] border border-slate-700/30 dark:border-white/15 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 shadow-2xl backdrop-blur device-sway device-glow z-30">
+                  <div className="m-3 rounded-2xl bg-gradient-to-b from-slate-700 via-slate-600 to-slate-700 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 border border-slate-600/50 dark:border-white/15 h-44 flex flex-col justify-between p-3 shadow-inner">
+                    <div className="flex items-center justify-between text-[10px] text-white/80">
+                      <span>12:45</span>
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/25 text-emerald-300">5G</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[...Array(8)].map((_, idx) => (
+                        <span key={idx} className="h-5 rounded-md bg-white/60 dark:bg-white/20 grid-cell-pulse" style={{ animationDelay: `${idx * 150}ms` }} />
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] text-white/80">
+                      <span className="h-6 w-6 rounded-full bg-white/60 dark:bg-white/20 border border-white/30 dark:border-white/20" />
+                      <span className="flex-1 h-2 rounded-full bg-white/60 dark:bg-white/25" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop/laptop back layer */}
+                <div className="relative w-[84%] sm:w-[88%] mx-auto rounded-[30px] border border-slate-600/40 dark:border-white/15 bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 p-4 shadow-2xl device-float device-glow z-10">
+                  <div className="h-[210px] sm:h-[240px] rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border border-white/12 shadow-inner overflow-hidden">
+                    <div className="flex items-center gap-2 px-4 py-3">
+                      <span className="h-2 w-2 rounded-full bg-rose-400" />
+                      <span className="h-2 w-2 rounded-full bg-amber-300" />
+                      <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                    </div>
+                    <div className="px-4 grid grid-cols-4 gap-3">
+                      {[...Array(12)].map((_, idx) => (
+                        <div key={idx} className="h-10 rounded-xl bg-white/40 dark:bg-white/10 border border-white/20 dark:border-white/5 grid-cell-pulse" style={{ animationDelay: `${idx * 100}ms` }} />
+                      ))}
+                    </div>
+                    <div className="px-4 pt-4 grid grid-cols-3 gap-3">
+                      {[...Array(6)].map((_, idx) => (
+                        <div key={idx} className="h-2 rounded-full bg-white/50 dark:bg-white/15 grid-cell-shimmer" style={{ animationDelay: `${idx * 200}ms` }} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-4 h-5 w-4/5 mx-auto rounded-full bg-slate-500/60" />
+                </div>
+
+                {/* Phone front-right */}
+                <div className="absolute right-0 sm:right-1 top-1 sm:top-3 w-28 sm:w-32 rounded-[24px] border border-slate-700/30 dark:border-white/15 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 shadow-xl backdrop-blur device-bounce device-glow z-40">
+                  <div className="m-3 rounded-2xl bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 border border-slate-600/50 dark:border-white/15 h-40 flex flex-col justify-between p-4 shadow-inner">
+                    <div className="flex items-center justify-between text-[11px] text-white/90">
+                      <span>Phone</span>
+                      <span className="px-2 py-0.5 rounded-full bg-blue-500/25 text-blue-200">Online</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[...Array(9)].map((_, idx) => (
+                        <div key={idx} className="h-5 rounded-lg bg-white/60 dark:bg-white/20 grid-cell-fade" style={{ animationDelay: `${idx * 120}ms` }} />
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="h-2 w-14 rounded-full bg-white/60 dark:bg-white/20" />
+                      <div className="h-2 w-10 rounded-full bg-emerald-400/80" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/10 border border-slate-200/80 dark:border-white/10 text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-lg">
+              <PanelsTopLeft size={16} className="text-emerald-500" /> Multi-device confidence
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Unified experiences for mobile, tablet, and desktop</h3>
+            <p className="text-base sm:text-lg text-slate-700 dark:text-slate-200 max-w-3xl">
+              We prototype with real device ratios, notch-safe layouts, adaptive grids, and cursor/touch ergonomics so every flow feels native on Windows laptops, macOS desktops, Linux workstations, tablets, and modern phones.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {deviceHighlights.map((item) => (
+                <div key={item.title} className="rounded-2xl border border-slate-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm">
+                  <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">{item.title}</h4>
+                  <p className="text-sm text-slate-700 dark:text-slate-200">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {systemLogos.map((os) => (
+                <div key={os.name} className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200/70 dark:border-white/10 bg-white/80 dark:bg-white/5 shadow-sm">
+                  <img src={os.src} alt={os.name} className="h-6 w-6 object-contain" loading="lazy" />
+                  <span className="text-sm font-semibold text-slate-800 dark:text-white/90">{os.name}</span>
+                </div>
+              ))}
+              <span className="text-sm text-slate-600 dark:text-slate-300">+ iOS, Android, web, and kiosk form factors</span>
+            </div>
           </div>
         </div>
       </div>

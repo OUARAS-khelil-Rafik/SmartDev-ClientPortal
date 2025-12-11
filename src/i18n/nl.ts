@@ -70,7 +70,36 @@ const nl = {
     },
     stack_title: 'Stacks die we beheersen',
     stack_subtitle: 'Echte talen, frameworks en clouds',
-    stack_caption: 'Productierijpe expertise met de tools die het moderne internet aandrijven.'
+    stack_caption: 'Productierijpe expertise met de tools die het moderne internet aandrijven.',
+    devices: {
+      badge: 'Cross-platform',
+      title: 'Mobile, tablet, desktop — één naadloos product',
+      subtitle: 'We bouwen responsieve, offline-klare ervaringen die op elk scherm native aanvoelen.',
+      systemsTitle: 'Besturingssystemen die we dekken',
+      systemsCopy: 'Windows, macOS en Linux met hardwarebewuste optimalisaties, veilige packaging en deployments.',
+      laptopScreen: 'Desktop workspace',
+      tabletScreen: 'Tablet samenwerking',
+      mobileScreen: 'Mobiele controls',
+      points: {
+        p1: 'Adaptieve layouts met vloeiende typografie en auto-layout grids.',
+        p2: 'Toetsenbord, muis, touch, stylus en toegankelijkheid zijn standaard inbegrepen.',
+        p3: 'Performance-budgetten afgestemd op high-end en low-power devices.'
+      },
+      deviceCards: {
+        desktop: {
+          title: 'Desktop',
+          desc: 'Enterprise dashboards, Electron shells en PWAs voor volledige werkstations.'
+        },
+        tablet: {
+          title: 'Tablet',
+          desc: 'Gebarenvriendelijke UI, whiteboard-ready, en vloeiende overstap van laptop naar bankmodus.'
+        },
+        mobile: {
+          title: 'Mobile',
+          desc: 'Native gevoel met offline caching, biometrie en ergonomische touch targets.'
+        }
+      }
+    }
   },
   auth: {
     welcome_back: 'Welkom Terug',
