@@ -48,16 +48,17 @@
 - 💬 AI Project Consultant (Gemini)
 - 🤝 Floating AI Copilot assistant
 - 🧠 Context-aware conversations
-- 🌍 Multilingual support (EN/FR)
+- 🌍 Multilingual support (EN/FR/NL/DE)
 
 </td>
 </tr>
 <tr>
 <td width="50%">
 
-### 👥 **Client Management**
+### � **Client Management**
 - 📊 Interactive Dashboard
 - 📅 Smart Booking System
+- 🎫 **Demo Booking** (No login required)
 - 📁 Project Management
 - 🔔 Real-time Notifications
 
@@ -169,7 +170,8 @@ SmartDev-ClientPortal/
 │   │   ├── 🎨 AdminDashboard.tsx    # Admin control panel
 │   │   ├── 🤖 AIConsultant.tsx      # AI chat interface
 │   │   ├── 🔐 Auth.tsx              # Authentication
-│   │   ├── 📅 Booking.tsx           # Booking system
+│   │   ├── 📅 Booking.tsx           # Booking system (logged-in users)
+│   │   ├── 🎫 DemoBooking.tsx       # Demo booking (no login required)
 │   │   ├── 📊 Dashboard.tsx         # Client dashboard
 │   │   ├── 💬 FloatingCopilot.tsx   # AI assistant widget
 │   │   ├── 🏠 Hero.tsx              # Landing hero section
@@ -182,6 +184,8 @@ SmartDev-ClientPortal/
 │   ├── 📂 i18n/
 │   │   ├── 🇬🇧 en.ts                 # English translations
 │   │   ├── 🇫🇷 fr.ts                 # French translations
+│   │   ├── 🇳🇱 nl.ts                 # Dutch translations
+│   │   ├── 🇩🇪 de.ts                 # German translations
 │   │   └── 📦 index.tsx             # i18n provider
 │   │
 │   ├── 📂 services/
@@ -204,6 +208,30 @@ SmartDev-ClientPortal/
 ├── 🎨 tailwind.config.cjs           # Tailwind configuration
 └── 📝 tsconfig.json                 # TypeScript configuration
 ```
+
+---
+
+## 🎫 Demo Booking
+
+SmartDev features a **Demo Booking** system that allows potential clients to schedule a demo without requiring an account:
+
+### ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 🚫 **No Login Required** | Book a demo without creating an account |
+| 📝 **Simple Form** | Collect name, email, company, and phone |
+| 📅 **Live Availability** | Real-time slot checking to prevent double-booking |
+| 📧 **Admin Notifications** | Admins receive instant notifications of new demo requests |
+| 🌍 **Fully Translated** | Available in all supported languages (EN/FR/NL/DE) |
+
+### 📋 Booking Flow
+
+1. Click **"Book a Demo"** on the homepage
+2. Fill in contact information (name, email, optional company/phone)
+3. Describe your project needs
+4. Select available date and time slot
+5. Submit request - Admin will confirm and send meeting link
 
 ---
 
@@ -260,6 +288,8 @@ The app supports multiple languages:
 |----------|------|--------|
 | 🇬🇧 English | `en` | ✅ Complete |
 | 🇫🇷 French | `fr` | ✅ Complete |
+| 🇳🇱 Dutch | `nl` | ✅ Complete |
+| 🇩🇪 German | `de` | ✅ Complete |
 
 Toggle language using the language switcher in the navbar.
 
