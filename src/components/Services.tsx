@@ -1,139 +1,145 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useI18n } from '../i18n';
-import { Brain, Globe, ArrowLeft, CheckCircle2, Zap } from 'lucide-react';
-import { Service } from '../types';
+import { Sparkles, BotMessageSquare, PanelsTopLeft, Rocket } from 'lucide-react';
 
-// Service texts are localized at runtime using `t('services.items.<id>...')`
+const techLogos = [
+  { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+  { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'Go', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
+  { name: 'Java', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+  { name: 'C#', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+  { name: 'Node.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { name: 'React', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Next.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+  { name: 'Vue.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+  { name: 'Angular', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg' },
+  { name: 'Flutter', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
+  { name: 'React Native', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Swift', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg' },
+  { name: 'Kotlin', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+  { name: 'Rust', src: 'https://www.rust-lang.org/logos/rust-logo-blk.svg' },
+  { name: 'Ruby', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg' },
+  { name: 'Laravel', src: 'https://laravel.com/img/logotype.min.svg' },
+  { name: 'Django', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
+  { name: '.NET', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg' },
+  { name: 'Spring', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
+  { name: 'PostgreSQL', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'MongoDB', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+  { name: 'Docker', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+  { name: 'Kubernetes', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' },
+  { name: 'AWS', src: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg' },
+  { name: 'Azure', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg' },
+  { name: 'GCP', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' }
+];
+
+const marqueeRows = [
+  techLogos.slice(0, 14),
+  techLogos.slice(14).concat(techLogos.slice(0, 6))
+];
 
 const Services: React.FC = () => {
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
   const { t } = useI18n();
+  const marketingLinesRaw = t('services.marketingLines');
+  const marketingLines = Array.isArray(marketingLinesRaw) ? marketingLinesRaw : [];
 
-  const servicesList: Service[] = [
+  const capabilityCards = [
     {
-      id: 'ai',
-      icon: <Brain size={40} className="text-purple-500" />,
-      title: t('services.items.ai.title'),
-      description: t('services.items.ai.description'),
-      longDescription: t('services.items.ai.longDescription'),
-      features: [
-        t('services.items.ai.features.0'),
-        t('services.items.ai.features.1'),
-        t('services.items.ai.features.2'),
-        t('services.items.ai.features.3'),
-        t('services.items.ai.features.4')
-      ]
+      icon: <BotMessageSquare size={28} className="text-blue-300" />,
+      title: t('services.capabilities.ai.title'),
+      highlight: t('services.capabilities.ai.highlight'),
+      desc: t('services.capabilities.ai.desc')
     },
     {
-      id: 'web',
-      icon: <Globe size={40} className="text-blue-500" />,
-      title: t('services.items.web.title'),
-      description: t('services.items.web.description'),
-      longDescription: t('services.items.web.longDescription'),
-      features: [
-        t('services.items.web.features.0'),
-        t('services.items.web.features.1'),
-        t('services.items.web.features.2'),
-        t('services.items.web.features.3'),
-        t('services.items.web.features.4')
-      ]
+      icon: <PanelsTopLeft size={28} className="text-cyan-300" />,
+      title: t('services.capabilities.experiences.title'),
+      highlight: t('services.capabilities.experiences.highlight'),
+      desc: t('services.capabilities.experiences.desc')
+    },
+    {
+      icon: <Sparkles size={28} className="text-amber-300" />,
+      title: t('services.capabilities.platforms.title'),
+      highlight: t('services.capabilities.platforms.highlight'),
+      desc: t('services.capabilities.platforms.desc')
+    },
+    {
+      icon: <Rocket size={28} className="text-emerald-300" />,
+      title: t('services.capabilities.delivery.title'),
+      highlight: t('services.capabilities.delivery.highlight'),
+      desc: t('services.capabilities.delivery.desc')
     }
   ];
 
-  if (selectedService) {
-      return (
-        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 animate-fade-in">
-            <div className="max-w-7xl mx-auto">
-                <button 
-                  onClick={() => setSelectedService(null)}
-                  className="flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 mb-8 transition-colors hover:-translate-x-1 duration-300"
-                >
-                  <ArrowLeft size={20} /> {t('common.back_to_services')}
-                </button>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-                    <div className="animate-fade-in-left opacity-0">
-                        <div className="p-3 sm:p-4 bg-slate-100 dark:bg-slate-800 rounded-xl sm:rounded-2xl w-fit mb-4 sm:mb-6 animate-scale-in-bounce">
-                            {React.cloneElement(selectedService.icon as React.ReactElement<any>, { size: 48, className: `${(selectedService.icon as React.ReactElement<any>).props.className || ''} sm:w-16 sm:h-16` })}
-                        </div>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-4 sm:mb-6 animate-fade-in-up opacity-0 animation-delay-200">
-                            {selectedService.title}
-                        </h2>
-                        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6 sm:mb-8 animate-fade-in-up opacity-0 animation-delay-300">
-                            {selectedService.longDescription}
-                        </p>
-                        
-                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-5 sm:p-8 rounded-2xl sm:rounded-3xl text-white shadow-xl animate-fade-in-up opacity-0 animation-delay-400 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
-                            <h3 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
-                              <Zap className="text-yellow-300 animate-pulse" size={20} /> {t('services.why_choose')}
-                            </h3>
-                            <p className="text-sm sm:text-base text-blue-100">
-                              {t('services.why_choose_prefix')} <strong>{selectedService.title}</strong> {t('services.why_choose_suffix')}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-lg animate-fade-in-right opacity-0 animation-delay-200">
-                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 pb-2">{t('services.engineering_excellence')}</h3>
-                        <div className="space-y-3 sm:space-y-4 stagger-children">
-                            {selectedService.features?.map((feature, idx) => (
-                                <div key={idx} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 animate-fade-in-up hover:translate-x-2 hover:shadow-md">
-                                    <CheckCircle2 className="text-green-500 flex-shrink-0 mt-0.5 animate-scale-in" size={18} />
-                                    <span className="text-sm sm:text-base text-slate-700 dark:text-slate-200 font-medium">{feature}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      );
-  }
-
   return (
-    <div id="services-section" className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10 sm:mb-16 animate-fade-in-up">
-          <h2 className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wide text-xs sm:text-sm mb-2">{t('services.our_expertise')}</h2>
-          <h3 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 gradient-text-animated pb-2">{t('services.engineering_excellence')}</h3>
-          <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto px-2 sm:px-0">{t('services.subtitle')}</p>
+    <div id="services-section" className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white transition-colors">
+      <div className="absolute inset-0 gradient-aurora opacity-70 dark:opacity-90" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.08),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.07),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.07),transparent_22%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.12),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.12),transparent_22%)]" aria-hidden="true" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-24 pb-20 relative">
+        <div className="text-center space-y-4 sm:space-y-5 animate-fade-in-up">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/10 border border-slate-200/80 dark:border-white/10 text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-lg glow-border">
+            <Sparkles size={16} className="text-blue-500 dark:text-blue-300" /> {t('services.badge')}
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight gradient-text-animated">{t('services.title')}</h2>
+          <p className="text-lg sm:text-xl text-slate-700 dark:text-slate-200 max-w-3xl mx-auto">{t('services.subtitle')}</p>
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-4xl mx-auto">{t('services.promise')}</p>
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-sm sm:text-base text-slate-800 dark:text-slate-100">
+            {marketingLines.map((line, idx) => (
+              <span key={idx} className="px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 backdrop-blur">
+                {line}
+              </span>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 stagger-children">
-          {servicesList.map((service) => (
-            <div 
-              key={service.id}
-              className="group relative bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl p-5 sm:p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 border border-slate-100 dark:border-slate-800 overflow-hidden cursor-pointer hover-lift animate-fade-in-up"
-              onClick={() => setSelectedService(service)}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {capabilityCards.map((capability, index) => (
+            <div
+              key={capability.title}
+              className="glass-panel rounded-2xl p-6 sm:p-7 border border-slate-200/70 dark:border-white/10 shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 perspective-1000 tilt-hover animate-fade-in-up"
+              style={{ animationDelay: `${index * 80}ms` }}
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-150 group-hover:rotate-12 duration-500">
-                {service.icon}
-              </div>
-              
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-500 rounded-2xl"></div>
-              
-              <div className="relative z-10">
-                <div className="mb-4 sm:mb-6 p-2 sm:p-3 bg-slate-50 dark:bg-slate-800 w-fit rounded-lg sm:rounded-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 group-hover:shadow-lg">
-                    {React.cloneElement(service.icon as React.ReactElement<any>, { size: 32, className: `${(service.icon as React.ReactElement<any>).props.className || ''} sm:w-10 sm:h-10` })}
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl bg-white/80 dark:bg-white/10 border border-slate-200/80 dark:border-white/10 shadow-inner">
+                  {capability.icon}
                 </div>
-                <h4 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                  {service.title}
-                </h4>
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
-                  {service.description}
-                </p>
-                
-                <div className="mt-4 sm:mt-6 flex items-center text-blue-600 dark:text-blue-400 font-semibold text-sm sm:text-base group-hover:translate-x-2 transition-transform">
-                  {t('services.view_details')} <span className="ml-2 group-hover:ml-4 transition-all">&rarr;</span>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">{capability.title}</h3>
+                    <span className="text-xs uppercase tracking-[0.2em] text-blue-600 dark:text-blue-200">{capability.highlight}</span>
+                  </div>
+                  <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{capability.desc}</p>
                 </div>
               </div>
-              
-              {/* Bottom border animation */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 bg-white/80 dark:bg-white/5 rounded-3xl border border-slate-200/80 dark:border-white/10 p-6 sm:p-10 shadow-2xl backdrop-blur-xl animate-fade-in-up">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+            <div>
+              <p className="text-blue-700 dark:text-blue-200 text-sm font-semibold uppercase tracking-[0.25em] mb-2">{t('services.stack_title')}</p>
+              <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('services.stack_subtitle')}</h3>
+              <p className="text-slate-700 dark:text-slate-200 mt-2 max-w-3xl">{t('services.stack_caption')}</p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {marqueeRows.map((row, rowIdx) => (
+              <div key={rowIdx} className="overflow-hidden rounded-2xl bg-white/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10 shadow-inner">
+                <div className={`marquee-track ${rowIdx === 0 ? 'marquee-fast' : 'marquee-slow'}`}>
+                  {[...row, ...row].map((logo, idx) => (
+                    <div key={`${logo.name}-${idx}`} className="flex items-center gap-3 px-6 py-4">
+                      <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white shadow-sm border border-slate-200/80 dark:bg-white dark:border-white/20 dark:shadow-white/10 flex items-center justify-center">
+                        <img src={logo.src} alt={logo.name} className="h-8 w-8 sm:h-10 sm:w-10 object-contain" loading="lazy" />
+                      </div>
+                      <span className="text-sm sm:text-base font-semibold text-slate-800 dark:text-white/90">{logo.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

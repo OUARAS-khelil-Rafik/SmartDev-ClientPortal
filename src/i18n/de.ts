@@ -34,39 +34,43 @@ const de = {
     }
   },
   services: {
-    our_expertise: 'Unsere Expertise',
-    engineering_excellence: 'Engineering-Exzellenz',
-    subtitle: 'Wir kombinieren Kreativität mit technischer Kompetenz, um skalierbare Lösungen zu liefern.',
-    view_details: 'Details Anzeigen',
-    why_choose: 'Warum SYNARIZMIE Wählen?',
-    why_choose_prefix: 'Wir schreiben nicht nur Code; wir entwickeln Lösungen, die Wachstum fördern. Unser',
-    why_choose_suffix: 'Team besteht aus Branchenveteranen, die sich Ihrem Erfolg verschrieben haben.',
-    items: {
+    badge: 'Unsere Expertise',
+    title: 'Vom Problem zum ausgerollten Produkt',
+    subtitle: 'Wir übersetzen Ihre Idee in eine technische Roadmap mit AI-first-Ansatz, sicheren Fundamenten und perfekter Ausarbeitung.',
+    promise: 'Ihr Problem wird zur Lösung: Discovery, Architektur, Prototypen, AI-Copilots, mobile Erweiterungen und ein belastbarer Production-Launch.',
+    cta: 'Erzählen Sie uns Ihre Herausforderung',
+    marketingLines: [
+      'Legacy modernisieren mit AI-first Workflows',
+      'Einen Chatbot bauen, der Ihren Geschäftskontext versteht',
+      'Eine Premium-Mobile-App für Ihre Kunden starten',
+      'Manuelle Schritte mit Agents und Integrationen automatisieren',
+      'Schneller liefern mit Observability, Security und QA by design'
+    ],
+    capabilities: {
       ai: {
-        title: 'Künstliche Intelligenz Lösungen',
-        description: 'Maßgeschneiderte LLM-Integration, prädiktive Analysen und automatisierte Entscheidungssysteme.',
-        longDescription: 'Nutzen Sie die Kraft von Generativer KI und Machine Learning, um Ihre Geschäftsabläufe zu transformieren. Wir entwickeln maßgeschneiderte Modelle für Ihre spezifischen Datensätze, die prädiktive Einblicke, automatisierte Inhaltserstellung und intelligente Agenten ermöglichen.',
-        features: {
-          '0': 'Maßgeschneidertes LLM Fine-Tuning',
-          '1': 'Prädiktive Analyse-Dashboards',
-          '2': 'Natural Language Processing (NLP)',
-          '3': 'Computer Vision Systeme',
-          '4': 'KI-gesteuerte Automatisierungs-Agenten'
-        }
+        title: 'AI-Architektur & Agents',
+        highlight: 'GenAI',
+        desc: 'LLM-Workflows designen und feinabstimmen, Retrieval, Voice/Chat-Interfaces, Copilots und Evaluation für hohe Genauigkeit.'
       },
-      web: {
-        title: 'Web-, Mobil- & Desktop-Lösungen',
-        description: 'Hochleistungsanwendungen für Web-, Mobil- und Desktop-Plattformen.',
-        longDescription: 'Wir erstellen visuell beeindruckende und hochleistungsfähige Anwendungen auf allen Plattformen. Mit modernen Frameworks wie React, Next.js, React Native, Flutter und Electron stellen wir sicher, dass Ihre digitale Präsenz schnell, zugänglich und für jedes Gerät optimiert ist.',
-        features: {
-          '0': 'React & Next.js Webentwicklung',
-          '1': 'iOS & Android Mobile Apps',
-          '2': 'Plattformübergreifende Desktop-Anwendungen',
-          '3': 'Progressive Web Apps (PWA)',
-          '4': 'UI/UX Design & Optimierung'
-        }
+      experiences: {
+        title: 'Web · Mobile · Desktop',
+        highlight: 'Produkt',
+        desc: 'Premium-Erlebnisse in React, Next.js, React Native, Flutter, Electron — schnell, zugänglich und markenkonform.'
+      },
+      platforms: {
+        title: 'Cloud- & Daten-Plattformen',
+        highlight: 'Scale',
+        desc: 'Multi-Cloud, Kubernetes, Serverless, Postgres, MongoDB, Vector DBs, Streaming und belastbare APIs.'
+      },
+      delivery: {
+        title: 'Delivery & Verlässlichkeit',
+        highlight: 'Trust',
+        desc: 'Design Systems, QA-Automatisierung, Performance-Budgets, Security-Hardening und SLO-getriebener Betrieb.'
       }
-    }
+    },
+    stack_title: 'Stacks, die wir beherrschen',
+    stack_subtitle: 'Echte Sprachen, Frameworks und Clouds',
+    stack_caption: 'Produktionsreife Expertise mit den Werkzeugen, die das moderne Internet antreiben.'
   },
   auth: {
     welcome_back: 'Willkommen Zurück',

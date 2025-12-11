@@ -35,40 +35,43 @@ const en = {
     }
   },
   services: {
-    our_expertise: 'Our Expertise',
-    engineering_excellence: 'Engineering Excellence',
-    subtitle: 'We combine creativity with technical prowess to deliver solutions that scale.',
-    view_details: 'View Details',
-    why_choose: 'Why Choose SYNARIZMIE?',
-    why_choose_prefix: "We don't just write code; we architect solutions that drive growth. Our",
-    why_choose_suffix: 'team consists of industry veterans dedicated to your success.'
-  ,
-    items: {
+    badge: 'Our Expertise',
+    title: 'From challenge to deployed product',
+    subtitle: 'We translate your idea into an engineered roadmap with AI-native thinking, secure foundations, and pixel-perfect craft.',
+    promise: 'Your problem transforms into a solution: discovery, architecture, prototypes, AI copilots, mobile extensions, and a resilient production launch.',
+    cta: 'Tell us your challenge',
+    marketingLines: [
+      'Modernize legacy systems with AI-first workflows',
+      'Create a chatbot that understands your business context',
+      'Launch a premium mobile app for your customers',
+      'Automate manual steps with agents and integrations',
+      'Ship faster with observability, security, and QA baked in'
+    ],
+    capabilities: {
       ai: {
-        title: 'Artificial Intelligence Solutions',
-        description: 'Custom LLM integration, predictive analytics, and automated decision-making systems.',
-        longDescription: 'Harness the power of Generative AI and Machine Learning to transform your business operations. We build custom models tailored to your specific data sets, enabling predictive insights, automated content generation, and intelligent agents.',
-        features: {
-          '0': 'Custom LLM Fine-tuning',
-          '1': 'Predictive Analytics Dashboards',
-          '2': 'Natural Language Processing (NLP)',
-          '3': 'Computer Vision Systems',
-          '4': 'AI-Powered Automation Agents'
-        }
+        title: 'AI Architecture & Agents',
+        highlight: 'GenAI',
+        desc: 'Design and fine-tune LLM workflows, retrieval, voice/chat interfaces, copilots, and evaluation to keep accuracy high.'
       },
-      web: {
-        title: 'Web, Mobile & Desktop Solutions',
-        description: 'High-performance applications for web, mobile, and desktop platforms.',
-        longDescription: 'We craft visually stunning and high-performance applications across all platforms. Using modern frameworks like React, Next.js, React Native, Flutter, and Electron, we ensure your digital presence is fast, accessible, and optimized for every device.',
-        features: {
-          '0': 'React & Next.js Web Development',
-          '1': 'iOS & Android Mobile Apps',
-          '2': 'Cross-Platform Desktop Applications',
-          '3': 'Progressive Web Apps (PWA)',
-          '4': 'UI/UX Design & Optimization'
-        }
+      experiences: {
+        title: 'Web · Mobile · Desktop',
+        highlight: 'Product',
+        desc: 'Premium experiences in React, Next.js, React Native, Flutter, Electron—fast, accessible, and on-brand.'
+      },
+      platforms: {
+        title: 'Cloud & Data Platforms',
+        highlight: 'Scale',
+        desc: 'Multi-cloud, Kubernetes, serverless, Postgres, MongoDB, vector DBs, streaming, and rock-solid APIs.'
+      },
+      delivery: {
+        title: 'Delivery & Reliability',
+        highlight: 'Trust',
+        desc: 'Design systems, QA automation, performance budgets, security hardening, and SLO-driven operations.'
       }
-    }
+    },
+    stack_title: 'Stacks we master',
+    stack_subtitle: 'Real languages, frameworks, and clouds',
+    stack_caption: 'Production-ready expertise with the tools that actually run the modern internet.'
   },
   auth: {
     welcome_back: 'Welcome Back',

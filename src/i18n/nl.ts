@@ -34,39 +34,43 @@ const nl = {
     }
   },
   services: {
-    our_expertise: 'Onze Expertise',
-    engineering_excellence: 'Engineering Excellentie',
-    subtitle: 'Wij combineren creativiteit met technische bekwaamheid om schaalbare oplossingen te leveren.',
-    view_details: 'Details Bekijken',
-    why_choose: 'Waarom Kiezen voor SYNARIZMIE?',
-    why_choose_prefix: 'Wij schrijven niet alleen code; wij ontwerpen oplossingen die groei stimuleren. Ons',
-    why_choose_suffix: 'team bestaat uit ervaren professionals die zich inzetten voor uw succes.',
-    items: {
+    badge: 'Onze expertise',
+    title: 'Van uitdaging naar gelanceerd product',
+    subtitle: 'We vertalen uw idee naar een technische roadmap met AI-first denken, veilige fundamenten en pixel-perfect uitvoering.',
+    promise: 'Uw probleem wordt een oplossing: discovery, architectuur, prototypes, AI-copilots, mobiele extensies en een robuuste productie-release.',
+    cta: 'Vertel ons uw uitdaging',
+    marketingLines: [
+      'Legacy moderniseren met AI-first workflows',
+      'Een chatbot bouwen die uw businesscontext begrijpt',
+      'Een premium mobiele app voor uw klanten lanceren',
+      'Handmatige stappen automatiseren met agents en integraties',
+      'Sneller leveren met observability, security en QA ingebouwd'
+    ],
+    capabilities: {
       ai: {
-        title: 'Kunstmatige Intelligentie Oplossingen',
-        description: 'Aangepaste LLM-integratie, voorspellende analyses en geautomatiseerde besluitvormingssystemen.',
-        longDescription: 'Benut de kracht van Generatieve AI en Machine Learning om uw bedrijfsvoering te transformeren. Wij bouwen aangepaste modellen op maat van uw specifieke datasets, waardoor voorspellende inzichten, geautomatiseerde contentgeneratie en intelligente agents mogelijk worden.',
-        features: {
-          '0': 'Aangepaste LLM Fine-tuning',
-          '1': 'Voorspellende Analyse Dashboards',
-          '2': 'Natural Language Processing (NLP)',
-          '3': 'Computer Vision Systemen',
-          '4': 'AI-gestuurde Automatisering Agents'
-        }
+        title: 'AI-architectuur & Agents',
+        highlight: 'GenAI',
+        desc: 'LLM-workflows ontwerpen en fine-tunen, retrieval, voice/chat interfaces, copilots en evaluatie om nauwkeurigheid hoog te houden.'
       },
-      web: {
-        title: 'Web, Mobiele & Desktop Oplossingen',
-        description: 'Hoogwaardige applicaties voor web, mobiel en desktop platforms.',
-        longDescription: 'Wij creëren visueel verbluffende en hoogwaardige applicaties op alle platforms. Met moderne frameworks zoals React, Next.js, React Native, Flutter en Electron zorgen wij ervoor dat uw digitale aanwezigheid snel, toegankelijk en geoptimaliseerd is voor elk apparaat.',
-        features: {
-          '0': 'React & Next.js Webontwikkeling',
-          '1': 'iOS & Android Mobiele Apps',
-          '2': 'Cross-Platform Desktop Applicaties',
-          '3': 'Progressive Web Apps (PWA)',
-          '4': 'UI/UX Design & Optimalisatie'
-        }
+      experiences: {
+        title: 'Web · Mobile · Desktop',
+        highlight: 'Product',
+        desc: 'Premium experiences in React, Next.js, React Native, Flutter, Electron — snel, toegankelijk en on-brand.'
+      },
+      platforms: {
+        title: 'Cloud & Data Platforms',
+        highlight: 'Scale',
+        desc: 'Multi-cloud, Kubernetes, serverless, Postgres, MongoDB, vector DBs, streaming en solide APIs.'
+      },
+      delivery: {
+        title: 'Delivery & Betrouwbaarheid',
+        highlight: 'Trust',
+        desc: 'Design systems, QA-automatisering, performance-budgets, security-hardening en SLO-gedreven operations.'
       }
-    }
+    },
+    stack_title: 'Stacks die we beheersen',
+    stack_subtitle: 'Echte talen, frameworks en clouds',
+    stack_caption: 'Productierijpe expertise met de tools die het moderne internet aandrijven.'
   },
   auth: {
     welcome_back: 'Welkom Terug',

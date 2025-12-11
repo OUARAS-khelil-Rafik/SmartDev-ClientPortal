@@ -35,40 +35,43 @@ const fr = {
     }
   },
   services: {
-    our_expertise: 'Notre Expertise',
-    engineering_excellence: "L'Excellence d'ingénierie",
-    subtitle: "Nous combinons créativité et expertise technique pour fournir des solutions évolutives.",
-    view_details: 'Voir les détails',
-    why_choose: 'Pourquoi choisir SYNARIZMIE ?',
-    why_choose_prefix: "Nous n'écrivons pas seulement du code ; nous concevons des solutions qui stimulent la croissance. Notre",
-    why_choose_suffix: "équipe est composée de vétérans de l'industrie dédiés à votre réussite."
-  ,
-    items: {
+    badge: 'Notre expertise',
+    title: 'Du problème au produit déployé',
+    subtitle: "Nous traduisons votre idée en feuille de route technique avec une approche IA-native, des fondations sécurisées et un soin pixel-perfect.",
+    promise: "Votre problématique devient une solution : discovery, architecture, prototypes, copilots IA, extensions mobiles et lancement en production résilient.",
+    cta: 'Parlez-nous de votre défi',
+    marketingLines: [
+      'Moderniser vos outils métiers avec des workflows IA',
+      'Créer un chatbot qui comprend votre contexte métier',
+      'Lancer une app mobile premium pour vos clients',
+      'Automatiser les étapes manuelles avec des agents et des intégrations',
+      'Livrer plus vite avec observabilité, sécurité et QA intégrées'
+    ],
+    capabilities: {
       ai: {
-        title: 'Solutions d\'Intelligence Artificielle',
-        description: "Intégration LLM personnalisée, analyses prédictives et systèmes de prise de décision automatisés.",
-        longDescription: "Exploitez la puissance de l'IA générative et du Machine Learning pour transformer vos opérations. Nous construisons des modèles personnalisés adaptés à vos jeux de données, offrant des insights prédictifs, de la génération de contenu automatisée et des agents intelligents.",
-        features: {
-          '0': 'Fine-tuning des LLM personnalisés',
-          '1': "Tableaux de bord d'analyse prédictive",
-          '2': 'Traitement du langage naturel (NLP)',
-          '3': 'Systèmes de vision par ordinateur',
-          '4': "Agents d'automatisation pilotés par l'IA"
-        }
+        title: 'Architecture IA & Agents',
+        highlight: 'GenAI',
+        desc: 'Conception et fine-tuning de workflows LLM, retrieval, interfaces voix/chat, copilots et évaluation pour maintenir la précision.'
       },
-      web: {
-        title: 'Solutions Web, Mobile & Bureau',
-        description: "Applications haute performance pour web, mobile et bureau.",
-        longDescription: "Nous concevons des applications esthétiques et performantes sur toutes les plateformes. En utilisant des frameworks modernes comme React, Next.js, React Native, Flutter et Electron, nous garantissons une présence digitale rapide, accessible et optimisée pour chaque appareil.",
-        features: {
-          '0': 'Développement Web React & Next.js',
-          '1': 'Applications mobiles iOS & Android',
-          '2': 'Applications bureau cross-platform',
-          '3': 'Progressive Web Apps (PWA)',
-          '4': 'Conception et optimisation UI/UX'
-        }
+      experiences: {
+        title: 'Web · Mobile · Desktop',
+        highlight: 'Produit',
+        desc: 'Expériences premium en React, Next.js, React Native, Flutter, Electron — rapides, accessibles et on-brand.'
+      },
+      platforms: {
+        title: 'Cloud & Data Platforms',
+        highlight: 'Scale',
+        desc: 'Multi-cloud, Kubernetes, serverless, Postgres, MongoDB, bases vectorielles, streaming et APIs robustes.'
+      },
+      delivery: {
+        title: 'Delivery & Fiabilité',
+        highlight: 'Confiance',
+        desc: 'Design systems, QA automatisée, budgets de performance, durcissement sécurité et opérations guidées par des SLO.'
       }
-    }
+    },
+    stack_title: 'Stacks que nous maîtrisons',
+    stack_subtitle: 'Vrais langages, frameworks et clouds',
+    stack_caption: "Une expertise prête pour la production avec les outils qui font tourner l'internet moderne."
   },
   auth: {
     welcome_back: 'Bon retour',
