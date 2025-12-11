@@ -23,7 +23,7 @@ const en = {
     title_line1: 'Building the',
     title_highlight: 'Digital Future',
     subtitle: 'We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, SYNARIZMIE delivers excellence in every line of code.',
-    start_project: 'Start Your Project',
+    start_project: 'Book a Demo',
     explore_services: 'Explore Services'
     ,
     modern_stack: {
@@ -99,6 +99,31 @@ const en = {
           title: 'Mobile',
           desc: 'Native-feel experiences with offline caching, biometrics, and ergonomic touch targets.'
         }
+      },
+      runs_on_every_os: 'Runs on every OS',
+      phone_label: 'Phone',
+      online_status: 'Online',
+      multi_device_confidence: 'Multi-device confidence',
+      unified_experiences: 'Unified experiences for mobile, tablet, and desktop',
+      unified_experiences_desc: 'We prototype with real device ratios, notch-safe layouts, adaptive grids, and cursor/touch ergonomics so every flow feels native on Windows laptops, macOS desktops, Linux workstations, tablets, and modern phones.',
+      more_platforms: '+ iOS, Android, web, and kiosk form factors',
+      highlights: {
+        pixel_perfect: {
+          title: 'Pixel-perfect across screens',
+          desc: 'From pocket to desktop, layouts, motions, and gestures adapt instantly.'
+        },
+        native_performance: {
+          title: 'Native-grade performance',
+          desc: 'Hardware-accelerated UI, smooth 120fps-ready transitions, and offline-first caching.'
+        },
+        security_compliance: {
+          title: 'Security + compliance built-in',
+          desc: 'SSO, device posture checks, encryption at rest/in transit, and audit-ready logging.'
+        },
+        ship_everywhere: {
+          title: 'Ship once, run everywhere',
+          desc: 'Unified design system for iOS, Android, Windows, macOS, and Linux workspaces.'
+        }
       }
     }
   },
@@ -161,6 +186,32 @@ const en = {
     join_meet: 'Join Meet'
     ,
     booking_failed: 'Booking failed'
+  },
+  demo_booking: {
+    title: 'Book a Demo',
+    subtitle: 'Schedule a free demo session to discover how we can help transform your ideas into reality.',
+    name_label: 'Full Name',
+    name_placeholder: 'Enter your full name',
+    email_label: 'Email Address',
+    email_placeholder: 'Enter your email address',
+    company_label: 'Company (Optional)',
+    company_placeholder: 'Enter your company name',
+    phone_label: 'Phone (Optional)',
+    phone_placeholder: 'Enter your phone number',
+    message_label: 'Tell us about your project',
+    message_placeholder: 'Briefly describe what you would like to discuss during the demo...',
+    select_date: 'Select Date',
+    select_time: 'Select Time',
+    confirm_demo: 'Confirm Demo Request',
+    processing: 'Processing...',
+    success_title: 'Demo Request Received!',
+    success_message: 'Thank you for your interest! We have received your demo request for',
+    success_email_note: 'A confirmation email will be sent to',
+    contact_soon: 'Our team will contact you shortly to confirm the meeting details.',
+    book_another: 'Book Another Demo',
+    back_home: 'Back to Home',
+    no_login_required: 'No account required',
+    free_consultation: 'Free 30-minute consultation'
   },
   dashboard: {
     title: 'Client Portal',

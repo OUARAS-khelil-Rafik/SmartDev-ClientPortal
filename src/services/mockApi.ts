@@ -539,6 +539,60 @@ class MockApi {
     return newBooking;
   }
 
+  // Demo booking for new users without login/signup
+  async createDemoBooking(details: { 
+    name: string; 
+    email: string; 
+    company?: string;
+    phone?: string;
+    date: string; 
+    time: string; 
+    message: string 
+  }): Promise<Booking> {
+    await delay(1500);
+    const bookings = this.getStoredBookings();
+    
+    // Check for conflicts (date + time)
+    const isOccupied = bookings.some(b => 
+      b.date === details.date && 
+      b.time === details.time && 
+      (b.status === 'pending' || b.status === 'confirmed')
+    );
+
+    if (isOccupied) {
+      throw new Error("This time slot is no longer available. Please select another.");
+    }
+    
+    // Create a demo booking with a special demo user ID
+    const newBooking: Booking = {
+      id: Date.now().toString(),
+      userId: 'demo_' + Date.now().toString(), // Special demo user ID
+      userName: details.name,
+      userEmail: details.email,
+      date: details.date,
+      time: details.time,
+      topic: ['Demo Request'],
+      description: `[DEMO REQUEST]${details.company ? ` Company: ${details.company}` : ''}${details.phone ? ` | Phone: ${details.phone}` : ''}\n\n${details.message}`,
+      status: 'pending',
+      meetLink: undefined,
+      projectId: undefined
+    };
+
+    bookings.push(newBooking);
+    this.saveBookings(bookings);
+
+    // Notify admins about the new demo booking
+    try {
+      const admins = this.getUsers().filter(u => u.role === 'admin');
+      for (const a of admins) {
+        this.createNotification(a.id, 'New Demo Request', `${details.name} (${details.email}) requested a demo on ${details.date} at ${details.time}.`).catch(() => {});
+      }
+    } catch (e) {
+      // ignore
+    }
+    return newBooking;
+  }
+
   // New method to fetch all occupied slots for the calendar
   async getOccupiedSlots(): Promise<{date: string, time: string}[]> {
       await delay(500);

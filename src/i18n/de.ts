@@ -23,7 +23,7 @@ const de = {
     title_line1: 'Die',
     title_highlight: 'Digitale Zukunft',
     subtitle: 'Wir entwickeln robuste, skalierbare und sichere Softwarelösungen. Von KI-Integration bis Enterprise-Security, SYNARIZMIE liefert Exzellenz in jeder Codezeile.',
-    start_project: 'Starten Sie Ihr Projekt',
+    start_project: 'Demo Buchen',
     explore_services: 'Dienstleistungen Entdecken',
     modern_stack: {
       title: 'Moderner Stack'
@@ -98,6 +98,31 @@ const de = {
           title: 'Mobile',
           desc: 'Native User Experience mit Offline-Cache, Biometrie und ergonomischen Touch-Zielen.'
         }
+      },
+      runs_on_every_os: 'Läuft auf jedem OS',
+      phone_label: 'Telefon',
+      online_status: 'Online',
+      multi_device_confidence: 'Multi-Geräte-Vertrauen',
+      unified_experiences: 'Einheitliche Erlebnisse für Mobil, Tablet und Desktop',
+      unified_experiences_desc: 'Wir prototypen mit echten Geräteverhältnissen, Notch-sicheren Layouts, adaptiven Grids und Cursor/Touch-Ergonomie, damit jeder Flow nativ auf Windows-Laptops, macOS-Desktops, Linux-Workstations, Tablets und modernen Telefonen funktioniert.',
+      more_platforms: '+ iOS, Android, Web und Kiosk-Formfaktoren',
+      highlights: {
+        pixel_perfect: {
+          title: 'Pixelgenau auf allen Bildschirmen',
+          desc: 'Von der Hosentasche bis zum Desktop passen sich Layouts, Bewegungen und Gesten sofort an.'
+        },
+        native_performance: {
+          title: 'Native Leistung',
+          desc: 'Hardware-beschleunigte UI, flüssige 120fps-bereite Übergänge und Offline-First-Caching.'
+        },
+        security_compliance: {
+          title: 'Sicherheit + Compliance integriert',
+          desc: 'SSO, Gerätestatusprüfungen, Verschlüsselung im Ruhezustand/Transit und audit-bereite Protokollierung.'
+        },
+        ship_everywhere: {
+          title: 'Einmal ausliefern, überall laufen',
+          desc: 'Einheitliches Designsystem für iOS, Android, Windows, macOS und Linux-Arbeitsbereiche.'
+        }
       }
     }
   },
@@ -158,6 +183,32 @@ const de = {
     no_booking_history: 'Keine Buchungshistorie',
     join_meet: 'Meet Beitreten',
     booking_failed: 'Buchung fehlgeschlagen'
+  },
+  demo_booking: {
+    title: 'Demo Buchen',
+    subtitle: 'Planen Sie eine kostenlose Demo-Sitzung, um zu entdecken, wie wir Ihre Ideen in die Realität umsetzen können.',
+    name_label: 'Vollständiger Name',
+    name_placeholder: 'Geben Sie Ihren vollständigen Namen ein',
+    email_label: 'E-Mail-Adresse',
+    email_placeholder: 'Geben Sie Ihre E-Mail-Adresse ein',
+    company_label: 'Unternehmen (Optional)',
+    company_placeholder: 'Geben Sie Ihren Firmennamen ein',
+    phone_label: 'Telefon (Optional)',
+    phone_placeholder: 'Geben Sie Ihre Telefonnummer ein',
+    message_label: 'Erzählen Sie uns von Ihrem Projekt',
+    message_placeholder: 'Beschreiben Sie kurz, was Sie während der Demo besprechen möchten...',
+    select_date: 'Datum Auswählen',
+    select_time: 'Zeit Auswählen',
+    confirm_demo: 'Demo-Anfrage Bestätigen',
+    processing: 'Verarbeitung...',
+    success_title: 'Demo-Anfrage Erhalten!',
+    success_message: 'Vielen Dank für Ihr Interesse! Wir haben Ihre Demo-Anfrage erhalten für',
+    success_email_note: 'Eine Bestätigungs-E-Mail wird gesendet an',
+    contact_soon: 'Unser Team wird Sie in Kürze kontaktieren, um die Meeting-Details zu bestätigen.',
+    book_another: 'Weitere Demo Buchen',
+    back_home: 'Zurück zur Startseite',
+    no_login_required: 'Kein Konto erforderlich',
+    free_consultation: 'Kostenlose 30-minütige Beratung'
   },
   dashboard: {
     title: 'Kundenportal',

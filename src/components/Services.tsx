@@ -64,29 +64,29 @@ const systemLogos = [
   { name: 'Linux', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' }
 ];
 
-const deviceHighlights = [
-  {
-    title: 'Pixel-perfect across screens',
-    desc: 'From pocket to desktop, layouts, motions, and gestures adapt instantly.'
-  },
-  {
-    title: 'Native-grade performance',
-    desc: 'Hardware-accelerated UI, smooth 120fps-ready transitions, and offline-first caching.'
-  },
-  {
-    title: 'Security + compliance built-in',
-    desc: 'SSO, device posture checks, encryption at rest/in transit, and audit-ready logging.'
-  },
-  {
-    title: 'Ship once, run everywhere',
-    desc: 'Unified design system for iOS, Android, Windows, macOS, and Linux workspaces.'
-  }
-];
-
 const Services: React.FC = () => {
   const { t } = useI18n();
   const marketingLinesRaw = t('services.marketingLines');
   const marketingLines = Array.isArray(marketingLinesRaw) ? marketingLinesRaw : [];
+
+  const deviceHighlights = [
+    {
+      title: t('services.devices.highlights.pixel_perfect.title'),
+      desc: t('services.devices.highlights.pixel_perfect.desc')
+    },
+    {
+      title: t('services.devices.highlights.native_performance.title'),
+      desc: t('services.devices.highlights.native_performance.desc')
+    },
+    {
+      title: t('services.devices.highlights.security_compliance.title'),
+      desc: t('services.devices.highlights.security_compliance.desc')
+    },
+    {
+      title: t('services.devices.highlights.ship_everywhere.title'),
+      desc: t('services.devices.highlights.ship_everywhere.desc')
+    }
+  ];
 
   const [currentOsIndex, setCurrentOsIndex] = useState(0);
 
@@ -214,7 +214,7 @@ const Services: React.FC = () => {
                     />
                   ))}
                 </div>
-                <span className="text-xs font-semibold text-slate-800 dark:text-white/90">Runs on every OS</span>
+                <span className="text-xs font-semibold text-slate-800 dark:text-white/90">{t('services.devices.runs_on_every_os')}</span>
               </div>
 
               <div className="relative w-full max-w-3xl">
@@ -263,8 +263,8 @@ const Services: React.FC = () => {
                 <div className="absolute right-0 sm:right-1 top-1 sm:top-3 w-28 sm:w-32 rounded-[24px] border border-slate-700/30 dark:border-white/15 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 shadow-xl backdrop-blur device-bounce device-glow z-40">
                   <div className="m-3 rounded-2xl bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 border border-slate-600/50 dark:border-white/15 h-40 flex flex-col justify-between p-4 shadow-inner">
                     <div className="flex items-center justify-between text-[11px] text-white/90">
-                      <span>Phone</span>
-                      <span className="px-2 py-0.5 rounded-full bg-blue-500/25 text-blue-200">Online</span>
+                      <span>{t('services.devices.phone_label')}</span>
+                      <span className="px-2 py-0.5 rounded-full bg-blue-500/25 text-blue-200">{t('services.devices.online_status')}</span>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       {[...Array(9)].map((_, idx) => (
@@ -284,11 +284,11 @@ const Services: React.FC = () => {
 
           <div className="space-y-4">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/5 dark:bg-white/10 border border-slate-200/80 dark:border-white/10 text-xs sm:text-sm font-semibold tracking-wide backdrop-blur-md shadow-lg">
-              <PanelsTopLeft size={16} className="text-emerald-500" /> Multi-device confidence
+              <PanelsTopLeft size={16} className="text-emerald-500" /> {t('services.devices.multi_device_confidence')}
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Unified experiences for mobile, tablet, and desktop</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('services.devices.unified_experiences')}</h3>
             <p className="text-base sm:text-lg text-slate-700 dark:text-slate-200 max-w-3xl">
-              We prototype with real device ratios, notch-safe layouts, adaptive grids, and cursor/touch ergonomics so every flow feels native on Windows laptops, macOS desktops, Linux workstations, tablets, and modern phones.
+              {t('services.devices.unified_experiences_desc')}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -307,7 +307,7 @@ const Services: React.FC = () => {
                   <span className="text-sm font-semibold text-slate-800 dark:text-white/90">{os.name}</span>
                 </div>
               ))}
-              <span className="text-sm text-slate-600 dark:text-slate-300">+ iOS, Android, web, and kiosk form factors</span>
+              <span className="text-sm text-slate-600 dark:text-slate-300">{t('services.devices.more_platforms')}</span>
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ const fr = {
     title_line1: 'Construire le',
     title_highlight: 'Futur Numérique',
     subtitle: "Nous concevons des solutions logicielles robustes, évolutives et sécurisées. De l'intégration IA à la sécurité d'entreprise, SYNARIZMIE offre l'excellence à chaque ligne de code.",
-    start_project: 'Démarrer votre projet',
+    start_project: 'Réserver une démo',
     explore_services: 'Explorer les services'
     ,
     modern_stack: {
@@ -99,6 +99,31 @@ const fr = {
           title: 'Mobile',
           desc: 'Expériences natives avec cache hors ligne, biométrie et cibles tactiles ergonomiques.'
         }
+      },
+      runs_on_every_os: 'Fonctionne sur tous les OS',
+      phone_label: 'Téléphone',
+      online_status: 'En ligne',
+      multi_device_confidence: 'Confiance multi-appareils',
+      unified_experiences: 'Expériences unifiées pour mobile, tablette et desktop',
+      unified_experiences_desc: 'Nous prototypons avec de vrais ratios d\'appareils, des mises en page sûres pour les encoches, des grilles adaptatives et une ergonomie curseur/tactile pour que chaque flux soit natif sur laptops Windows, desktops macOS, stations Linux, tablettes et téléphones modernes.',
+      more_platforms: '+ iOS, Android, web et facteurs de forme kiosque',
+      highlights: {
+        pixel_perfect: {
+          title: 'Pixel-perfect sur tous les écrans',
+          desc: 'Du mobile au desktop, les mises en page, mouvements et gestes s\'adaptent instantanément.'
+        },
+        native_performance: {
+          title: 'Performance native',
+          desc: 'UI accélérée matériellement, transitions fluides prêtes pour 120fps et cache offline-first.'
+        },
+        security_compliance: {
+          title: 'Sécurité + conformité intégrées',
+          desc: 'SSO, vérification de posture des appareils, chiffrement au repos/en transit et journalisation prête pour l\'audit.'
+        },
+        ship_everywhere: {
+          title: 'Livrer une fois, exécuter partout',
+          desc: 'Système de design unifié pour iOS, Android, Windows, macOS et espaces de travail Linux.'
+        }
       }
     }
   },
@@ -161,6 +186,32 @@ const fr = {
     join_meet: 'Rejoindre la réunion'
     ,
     booking_failed: 'La réservation a échoué'
+  },
+  demo_booking: {
+    title: 'Réserver une démo',
+    subtitle: 'Planifiez une session de démonstration gratuite pour découvrir comment nous pouvons vous aider à transformer vos idées en réalité.',
+    name_label: 'Nom complet',
+    name_placeholder: 'Entrez votre nom complet',
+    email_label: 'Adresse e-mail',
+    email_placeholder: 'Entrez votre adresse e-mail',
+    company_label: 'Entreprise (Optionnel)',
+    company_placeholder: 'Entrez le nom de votre entreprise',
+    phone_label: 'Téléphone (Optionnel)',
+    phone_placeholder: 'Entrez votre numéro de téléphone',
+    message_label: 'Parlez-nous de votre projet',
+    message_placeholder: 'Décrivez brièvement ce que vous aimeriez discuter lors de la démo...',
+    select_date: 'Sélectionner une date',
+    select_time: 'Sélectionner une heure',
+    confirm_demo: 'Confirmer la demande de démo',
+    processing: 'Traitement...',
+    success_title: 'Demande de démo reçue !',
+    success_message: 'Merci pour votre intérêt ! Nous avons reçu votre demande de démo pour',
+    success_email_note: 'Un e-mail de confirmation sera envoyé à',
+    contact_soon: 'Notre équipe vous contactera prochainement pour confirmer les détails de la réunion.',
+    book_another: 'Réserver une autre démo',
+    back_home: 'Retour à l\'accueil',
+    no_login_required: 'Aucun compte requis',
+    free_consultation: 'Consultation gratuite de 30 minutes'
   },
   dashboard: {
     title: "Portail client",

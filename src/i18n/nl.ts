@@ -23,7 +23,7 @@ const nl = {
     title_line1: 'De',
     title_highlight: 'Digitale Toekomst',
     subtitle: 'Wij ontwikkelen robuuste, schaalbare en veilige softwareoplossingen. Van AI-integratie tot enterprise security, SYNARIZMIE levert excellentie in elke regel code.',
-    start_project: 'Start Uw Project',
+    start_project: 'Demo Boeken',
     explore_services: 'Ontdek Diensten',
     modern_stack: {
       title: 'Moderne Stack'
@@ -98,6 +98,31 @@ const nl = {
           title: 'Mobile',
           desc: 'Native gevoel met offline caching, biometrie en ergonomische touch targets.'
         }
+      },
+      runs_on_every_os: 'Draait op elk OS',
+      phone_label: 'Telefoon',
+      online_status: 'Online',
+      multi_device_confidence: 'Multi-device vertrouwen',
+      unified_experiences: 'Uniforme ervaringen voor mobiel, tablet en desktop',
+      unified_experiences_desc: 'We prototypen met echte apparaatverhoudingen, notch-veilige layouts, adaptieve grids en cursor/touch-ergonomie zodat elke flow native aanvoelt op Windows-laptops, macOS-desktops, Linux-werkstations, tablets en moderne telefoons.',
+      more_platforms: '+ iOS, Android, web en kiosk-formfactoren',
+      highlights: {
+        pixel_perfect: {
+          title: 'Pixel-perfect op alle schermen',
+          desc: 'Van pocket tot desktop, layouts, bewegingen en gebaren passen zich direct aan.'
+        },
+        native_performance: {
+          title: 'Native-grade prestaties',
+          desc: 'Hardware-versnelde UI, vloeiende 120fps-klare overgangen en offline-first caching.'
+        },
+        security_compliance: {
+          title: 'Beveiliging + compliance ingebouwd',
+          desc: 'SSO, device posture checks, encryptie in rust/transit en audit-klare logging.'
+        },
+        ship_everywhere: {
+          title: 'Eenmaal verzenden, overal draaien',
+          desc: 'Uniforme designsysteem voor iOS, Android, Windows, macOS en Linux-werkruimtes.'
+        }
       }
     }
   },
@@ -158,6 +183,32 @@ const nl = {
     no_booking_history: 'Geen boekingsgeschiedenis',
     join_meet: 'Deelnemen aan Meet',
     booking_failed: 'Boeking mislukt'
+  },
+  demo_booking: {
+    title: 'Demo Boeken',
+    subtitle: 'Plan een gratis demosessie om te ontdekken hoe wij uw ideeën kunnen omzetten in realiteit.',
+    name_label: 'Volledige Naam',
+    name_placeholder: 'Voer uw volledige naam in',
+    email_label: 'E-mailadres',
+    email_placeholder: 'Voer uw e-mailadres in',
+    company_label: 'Bedrijf (Optioneel)',
+    company_placeholder: 'Voer uw bedrijfsnaam in',
+    phone_label: 'Telefoon (Optioneel)',
+    phone_placeholder: 'Voer uw telefoonnummer in',
+    message_label: 'Vertel ons over uw project',
+    message_placeholder: 'Beschrijf kort wat u wilt bespreken tijdens de demo...',
+    select_date: 'Selecteer Datum',
+    select_time: 'Selecteer Tijd',
+    confirm_demo: 'Demo Aanvraag Bevestigen',
+    processing: 'Verwerken...',
+    success_title: 'Demo Aanvraag Ontvangen!',
+    success_message: 'Bedankt voor uw interesse! Wij hebben uw demo aanvraag ontvangen voor',
+    success_email_note: 'Een bevestigingsmail wordt verzonden naar',
+    contact_soon: 'Ons team neemt binnenkort contact met u op om de vergaderingsdetails te bevestigen.',
+    book_another: 'Nog Een Demo Boeken',
+    back_home: 'Terug naar Home',
+    no_login_required: 'Geen account vereist',
+    free_consultation: 'Gratis consultatie van 30 minuten'
   },
   dashboard: {
     title: 'Klantenportaal',

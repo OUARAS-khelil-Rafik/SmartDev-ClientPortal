@@ -5,6 +5,7 @@ import Services from './components/Services';
 import AppsShowcase from './components/AppsShowcase';
 import Dashboard from './components/Dashboard';
 import Booking from './components/Booking';
+import DemoBooking from './components/DemoBooking';
 import AIConsultant from './components/AIConsultant';
 import FloatingCopilot from './components/FloatingCopilot';
 import Auth from './components/Auth';
@@ -81,6 +82,10 @@ const App: React.FC = () => {
       case ViewState.BOOKING:
         // Booking handles its own auth check internally for the UI, but we pass user
         return <Booking user={user} setView={setView} />;
+
+      case ViewState.DEMO_BOOKING:
+        // Demo booking for new users - no login required
+        return <DemoBooking setView={setView} />;
         
       case ViewState.AI_CONSULT:
         return <AIConsultant />;

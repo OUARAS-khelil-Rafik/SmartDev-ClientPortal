@@ -99,7 +99,7 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
             className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-2 sm:px-0"
           >
               <button 
-                onClick={() => setView(ViewState.BOOKING)}
+                onClick={() => setView(ViewState.DEMO_BOOKING)}
                 className="group px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-base sm:text-lg hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
             >
               {t('hero.start_project')} <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
