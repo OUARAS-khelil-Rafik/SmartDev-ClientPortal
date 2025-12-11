@@ -382,6 +382,9 @@ const en = {
     pointageTitle: 'Time Tracking System',
     pointageSubtitle: 'Complete work hours management',
     pointageDescription: 'A modern and intuitive solution for managing attendance, leave, overtime and RTT. Designed for SMEs and large enterprises seeking efficiency and compliance.',
+    brailleTitle: 'Braille Translator',
+    brailleSubtitle: 'Breaking barriers through accessibility',
+    brailleDescription: 'An innovative tool for translating text to Braille and vice versa. Supports multiple languages with Grade 1 and Grade 2 Braille notation. Empowering the visually impaired community through technology.',
     liveDemo: 'Live Demo',
     learnMore: 'Learn More',
     builtWith: 'Built with',
@@ -403,6 +406,11 @@ const en = {
       3: { title: 'Report Center', description: 'Generate Excel and PDF reports for hours and requests tracking.', category: 'Reports' },
       4: { title: 'Time Tracking Management', description: 'Complete dashboard for daily time tracking and attendance management.', category: 'Time Tracking' }
     },
+    brailleImagesTitles: {
+      0: { title: 'Translator Page', description: 'Translate between multiple languages with Braille support. Bidirectional translation with real-time conversion.', category: 'Translation' },
+      1: { title: 'Text to Braille', description: 'Convert regular text to Braille notation with virtual keyboard support for Grade 1 and Grade 2 Braille.', category: 'Transcription' },
+      2: { title: 'Braille to Text', description: 'Transcribe Braille notation back to readable text. Interactive Braille cell input with visual feedback.', category: 'Transcription' }
+    },
     features: {
       employeeManagement: 'Employee Management',
       leaveRequests: 'Leave Requests',
@@ -410,6 +418,14 @@ const en = {
       excelPdfExport: 'Excel/PDF Export',
       enhancedSecurity: 'Enhanced Security',
       responsiveDesign: 'Responsive Design'
+    },
+    brailleFeatures: {
+      multiLanguage: 'Multi-Language Support',
+      realTimeConversion: 'Real-Time Conversion',
+      grade1Grade2: 'Grade 1 & Grade 2 Braille',
+      accessibilityFirst: 'Accessibility First',
+      virtualKeyboard: 'Virtual Braille Keyboard',
+      exportOptions: 'Export & Share Options'
     },
     whyChooseFeatures: {
       timeSaving: {

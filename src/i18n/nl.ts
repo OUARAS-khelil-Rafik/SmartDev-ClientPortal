@@ -375,6 +375,9 @@ const nl = {
     pointageTitle: 'Tijdregistratiesysteem',
     pointageSubtitle: 'Volledige werktijdbeheer',
     pointageDescription: 'Een moderne en intuïtieve oplossing voor het beheren van aanwezigheid, verlof, overuren en RTT. Ontworpen voor MKB en grote ondernemingen die efficiëntie en compliance zoeken.',
+    brailleTitle: 'Braille Vertaler',
+    brailleSubtitle: 'Barrières doorbreken door toegankelijkheid',
+    brailleDescription: 'Een innovatieve tool voor het vertalen van tekst naar Braille en vice versa. Ondersteunt meerdere talen met Braille-notatie van Graad 1 en 2. Technologie om de visueel beperkte gemeenschap te versterken.',
     liveDemo: 'Live Demo',
     learnMore: 'Meer informatie',
     builtWith: 'Gebouwd met',
@@ -396,6 +399,11 @@ const nl = {
       3: { title: 'Rapportagecentrum', description: 'Genereren van Excel- en PDF-rapporten voor uren- en aanvraagtracking.', category: 'Rapporten' },
       4: { title: 'Tijdregistratiebeheer', description: 'Volledig dashboard voor dagelijkse tijdregistratie en aanwezigheidsbeheer.', category: 'Tijdregistratie' }
     },
+    brailleImagesTitles: {
+      0: { title: 'Vertaalpagina', description: 'Vertalen tussen meerdere talen met Braille-ondersteuning. Bidirectionele vertaling met realtime conversie.', category: 'Vertaling' },
+      1: { title: 'Tekst naar Braille', description: 'Converteer normale tekst naar Braille-notatie met virtueel toetsenbord voor Braille Graad 1 en 2.', category: 'Transcriptie' },
+      2: { title: 'Braille naar Tekst', description: 'Transcribeer Braille-notatie terug naar leesbare tekst. Interactieve Braille-cel invoer met visuele feedback.', category: 'Transcriptie' }
+    },
     features: {
       employeeManagement: 'Medewerkerbeheer',
       leaveRequests: 'Verlofaanvragen',
@@ -403,6 +411,14 @@ const nl = {
       excelPdfExport: 'Excel/PDF Export',
       enhancedSecurity: 'Verbeterde Beveiliging',
       responsiveDesign: 'Responsief Design'
+    },
+    brailleFeatures: {
+      multiLanguage: 'Meertalige Ondersteuning',
+      realTimeConversion: 'Realtime Conversie',
+      grade1Grade2: 'Braille Graad 1 & 2',
+      accessibilityFirst: 'Toegankelijkheid Eerst',
+      virtualKeyboard: 'Virtueel Braille Toetsenbord',
+      exportOptions: 'Export & Deel Opties'
     },
     whyChooseFeatures: {
       timeSaving: {

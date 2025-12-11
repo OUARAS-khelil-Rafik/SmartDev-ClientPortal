@@ -375,6 +375,9 @@ const de = {
     pointageTitle: 'Zeiterfassungssystem',
     pointageSubtitle: 'Vollständige Arbeitszeitverwaltung',
     pointageDescription: 'Eine moderne und intuitive Lösung für die Verwaltung von Anwesenheit, Urlaub, Überstunden und RTT. Entwickelt für KMU und Großunternehmen, die Effizienz und Compliance suchen.',
+    brailleTitle: 'Braille-Übersetzer',
+    brailleSubtitle: 'Barrieren durch Zugänglichkeit überwinden',
+    brailleDescription: 'Ein innovatives Werkzeug zur Übersetzung von Text in Braille und umgekehrt. Unterstützt mehrere Sprachen mit Braille-Notation der Stufe 1 und 2. Technologie zur Stärkung der sehbehinderten Gemeinschaft.',
     liveDemo: 'Live Demo',
     learnMore: 'Mehr erfahren',
     builtWith: 'Entwickelt mit',
@@ -396,6 +399,11 @@ const de = {
       3: { title: 'Berichtszentrum', description: 'Generierung von Excel- und PDF-Berichten für Stunden- und Anfrageverfolgung.', category: 'Berichte' },
       4: { title: 'Zeiterfassungsverwaltung', description: 'Vollständiges Dashboard für die tägliche Zeiterfassung und Anwesenheitsverwaltung.', category: 'Zeiterfassung' }
     },
+    brailleImagesTitles: {
+      0: { title: 'Übersetzerseite', description: 'Übersetzen zwischen mehreren Sprachen mit Braille-Unterstützung. Bidirektionale Übersetzung mit Echtzeit-Konvertierung.', category: 'Übersetzung' },
+      1: { title: 'Text zu Braille', description: 'Konvertieren Sie normalen Text in Braille-Notation mit virtueller Tastatur für Braille Stufe 1 und 2.', category: 'Transkription' },
+      2: { title: 'Braille zu Text', description: 'Transkribieren Sie Braille-Notation zurück in lesbaren Text. Interaktive Braille-Zellen-Eingabe mit visuellem Feedback.', category: 'Transkription' }
+    },
     features: {
       employeeManagement: 'Mitarbeiterverwaltung',
       leaveRequests: 'Urlaubsanträge',
@@ -403,6 +411,14 @@ const de = {
       excelPdfExport: 'Excel/PDF Export',
       enhancedSecurity: 'Erhöhte Sicherheit',
       responsiveDesign: 'Responsives Design'
+    },
+    brailleFeatures: {
+      multiLanguage: 'Mehrsprachige Unterstützung',
+      realTimeConversion: 'Echtzeit-Konvertierung',
+      grade1Grade2: 'Braille Stufe 1 & 2',
+      accessibilityFirst: 'Barrierefreiheit zuerst',
+      virtualKeyboard: 'Virtuelle Braille-Tastatur',
+      exportOptions: 'Export- & Freigabeoptionen'
     },
     whyChooseFeatures: {
       timeSaving: {

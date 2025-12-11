@@ -384,6 +384,9 @@ const fr = {
     pointageTitle: 'Système de Pointage',
     pointageSubtitle: 'Gestion complète des heures de travail',
     pointageDescription: 'Une solution moderne et intuitive pour la gestion des présences, congés, heures supplémentaires et RTT. Conçue pour les PME et grandes entreprises recherchant l\'efficacité et la conformité.',
+    brailleTitle: 'Traducteur Braille',
+    brailleSubtitle: 'Briser les barrières grâce à l\'accessibilité',
+    brailleDescription: 'Un outil innovant pour traduire du texte en Braille et vice versa. Supporte plusieurs langues avec la notation Braille de Grade 1 et Grade 2. Autonomiser la communauté des malvoyants grâce à la technologie.',
     liveDemo: 'Démo Live',
     learnMore: 'En savoir plus',
     builtWith: 'Construit avec',
@@ -405,6 +408,11 @@ const fr = {
       3: { title: 'Centre de rapports', description: 'Génération de rapports Excel et PDF pour le suivi des heures et des requêtes.', category: 'Rapports' },
       4: { title: 'Gestion des pointages', description: 'Tableau de bord complet pour la gestion quotidienne des pointages et présences.', category: 'Pointage' }
     },
+    brailleImagesTitles: {
+      0: { title: 'Page Traducteur', description: 'Traduisez entre plusieurs langues avec support Braille. Traduction bidirectionnelle avec conversion en temps réel.', category: 'Traduction' },
+      1: { title: 'Texte vers Braille', description: 'Convertissez du texte en notation Braille avec clavier virtuel pour Braille Grade 1 et Grade 2.', category: 'Transcription' },
+      2: { title: 'Braille vers Texte', description: 'Transcrivez la notation Braille en texte lisible. Saisie de cellules Braille interactive avec retour visuel.', category: 'Transcription' }
+    },
     features: {
       employeeManagement: 'Gestion des employés',
       leaveRequests: 'Demandes de congés',
@@ -412,6 +420,14 @@ const fr = {
       excelPdfExport: 'Export Excel/PDF',
       enhancedSecurity: 'Sécurité renforcée',
       responsiveDesign: 'Design responsive'
+    },
+    brailleFeatures: {
+      multiLanguage: 'Support Multi-Langues',
+      realTimeConversion: 'Conversion en Temps Réel',
+      grade1Grade2: 'Braille Grade 1 & Grade 2',
+      accessibilityFirst: 'Accessibilité en Premier',
+      virtualKeyboard: 'Clavier Braille Virtuel',
+      exportOptions: 'Options d\'Export & Partage'
     },
     whyChooseFeatures: {
       timeSaving: {
