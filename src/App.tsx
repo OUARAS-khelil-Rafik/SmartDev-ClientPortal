@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
+import AppsShowcase from './components/AppsShowcase';
 import Dashboard from './components/Dashboard';
 import Booking from './components/Booking';
 import AIConsultant from './components/AIConsultant';
@@ -62,6 +63,7 @@ const App: React.FC = () => {
           <>
             <Hero setView={setView} />
             <Services />
+            <AppsShowcase />
           </>
         );
       case ViewState.SERVICES:

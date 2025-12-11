@@ -365,6 +365,78 @@ const de = {
     thinking: 'Denke nach...',
     placeholder: 'Fragen Sie etwas...',
     send: 'Nachricht senden'
+  },
+  appsShowcase: {
+    ecosystem: 'Ökosystem',
+    appsTitle: 'Apps & Integrationen',
+    appsSubtitle: 'Erweitern Sie Ihre Möglichkeiten mit ausgewählten Apps. Ein nahtloses Ökosystem, das jeden Workflow verbindet.',
+    connect: 'Verbinden',
+    featuredProject: 'Ausgewähltes Projekt',
+    pointageTitle: 'Zeiterfassungssystem',
+    pointageSubtitle: 'Vollständige Arbeitszeitverwaltung',
+    pointageDescription: 'Eine moderne und intuitive Lösung für die Verwaltung von Anwesenheit, Urlaub, Überstunden und RTT. Entwickelt für KMU und Großunternehmen, die Effizienz und Compliance suchen.',
+    liveDemo: 'Live Demo',
+    learnMore: 'Mehr erfahren',
+    builtWith: 'Entwickelt mit',
+    productionReady: 'Produktionsbereit',
+    enterpriseGrade: 'Enterprise-Qualität',
+    viewAll: 'Alle anzeigen',
+    whyChooseTitle: 'Warum SYNARIZMIE wählen ',
+    whyChooseSubtitle: 'Maßgeschneiderte Lösungen, die Ihre Vision in digitale Realität verwandeln. Unsere Expertise begleitet Sie von der Konzeption bis zur Bereitstellung.',
+    advantages: 'Vorteile',
+    builtForTitle: 'Speziell entwickelt für',
+    builtForSubtitle: 'Lösungen für jede Branche',
+    industries: 'Branchen',
+    availableOn: 'Auf allen Plattformen verfügbar',
+    startProject: 'Starten Sie Ihr Projekt',
+    imagesTitles: {
+      0: { title: 'Mitarbeiter hinzufügen', description: 'Intuitive Oberfläche zum Erstellen neuer Mitarbeiterprofile mit persönlichen Daten und Ausgangsinformationen.', category: 'HR-Management' },
+      1: { title: 'Antragsverwaltung', description: 'Vollständige Verfolgung von Urlaub, RTT, Überstunden mit Echtzeit-Statusaktualisierungen.', category: 'Anträge' },
+      2: { title: 'Monatsübersicht', description: 'Überblick über geleistete Stunden, RTT, Überstunden und verbleibenden Urlaub.', category: 'Analytics' },
+      3: { title: 'Berichtszentrum', description: 'Generierung von Excel- und PDF-Berichten für Stunden- und Anfrageverfolgung.', category: 'Berichte' },
+      4: { title: 'Zeiterfassungsverwaltung', description: 'Vollständiges Dashboard für die tägliche Zeiterfassung und Anwesenheitsverwaltung.', category: 'Zeiterfassung' }
+    },
+    features: {
+      employeeManagement: 'Mitarbeiterverwaltung',
+      leaveRequests: 'Urlaubsanträge',
+      detailedReports: 'Detaillierte Berichte',
+      excelPdfExport: 'Excel/PDF Export',
+      enhancedSecurity: 'Erhöhte Sicherheit',
+      responsiveDesign: 'Responsives Design'
+    },
+    whyChooseFeatures: {
+      timeSaving: {
+        title: 'Zeitersparnis',
+        description: 'Reduzieren Sie den Verwaltungsaufwand für die Stundenverwaltung um 70%.',
+        stat: '70%'
+      },
+      compliance: {
+        title: 'Garantierte Compliance',
+        description: 'Automatische Einhaltung von Arbeitsvorschriften und Tarifverträgen.',
+        stat: '100%'
+      },
+      roi: {
+        title: 'Schneller ROI',
+        description: 'Sichtbarer Return on Investment ab den ersten Nutzungsmonaten.',
+        stat: '3x'
+      },
+      satisfaction: {
+        title: 'Mitarbeiterzufriedenheit',
+        description: 'Moderne und intuitive Oberfläche, geschätzt von allen Generationen.',
+        stat: '95%'
+      }
+    },
+    builtFor: {
+      sme: { name: 'KMU & Mittelstand', description: '10 bis 500 Mitarbeiter' },
+      multinational: { name: 'Multinationale Unternehmen', description: 'Mehrere Standorte, mehrere Länder' },
+      services: { name: 'Dienstleistungen', description: 'Beratung, IT, Agenturen' },
+      industry: { name: 'Industrie', description: 'Produktion, Logistik' }
+    },
+    platforms: {
+      desktop: 'Desktop',
+      mobile: 'Mobil',
+      web: 'Web'
+    }
   }
 };
 

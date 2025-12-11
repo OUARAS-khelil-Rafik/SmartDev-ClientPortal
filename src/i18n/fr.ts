@@ -374,6 +374,78 @@ const fr = {
     thinking: 'Réflexion...',
     placeholder: 'Posez votre question...',
     send: 'Envoyer'
+  },
+  appsShowcase: {
+    ecosystem: 'Écosystème',
+    appsTitle: 'Apps & Intégrations',
+    appsSubtitle: 'Étendez vos possibilités avec des applications sélectionnées. Un écosystème fluide conçu pour connecter chaque workflow.',
+    connect: 'Connecter',
+    featuredProject: 'Projet Phare',
+    pointageTitle: 'Système de Pointage',
+    pointageSubtitle: 'Gestion complète des heures de travail',
+    pointageDescription: 'Une solution moderne et intuitive pour la gestion des présences, congés, heures supplémentaires et RTT. Conçue pour les PME et grandes entreprises recherchant l\'efficacité et la conformité.',
+    liveDemo: 'Démo Live',
+    learnMore: 'En savoir plus',
+    builtWith: 'Construit avec',
+    productionReady: 'Prêt pour la production',
+    enterpriseGrade: 'Qualité Entreprise',
+    viewAll: 'Voir tout',
+    whyChooseTitle: 'Pourquoi choisir SYNARIZMIE ',
+    whyChooseSubtitle: 'Des solutions sur mesure qui transforment votre vision en réalité digitale. Notre expertise vous accompagne de la conception au déploiement.',
+    advantages: 'Avantages',
+    builtForTitle: 'Conçu spécialement pour',
+    builtForSubtitle: 'Des solutions adaptées à chaque secteur',
+    industries: 'Industries',
+    availableOn: 'Disponible sur toutes les plateformes',
+    startProject: 'Démarrer votre projet',
+    imagesTitles: {
+      0: { title: 'Ajouter un employé', description: 'Interface intuitive pour créer de nouveaux profils employés avec informations personnelles et données initiales.', category: 'Gestion RH' },
+      1: { title: 'Gestion des demandes', description: 'Suivi complet des congés, RTT, heures supplémentaires avec statuts en temps réel.', category: 'Demandes' },
+      2: { title: 'Sommaire mensuel', description: 'Vue d\'ensemble des heures prestées, RTT, heures supplémentaires et congés restants.', category: 'Analytics' },
+      3: { title: 'Centre de rapports', description: 'Génération de rapports Excel et PDF pour le suivi des heures et des requêtes.', category: 'Rapports' },
+      4: { title: 'Gestion des pointages', description: 'Tableau de bord complet pour la gestion quotidienne des pointages et présences.', category: 'Pointage' }
+    },
+    features: {
+      employeeManagement: 'Gestion des employés',
+      leaveRequests: 'Demandes de congés',
+      detailedReports: 'Rapports détaillés',
+      excelPdfExport: 'Export Excel/PDF',
+      enhancedSecurity: 'Sécurité renforcée',
+      responsiveDesign: 'Design responsive'
+    },
+    whyChooseFeatures: {
+      timeSaving: {
+        title: 'Gain de temps',
+        description: 'Réduisez de 70% le temps consacré à la gestion administrative des heures.',
+        stat: '70%'
+      },
+      compliance: {
+        title: 'Conformité garantie',
+        description: 'Respect automatique des réglementations du travail et conventions collectives.',
+        stat: '100%'
+      },
+      roi: {
+        title: 'ROI rapide',
+        description: 'Retour sur investissement visible dès les premiers mois d\'utilisation.',
+        stat: '3x'
+      },
+      satisfaction: {
+        title: 'Satisfaction employés',
+        description: 'Interface moderne et intuitive appréciée par toutes les générations.',
+        stat: '95%'
+      }
+    },
+    builtFor: {
+      sme: { name: 'PME & ETI', description: '10 à 500 employés' },
+      multinational: { name: 'Multinationales', description: 'Multi-sites, multi-pays' },
+      services: { name: 'Services', description: 'Consulting, IT, Agences' },
+      industry: { name: 'Industrie', description: 'Production, Logistique' }
+    },
+    platforms: {
+      desktop: 'Bureau',
+      mobile: 'Mobile',
+      web: 'Web'
+    }
   }
 };
 

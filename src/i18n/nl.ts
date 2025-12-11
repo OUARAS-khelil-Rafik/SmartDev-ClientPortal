@@ -365,6 +365,78 @@ const nl = {
     thinking: 'Nadenken...',
     placeholder: 'Stel een vraag...',
     send: 'Bericht verzenden'
+  },
+  appsShowcase: {
+    ecosystem: 'Ecosysteem',
+    appsTitle: 'Apps & Integraties',
+    appsSubtitle: 'Breid uw mogelijkheden uit met geselecteerde apps. Een naadloos ecosysteem ontworpen om elke workflow te verbinden.',
+    connect: 'Verbinden',
+    featuredProject: 'Uitgelicht Project',
+    pointageTitle: 'Tijdregistratiesysteem',
+    pointageSubtitle: 'Volledige werktijdbeheer',
+    pointageDescription: 'Een moderne en intuïtieve oplossing voor het beheren van aanwezigheid, verlof, overuren en RTT. Ontworpen voor MKB en grote ondernemingen die efficiëntie en compliance zoeken.',
+    liveDemo: 'Live Demo',
+    learnMore: 'Meer informatie',
+    builtWith: 'Gebouwd met',
+    productionReady: 'Productieklaar',
+    enterpriseGrade: 'Enterprise Kwaliteit',
+    viewAll: 'Alles bekijken',
+    whyChooseTitle: 'Waarom kiezen voor SYNARIZMIE ',
+    whyChooseSubtitle: 'Maatwerk oplossingen die uw visie transformeren naar digitale realiteit. Onze expertise begeleidt u van ontwerp tot implementatie.',
+    advantages: 'Voordelen',
+    builtForTitle: 'Speciaal gebouwd voor',
+    builtForSubtitle: 'Oplossingen voor elke sector',
+    industries: 'Sectoren',
+    availableOn: 'Beschikbaar op alle platformen',
+    startProject: 'Start uw project',
+    imagesTitles: {
+      0: { title: 'Medewerker toevoegen', description: 'Intuïtieve interface voor het aanmaken van nieuwe medewerkersprofielen met persoonlijke gegevens en initiële data.', category: 'HR-beheer' },
+      1: { title: 'Aanvraagbeheer', description: 'Volledige tracking van verlof, RTT, overuren met realtime statusupdates.', category: 'Aanvragen' },
+      2: { title: 'Maandoverzicht', description: 'Overzicht van gewerkte uren, RTT, overuren en resterend verlof.', category: 'Analytics' },
+      3: { title: 'Rapportagecentrum', description: 'Genereren van Excel- en PDF-rapporten voor uren- en aanvraagtracking.', category: 'Rapporten' },
+      4: { title: 'Tijdregistratiebeheer', description: 'Volledig dashboard voor dagelijkse tijdregistratie en aanwezigheidsbeheer.', category: 'Tijdregistratie' }
+    },
+    features: {
+      employeeManagement: 'Medewerkerbeheer',
+      leaveRequests: 'Verlofaanvragen',
+      detailedReports: 'Gedetailleerde Rapporten',
+      excelPdfExport: 'Excel/PDF Export',
+      enhancedSecurity: 'Verbeterde Beveiliging',
+      responsiveDesign: 'Responsief Design'
+    },
+    whyChooseFeatures: {
+      timeSaving: {
+        title: 'Tijdbesparing',
+        description: 'Verminder de administratieve tijd voor urenbeheer met 70%.',
+        stat: '70%'
+      },
+      compliance: {
+        title: 'Gegarandeerde Compliance',
+        description: 'Automatische naleving van arbeidsvoorschriften en cao\'s.',
+        stat: '100%'
+      },
+      roi: {
+        title: 'Snelle ROI',
+        description: 'Zichtbaar rendement op investering vanaf de eerste maanden.',
+        stat: '3x'
+      },
+      satisfaction: {
+        title: 'Medewerkertevredenheid',
+        description: 'Moderne en intuïtieve interface gewaardeerd door alle generaties.',
+        stat: '95%'
+      }
+    },
+    builtFor: {
+      sme: { name: 'MKB', description: '10 tot 500 medewerkers' },
+      multinational: { name: 'Multinationals', description: 'Meerdere locaties, meerdere landen' },
+      services: { name: 'Diensten', description: 'Consulting, IT, Bureaus' },
+      industry: { name: 'Industrie', description: 'Productie, Logistiek' }
+    },
+    platforms: {
+      desktop: 'Desktop',
+      mobile: 'Mobiel',
+      web: 'Web'
+    }
   }
 };
 

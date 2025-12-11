@@ -372,6 +372,78 @@ const en = {
     thinking: 'Thinking...',
     placeholder: 'Ask anything...',
     send: 'Send message'
+  },
+  appsShowcase: {
+    ecosystem: 'Ecosystem',
+    appsTitle: 'Apps & Integrations',
+    appsSubtitle: 'Extend your possibilities with curated apps. A seamless ecosystem designed to keep every workflow connected.',
+    connect: 'Connect',
+    featuredProject: 'Featured Project',
+    pointageTitle: 'Time Tracking System',
+    pointageSubtitle: 'Complete work hours management',
+    pointageDescription: 'A modern and intuitive solution for managing attendance, leave, overtime and RTT. Designed for SMEs and large enterprises seeking efficiency and compliance.',
+    liveDemo: 'Live Demo',
+    learnMore: 'Learn More',
+    builtWith: 'Built with',
+    productionReady: 'Production Ready',
+    enterpriseGrade: 'Enterprise Grade',
+    viewAll: 'View All',
+    whyChooseTitle: 'Why Choose SYNARIZMIE ',
+    whyChooseSubtitle: 'Custom solutions that transform your vision into digital reality. Our expertise supports you from design to deployment.',
+    advantages: 'Advantages',
+    builtForTitle: 'Built Specifically For',
+    builtForSubtitle: 'Solutions adapted to every industry',
+    industries: 'Industries',
+    availableOn: 'Available on all platforms',
+    startProject: 'Start your project',
+    imagesTitles: {
+      0: { title: 'Add Employee', description: 'Intuitive interface for creating new employee profiles with personal information and initial data.', category: 'HR Management' },
+      1: { title: 'Request Management', description: 'Complete tracking of leave, RTT, overtime with real-time status updates.', category: 'Requests' },
+      2: { title: 'Monthly Summary', description: 'Overview of hours worked, RTT, overtime and remaining leave.', category: 'Analytics' },
+      3: { title: 'Report Center', description: 'Generate Excel and PDF reports for hours and requests tracking.', category: 'Reports' },
+      4: { title: 'Time Tracking Management', description: 'Complete dashboard for daily time tracking and attendance management.', category: 'Time Tracking' }
+    },
+    features: {
+      employeeManagement: 'Employee Management',
+      leaveRequests: 'Leave Requests',
+      detailedReports: 'Detailed Reports',
+      excelPdfExport: 'Excel/PDF Export',
+      enhancedSecurity: 'Enhanced Security',
+      responsiveDesign: 'Responsive Design'
+    },
+    whyChooseFeatures: {
+      timeSaving: {
+        title: 'Time Saving',
+        description: 'Reduce administrative time spent on hours management by 70%.',
+        stat: '70%'
+      },
+      compliance: {
+        title: 'Guaranteed Compliance',
+        description: 'Automatic compliance with labor regulations and collective agreements.',
+        stat: '100%'
+      },
+      roi: {
+        title: 'Fast ROI',
+        description: 'Visible return on investment from the first months of use.',
+        stat: '3x'
+      },
+      satisfaction: {
+        title: 'Employee Satisfaction',
+        description: 'Modern and intuitive interface appreciated by all generations.',
+        stat: '95%'
+      }
+    },
+    builtFor: {
+      sme: { name: 'SME & ETI', description: '10 to 500 employees' },
+      multinational: { name: 'Multinationals', description: 'Multi-site, multi-country' },
+      services: { name: 'Services', description: 'Consulting, IT, Agencies' },
+      industry: { name: 'Industry', description: 'Production, Logistics' }
+    },
+    platforms: {
+      desktop: 'Desktop',
+      mobile: 'Mobile',
+      web: 'Web'
+    }
   }
 };
 
