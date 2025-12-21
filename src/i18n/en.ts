@@ -125,6 +125,14 @@ const en = {
           desc: 'Unified design system for iOS, Android, Windows, macOS, and Linux workspaces.'
         }
       }
+    },
+    items: {
+      ai: { title: 'AI & Machine Learning' },
+      sec: { title: 'Security & Compliance' },
+      web: { title: 'Web Development' },
+      mob: { title: 'Mobile Apps' },
+      cloud: { title: 'Cloud & DevOps' },
+      data: { title: 'Data & Analytics' }
     }
   },
   auth: {

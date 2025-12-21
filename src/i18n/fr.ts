@@ -125,6 +125,14 @@ const fr = {
           desc: 'Système de design unifié pour iOS, Android, Windows, macOS et espaces de travail Linux.'
         }
       }
+    },
+    items: {
+      ai: { title: 'IA & Machine Learning' },
+      sec: { title: 'Sécurité & Conformité' },
+      web: { title: 'Développement Web' },
+      mob: { title: 'Applications Mobiles' },
+      cloud: { title: 'Cloud & DevOps' },
+      data: { title: 'Données & Analytique' }
     }
   },
   auth: {

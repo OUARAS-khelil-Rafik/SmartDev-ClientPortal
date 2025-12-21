@@ -124,6 +124,14 @@ const nl = {
           desc: 'Uniforme designsysteem voor iOS, Android, Windows, macOS en Linux-werkruimtes.'
         }
       }
+    },
+    items: {
+      ai: { title: 'AI & Machine Learning' },
+      sec: { title: 'Beveiliging & Compliance' },
+      web: { title: 'Webontwikkeling' },
+      mob: { title: 'Mobiele Apps' },
+      cloud: { title: 'Cloud & DevOps' },
+      data: { title: 'Data & Analytics' }
     }
   },
   auth: {

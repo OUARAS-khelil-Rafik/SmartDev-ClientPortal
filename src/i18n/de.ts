@@ -124,6 +124,14 @@ const de = {
           desc: 'Einheitliches Designsystem für iOS, Android, Windows, macOS und Linux-Arbeitsbereiche.'
         }
       }
+    },
+    items: {
+      ai: { title: 'KI & Maschinelles Lernen' },
+      sec: { title: 'Sicherheit & Compliance' },
+      web: { title: 'Webentwicklung' },
+      mob: { title: 'Mobile Apps' },
+      cloud: { title: 'Cloud & DevOps' },
+      data: { title: 'Daten & Analytik' }
     }
   },
   auth: {
