@@ -22,7 +22,7 @@ const de = {
     accepting: 'Neue Projekte für 2025 annehmen',
     title_line1: 'Die',
     title_highlight: 'Digitale Zukunft',
-    subtitle: 'Wir entwickeln robuste, skalierbare und sichere Softwarelösungen. Von KI-Integration bis Enterprise-Security, SYNARIZMIE liefert Exzellenz in jeder Codezeile.',
+    subtitle: 'Wir entwickeln robuste, skalierbare und sichere Softwarelösungen. Von KI-Integration bis Enterprise-Security, NOVALIS AI liefert Exzellenz in jeder Codezeile.',
     start_project: 'Demo Buchen',
     explore_services: 'Dienstleistungen Entdecken',
     modern_stack: {
@@ -130,7 +130,7 @@ const de = {
     welcome_back: 'Willkommen Zurück',
     create_account: 'Konto Erstellen',
     access_portal: 'Zugang zu Ihrem Kundenportal',
-    start_journey: 'Starten Sie Ihre Reise mit SYNARIZMIE',
+    start_journey: 'Starten Sie Ihre Reise mit NOVALIS AI',
     full_name: 'Vollständiger Name',
     email: 'E-Mail-Adresse',
     password: 'Passwort',
@@ -138,7 +138,7 @@ const de = {
     create_account_cta: 'Konto Erstellen',
     dont_have: 'Haben Sie kein Konto? Registrieren',
     already_have: 'Haben Sie bereits ein Konto? Anmelden',
-    admin_tip: 'Tipp: Verwenden Sie admin@synarizmie.dev, um sich als Administrator anzumelden.',
+    admin_tip: 'Tipp: Verwenden Sie admin@novalis-ai.dev, um sich als Administrator anzumelden.',
     developer_tip: 'Entwickler: Kontaktieren Sie Ihren Administrator für Anmeldedaten.',
     developer_note: 'Hinweis: Die Registrierung ist nur für Kunden. Entwickler werden von Administratoren erstellt.'
   },
@@ -245,7 +245,8 @@ const de = {
     project_has_bookings: 'Dieses Projekt hat zugehörige Buchungen und kann nicht gelöscht werden.',
     provide_valid_project_name: 'Bitte geben Sie einen gültigen Projektnamen an',
     duplicate_project_name: 'Sie haben bereits ein Projekt mit diesem Namen. Wählen Sie einen anderen Namen.',
-    failed_to_create_project: 'Projekt konnte nicht erstellt werden'
+    failed_to_create_project: 'Projekt konnte nicht erstellt werden',
+    developer_readonly: 'Sie haben nur Lesezugriff auf dieses Projekt. Kontaktieren Sie den Projektinhaber oder Administrator, um Änderungen vorzunehmen.'
   },
   dashboard_extra: {
     failed_to_rename_project: 'Projekt konnte nicht umbenannt werden'
@@ -375,7 +376,7 @@ const de = {
     floating_copilot: 'Schwebender Copilot'
   },
   ai_consultant: {
-    welcome: 'Hallo! Ich bin der SYNARIZMIE KI-Architekt. Erzählen Sie mir von Ihrer Software-Idee, und ich helfe Ihnen, die technischen Anforderungen, Stack-Vorschläge und den geschätzten Umfang aufzuschlüsseln.',
+    welcome: 'Hallo! Ich bin der NOVALIS AI KI-Architekt. Erzählen Sie mir von Ihrer Software-Idee, und ich helfe Ihnen, die technischen Anforderungen, Stack-Vorschläge und den geschätzten Umfang aufzuschlüsseln.',
     title: 'KI-Architekt',
     subtitle: 'Angetrieben von Gemini 2.5 Flash',
     status: {
@@ -442,8 +443,8 @@ const de = {
     }
   },
   copilot: {
-    name: 'SYNARIZMIE Copilot',
-    init_text: 'Hallo! Ich bin SYNARIZMIE Copilot. Wie kann ich Ihnen heute helfen?',
+    name: 'NOVALIS AI Copilot',
+    init_text: 'Hallo! Ich bin NOVALIS AI Copilot. Wie kann ich Ihnen heute helfen?',
     open: 'Copilot öffnen',
     close: 'Copilot schließen',
     thinking: 'Denke nach...',
@@ -468,7 +469,7 @@ const de = {
     productionReady: 'Produktionsbereit',
     enterpriseGrade: 'Enterprise-Qualität',
     viewAll: 'Alle anzeigen',
-    whyChooseTitle: 'Warum SYNARIZMIE wählen ',
+    whyChooseTitle: 'Warum NOVALIS AI wählen ',
     whyChooseSubtitle: 'Maßgeschneiderte Lösungen, die Ihre Vision in digitale Realität verwandeln. Unsere Expertise begleitet Sie von der Konzeption bis zur Bereitstellung.',
     advantages: 'Vorteile',
     builtForTitle: 'Speziell entwickelt für',

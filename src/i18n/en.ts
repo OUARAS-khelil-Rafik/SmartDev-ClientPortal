@@ -22,7 +22,7 @@ const en = {
     accepting: 'Accepting New Projects for 2025',
     title_line1: 'Building the',
     title_highlight: 'Digital Future',
-    subtitle: 'We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, SYNARIZMIE delivers excellence in every line of code.',
+    subtitle: 'We engineer robust, scalable, and secure software solutions. From AI integration to enterprise security, NOVALIS AI delivers excellence in every line of code.',
     start_project: 'Book a Demo',
     explore_services: 'Explore Services'
     ,
@@ -131,7 +131,7 @@ const en = {
     welcome_back: 'Welcome Back',
     create_account: 'Create Account',
     access_portal: 'Access your client portal',
-    start_journey: 'Start your journey with SYNARIZMIE',
+    start_journey: 'Start your journey with NOVALIS AI',
     full_name: 'Full Name',
     email: 'Email Address',
     password: 'Password',
@@ -139,7 +139,7 @@ const en = {
     create_account_cta: 'Create Account',
     dont_have: "Don't have an account? Sign up",
     already_have: 'Already have an account? Sign in',
-    admin_tip: 'Tip: Use admin@synarizmie.dev to login as Administrator.',
+    admin_tip: 'Tip: Use admin@novalis-ai.dev to login as Administrator.',
     developer_tip: 'Developers: Contact your administrator for login credentials.',
     developer_note: 'Note: Sign up is only for clients. Developers are created by administrators.'
   },
@@ -248,7 +248,8 @@ const en = {
     project_has_bookings: 'This project has associated bookings and cannot be deleted.',
     provide_valid_project_name: 'Please provide a valid project name',
     duplicate_project_name: 'You already have a project with that name. Choose a different name.',
-    failed_to_create_project: 'Failed to create project'
+    failed_to_create_project: 'Failed to create project',
+    developer_readonly: 'You have read-only access to this project. Contact the project owner or admin to make changes.'
   },
   dashboard_extra: {
     failed_to_rename_project: 'Failed to rename project'
@@ -381,7 +382,7 @@ const en = {
   }
   ,
   ai_consultant: {
-    welcome: "Hello! I'm the SYNARIZMIE AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
+    welcome: "Hello! I'm the NOVALIS AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
     title: 'AI Architect',
     subtitle: 'Powered by Gemini 2.5 Flash',
     status: {
@@ -448,8 +449,8 @@ const en = {
     }
   },
   copilot: {
-    name: 'SYNARIZMIE Copilot',
-    init_text: "Hi! I'm SYNARIZMIE Copilot. How can I assist you today?",
+    name: 'NOVALIS AI Copilot',
+    init_text: "Hi! I'm NOVALIS AI Copilot. How can I assist you today?",
     open: 'Open Copilot',
     close: 'Close Copilot',
     thinking: 'Thinking...',
@@ -474,7 +475,7 @@ const en = {
     productionReady: 'Production Ready',
     enterpriseGrade: 'Enterprise Grade',
     viewAll: 'View All',
-    whyChooseTitle: 'Why Choose SYNARIZMIE ',
+    whyChooseTitle: 'Why Choose NOVALIS AI ',
     whyChooseSubtitle: 'Custom solutions that transform your vision into digital reality. Our expertise supports you from design to deployment.',
     advantages: 'Advantages',
     builtForTitle: 'Built Specifically For',

@@ -22,7 +22,7 @@ const nl = {
     accepting: 'Nieuwe Projecten Accepteren voor 2025',
     title_line1: 'De',
     title_highlight: 'Digitale Toekomst',
-    subtitle: 'Wij ontwikkelen robuuste, schaalbare en veilige softwareoplossingen. Van AI-integratie tot enterprise security, SYNARIZMIE levert excellentie in elke regel code.',
+    subtitle: 'Wij ontwikkelen robuuste, schaalbare en veilige softwareoplossingen. Van AI-integratie tot enterprise security, NOVALIS AI levert excellentie in elke regel code.',
     start_project: 'Demo Boeken',
     explore_services: 'Ontdek Diensten',
     modern_stack: {
@@ -130,7 +130,7 @@ const nl = {
     welcome_back: 'Welkom Terug',
     create_account: 'Account Aanmaken',
     access_portal: 'Toegang tot uw klantenportaal',
-    start_journey: 'Begin uw reis met SYNARIZMIE',
+    start_journey: 'Begin uw reis met NOVALIS AI',
     full_name: 'Volledige Naam',
     email: 'E-mailadres',
     password: 'Wachtwoord',
@@ -138,7 +138,7 @@ const nl = {
     create_account_cta: 'Account Aanmaken',
     dont_have: 'Heeft u geen account? Registreer',
     already_have: 'Heeft u al een account? Inloggen',
-    admin_tip: 'Tip: Gebruik admin@synarizmie.dev om in te loggen als Beheerder.',
+    admin_tip: 'Tip: Gebruik admin@novalis-ai.dev om in te loggen als Beheerder.',
     developer_tip: 'Ontwikkelaars: Neem contact op met uw beheerder voor inloggegevens.',
     developer_note: 'Opmerking: Registratie is alleen voor klanten. Ontwikkelaars worden aangemaakt door beheerders.'
   },
@@ -245,7 +245,8 @@ const nl = {
     project_has_bookings: 'Dit project heeft gekoppelde boekingen en kan niet worden verwijderd.',
     provide_valid_project_name: 'Geef een geldige projectnaam op',
     duplicate_project_name: 'U heeft al een project met die naam. Kies een andere naam.',
-    failed_to_create_project: 'Aanmaken van project mislukt'
+    failed_to_create_project: 'Aanmaken van project mislukt',
+    developer_readonly: 'U heeft alleen-lezen toegang tot dit project. Neem contact op met de projecteigenaar of beheerder om wijzigingen aan te brengen.'
   },
   dashboard_extra: {
     failed_to_rename_project: 'Hernoemen van project mislukt'
@@ -375,7 +376,7 @@ const nl = {
     floating_copilot: 'Zwevende Copilot'
   },
   ai_consultant: {
-    welcome: 'Hallo! Ik ben de SYNARIZMIE AI Architect. Vertel me over uw software-idee, en ik help u de technische vereisten, stack suggesties en geschatte scope uit te werken.',
+    welcome: 'Hallo! Ik ben de NOVALIS AI Architect. Vertel me over uw software-idee, en ik help u de technische vereisten, stack suggesties en geschatte scope uit te werken.',
     title: 'AI Architect',
     subtitle: 'Aangedreven door Gemini 2.5 Flash',
     status: {
@@ -442,8 +443,8 @@ const nl = {
     }
   },
   copilot: {
-    name: 'SYNARIZMIE Copilot',
-    init_text: 'Hallo! Ik ben SYNARIZMIE Copilot. Hoe kan ik u vandaag helpen?',
+    name: 'NOVALIS AI Copilot',
+    init_text: 'Hallo! Ik ben NOVALIS AI Copilot. Hoe kan ik u vandaag helpen?',
     open: 'Copilot openen',
     close: 'Copilot sluiten',
     thinking: 'Nadenken...',
@@ -468,7 +469,7 @@ const nl = {
     productionReady: 'Productieklaar',
     enterpriseGrade: 'Enterprise Kwaliteit',
     viewAll: 'Alles bekijken',
-    whyChooseTitle: 'Waarom kiezen voor SYNARIZMIE ',
+    whyChooseTitle: 'Waarom kiezen voor NOVALIS AI ',
     whyChooseSubtitle: 'Maatwerk oplossingen die uw visie transformeren naar digitale realiteit. Onze expertise begeleidt u van ontwerp tot implementatie.',
     advantages: 'Voordelen',
     builtForTitle: 'Speciaal gebouwd voor',

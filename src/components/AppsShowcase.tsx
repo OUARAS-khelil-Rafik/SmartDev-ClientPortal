@@ -111,7 +111,7 @@ const projects = [
     name: 'Pointage',
     icon: <Timer className="w-5 h-5" />,
     color: 'blue',
-    url: 'pointage.synarizmie.dev'
+    url: 'pointage.novalis-ai.dev'
   },
   {
     id: 'braille',
@@ -530,7 +530,7 @@ const AppsShowcase: React.FC = () => {
                   <div className="flex-1 ml-4">
                     <div className="bg-white dark:bg-slate-900 rounded-md px-3 py-1 text-xs text-slate-500 flex items-center gap-2">
                       <Shield className="w-3 h-3 text-green-500" />
-                      pointage.synarizmie.dev
+                      pointage.novalis-ai.dev
                     </div>
                   </div>
                 </div>
@@ -835,7 +835,7 @@ const AppsShowcase: React.FC = () => {
             </motion.div>
             
             <motion.h2 variants={itemVariants} className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
-              {t('appsShowcase.whyChooseTitle').replace('SYNARIZMIE', '')} <span className="gradient-text-animated">SYNARIZMIE</span>?
+              {t('appsShowcase.whyChooseTitle').replace('NOVALIS AI', '')} <span className="gradient-text-animated">NOVALIS AI</span>?
             </motion.h2>
             
             <motion.p variants={itemVariants} className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
@@ -1026,7 +1026,7 @@ const AppsShowcase: React.FC = () => {
       <AnimatePresence>
         {isLightboxOpen && (() => {
           const currentImages = lightboxProject === 'pointage' ? translatedPointageImages : translatedBrailleImages;
-          const projectDomain = lightboxProject === 'pointage' ? 'pointage.synarizmie.dev' : 'braille.synarizmie.dev';
+          const projectDomain = lightboxProject === 'pointage' ? 'pointage.novalis-ai.dev' : 'braille.novalis-ai.dev';
           const themeColor = lightboxProject === 'pointage' ? 'blue' : 'cyan';
           
           return (

@@ -128,7 +128,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-left">
             <div>
-              <h4 className="font-bold text-slate-900 dark:text-white mb-4">SYNARIZMIE</h4>
+              <h4 className="font-bold text-slate-900 dark:text-white mb-4">NOVALIS AI</h4>
               <p>Engineering the future with code.</p>
             </div>
             <div>
@@ -141,12 +141,12 @@ const App: React.FC = () => {
             </div>
             <div>
               <h4 className="font-bold text-slate-900 dark:text-white mb-4">Contact</h4>
-              <p>hello@synarizmie.dev</p>
+              <p>hello@novalis-ai.dev</p>
               <p>+1 (555) 123-4567</p>
             </div>
           </div>
           <div className="border-t border-slate-200 dark:border-slate-800 pt-8">
-            © {new Date().getFullYear()} SYNARIZMIE Development. All rights reserved.
+            © {new Date().getFullYear()} NOVALIS AI Development. All rights reserved.
           </div>
         </div>
       </footer>

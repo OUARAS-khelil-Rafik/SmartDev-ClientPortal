@@ -22,7 +22,7 @@ class MockApi {
     const stored = localStorage.getItem('nexus_users');
     // Default Admin User if empty
     if (!stored) {
-        const admin: User = { id: 'admin1', name: 'SYNARIZMIE Admin', email: 'admin@synarizmie.dev', role: 'admin' };
+        const admin: User = { id: 'admin1', name: 'NOVALIS AI Admin', email: 'admin@novalis-ai.dev', role: 'admin' };
         this.saveUsers([admin]);
         return [admin];
     }
@@ -443,10 +443,10 @@ class MockApi {
 
     project.tasks[taskIndex].completed = !project.tasks[taskIndex].completed;
     
-    // Calc progress
+    // Calc progress (avoid division by zero)
     const total = project.tasks.length;
     const completed = project.tasks.filter(t => t.completed).length;
-    project.progress = Math.round((completed / total) * 100);
+    project.progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     projects[projectIndex] = project;
     this.saveProjects(projects);

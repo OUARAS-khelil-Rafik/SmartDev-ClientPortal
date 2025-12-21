@@ -125,10 +125,22 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
 
     const isSlotOccupied = (dateISO: string | null, time: string) => {
             if (!dateISO) return false;
-            return occupiedSlots.some(slot => {
+            // Check if slot is already booked
+            const isBooked = occupiedSlots.some(slot => {
                     const slotISO = normalizeToISODate(slot.date);
                     return slotISO === dateISO && slot.time === time;
             });
+            if (isBooked) return true;
+            
+            // Check if slot is in the past (for today's date)
+            const today = new Date().toISOString().slice(0, 10);
+            if (dateISO === today) {
+                const now = new Date();
+                const [hours] = time.split(':').map(Number);
+                // Block slots that are less than 1 hour from now
+                if (hours <= now.getHours()) return true;
+            }
+            return false;
     };
 
     const formatTimeDisplay = (hhmm24: string) => {

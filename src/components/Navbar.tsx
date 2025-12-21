@@ -122,7 +122,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
               <Hexagon className="text-white transition-transform group-hover:rotate-180 duration-500" size={24} strokeWidth={2.5} />
             </div>
             <span className="ml-3 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 group-hover:from-blue-600 group-hover:to-cyan-500 transition-all duration-300">
-              SYNARIZMIE
+              NOVALIS AI
             </span>
           </div>
 

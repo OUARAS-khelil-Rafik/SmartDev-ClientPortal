@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { api } from '../services/mockApi';
 import { User, ViewState } from '../types';
-import { Bell, Check, X, Clock } from 'lucide-react';
+import { Bell, Check, X, Clock, Circle, Trash2 } from 'lucide-react';
 import { useI18n } from '../i18n';
 
 interface NotificationItem {
@@ -80,6 +80,18 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
     fetch();
   };
 
+  const toggleRead = async (id: string, currentlyRead: boolean) => {
+    if (!user) return;
+    await api.setNotificationRead(id, !currentlyRead, user.id);
+    fetch();
+  };
+
+  const deleteOne = async (id: string) => {
+    if (!user) return;
+    await api.deleteNotification(id, user.id);
+    fetch();
+  };
+
   const markAll = async () => {
     if (!user) return;
     await api.markAllNotificationsRead(user.id);
@@ -92,18 +104,11 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
     fetch();
   };
 
-  // By default clear all notifications for the user when the component mounts
-  // (keeps the UI fresh and prevents showing stale demo notifications)
+  // Fetch notifications when user changes
   useEffect(() => {
-    if (!user) return;
-    (async () => {
-      try {
-        await api.clearNotifications(user.id);
-      } catch (e) {
-        console.warn('Failed to clear notifications on mount', e);
-      }
+    if (user) {
       fetch();
-    })();
+    }
   }, [user]);
 
   return (
@@ -154,14 +159,25 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
                   </div>
                   {item.body && <div className="text-sm text-slate-600 dark:text-slate-300 mt-1">{item.body}</div>}
                 </div>
-                <div className="flex flex-col items-center gap-2 ml-2">
-                  {!item.read ? (
-                    <button type="button" onClick={() => markRead(item.id)} aria-label={t('notifications.mark_as_read')} title={t('notifications.mark_as_read')} className="p-1.5 rounded-full text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                      <Check size={18} />
-                    </button>
-                  ) : (
-                    <span className="text-xs text-slate-400">{t('notifications.read')}</span>
-                  )}
+                <div className="flex flex-col items-center gap-1">
+                  <button 
+                    type="button" 
+                    onClick={() => toggleRead(item.id, item.read)} 
+                    aria-label={item.read ? t('notifications.mark_as_unread') : t('notifications.mark_as_read')} 
+                    title={item.read ? t('notifications.mark_as_unread') : t('notifications.mark_as_read')} 
+                    className="p-1.5 rounded-full text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30"
+                  >
+                    {item.read ? <Circle size={16} /> : <Check size={16} />}
+                  </button>
+                  <button 
+                    type="button" 
+                    onClick={() => deleteOne(item.id)} 
+                    aria-label={t('notifications.delete_notification')} 
+                    title={t('notifications.delete_notification')} 
+                    className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
               </div>
             ))}

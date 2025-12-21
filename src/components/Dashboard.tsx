@@ -59,6 +59,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
   const handleToggleTask = async (taskId: string) => {
     if (!activeProjectId) return;
+    // Developers have read-only access - they cannot toggle tasks
+    if (user.role === 'developer') {
+        alert(t('dashboard.developer_readonly'));
+        return;
+    }
     try {
         const updatedProjects = await api.toggleTaskCompletion(activeProjectId, taskId);
         // The API returns all projects, but simplified for mock.
@@ -75,6 +80,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const handleAddTask = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeProjectId || !newTaskInput.trim()) return;
+    // Developers have read-only access - they cannot add tasks
+    if (user.role === 'developer') {
+        alert(t('dashboard.developer_readonly'));
+        return;
+    }
 
     setAddingTask(true);
     try {
@@ -112,6 +122,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
   const handleTaskDrop = async (toIndex: number) => {
     if (draggedTaskIndex === null || draggedTaskIndex === toIndex || !activeProjectId) {
+      setDraggedTaskIndex(null);
+      setDragOverTaskIndex(null);
+      return;
+    }
+    
+    // Developers have read-only access - they cannot reorder tasks
+    if (user.role === 'developer') {
       setDraggedTaskIndex(null);
       setDragOverTaskIndex(null);
       return;
