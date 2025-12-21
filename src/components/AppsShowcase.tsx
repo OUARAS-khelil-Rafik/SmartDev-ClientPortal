@@ -111,14 +111,14 @@ const projects = [
     name: 'Pointage',
     icon: <Timer className="w-5 h-5" />,
     color: 'blue',
-    url: 'pointage.novalis-ai.dev'
+    url: 'http://pointagevdc.cloud'
   },
   {
     id: 'braille',
     name: 'Braille Translator',
     icon: <Globe className="w-5 h-5" />,
     color: 'cyan',
-    url: 'translating.app'
+    url: 'https://dotwise-jk4yz203f-jamelsyh.vercel.app/'
   }
 ];
 
@@ -648,12 +648,20 @@ const AppsShowcase: React.FC = () => {
               
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4 pt-4">
-                <button className="group px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-lg hover:shadow-blue-500/25 hover:-translate-y-1 transition-all flex items-center gap-2">
+                <a
+                  href={projects.find(p => p.id === 'pointage')?.url || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-lg hover:shadow-blue-500/25 hover:-translate-y-1 transition-all flex items-center gap-2"
+                >
                   <Play className="w-5 h-5" />
                   {t('appsShowcase.liveDemo')}
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="px-6 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center gap-2">
+                </a>
+                <button
+                  onClick={() => openLightbox(0, 'pointage')}
+                  className="px-6 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center gap-2"
+                >
                   <Globe className="w-5 h-5" />
                   {t('appsShowcase.learnMore')}
                 </button>
@@ -716,12 +724,20 @@ const AppsShowcase: React.FC = () => {
               
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4 pt-4">
-                <button className="group px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-bold shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-1 transition-all flex items-center gap-2">
+                <a
+                  href={projects.find(p => p.id === 'braille')?.url || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-bold shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-1 transition-all flex items-center gap-2"
+                >
                   <Play className="w-5 h-5" />
                   {t('appsShowcase.liveDemo')}
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="px-6 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all flex items-center gap-2">
+                </a>
+                <button
+                  onClick={() => openLightbox(0, 'braille')}
+                  className="px-6 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all flex items-center gap-2"
+                >
                   <Globe className="w-5 h-5" />
                   {t('appsShowcase.learnMore')}
                 </button>

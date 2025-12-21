@@ -149,8 +149,7 @@ const Services: React.FC = () => {
           {capabilityCards.map((capability, index) => (
             <div
               key={capability.title}
-              className="glass-panel rounded-2xl p-6 sm:p-7 border border-slate-200/70 dark:border-white/10 shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 perspective-1000 tilt-hover animate-fade-in-up"
-              style={{ animationDelay: `${index * 80}ms` }}
+              className={`glass-panel rounded-2xl p-6 sm:p-7 border border-slate-200/70 dark:border-white/10 shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 perspective-1000 tilt-hover animate-fade-in-up animation-delay-${index * 80}`}
             >
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-xl bg-white/80 dark:bg-white/10 border border-slate-200/80 dark:border-white/10 shadow-inner">
@@ -227,7 +226,7 @@ const Services: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       {[...Array(8)].map((_, idx) => (
-                        <span key={idx} className="h-5 rounded-md bg-white/60 dark:bg-white/20 grid-cell-pulse" style={{ animationDelay: `${idx * 150}ms` }} />
+                        <span key={idx} className={`h-5 rounded-md bg-white/60 dark:bg-white/20 grid-cell-pulse animation-delay-${idx * 150}`} />
                       ))}
                     </div>
                     <div className="flex items-center gap-2 text-[10px] text-white/80">
@@ -247,12 +246,12 @@ const Services: React.FC = () => {
                     </div>
                     <div className="px-4 grid grid-cols-4 gap-3">
                       {[...Array(12)].map((_, idx) => (
-                        <div key={idx} className="h-10 rounded-xl bg-white/40 dark:bg-white/10 border border-white/20 dark:border-white/5 grid-cell-pulse" style={{ animationDelay: `${idx * 100}ms` }} />
+                        <div key={idx} className={`h-10 rounded-xl bg-white/40 dark:bg-white/10 border border-white/20 dark:border-white/5 grid-cell-pulse animation-delay-${idx * 100}`} />
                       ))}
                     </div>
                     <div className="px-4 pt-4 grid grid-cols-3 gap-3">
                       {[...Array(6)].map((_, idx) => (
-                        <div key={idx} className="h-2 rounded-full bg-white/50 dark:bg-white/15 grid-cell-shimmer" style={{ animationDelay: `${idx * 200}ms` }} />
+                        <div key={idx} className={`h-2 rounded-full bg-white/50 dark:bg-white/15 grid-cell-shimmer animation-delay-${idx * 200}`} />
                       ))}
                     </div>
                   </div>
@@ -268,7 +267,7 @@ const Services: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       {[...Array(9)].map((_, idx) => (
-                        <div key={idx} className="h-5 rounded-lg bg-white/60 dark:bg-white/20 grid-cell-fade" style={{ animationDelay: `${idx * 120}ms` }} />
+                        <div key={idx} className={`h-5 rounded-lg bg-white/60 dark:bg-white/20 grid-cell-fade animation-delay-${idx * 120}`} />
                       ))}
                     </div>
                     <div className="flex gap-2">
