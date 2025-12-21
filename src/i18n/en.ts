@@ -138,6 +138,7 @@ const en = {
   auth: {
     welcome_back: 'Welcome Back',
     create_account: 'Create Account',
+    company: 'Company',
     access_portal: 'Access your client portal',
     start_journey: 'Start your journey with NOVALIS AI',
     full_name: 'Full Name',
@@ -305,6 +306,7 @@ const en = {
     approve_remove_tip: 'Approve or remove client accounts',
     name: 'Name',
     email: 'Email',
+    company: 'Company',
     status: 'Status',
     actions: 'Actions',
     activate: 'Activate',

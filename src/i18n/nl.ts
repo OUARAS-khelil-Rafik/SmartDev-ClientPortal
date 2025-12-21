@@ -137,6 +137,7 @@ const nl = {
   auth: {
     welcome_back: 'Welkom Terug',
     create_account: 'Account Aanmaken',
+      company: 'Bedrijf',
     access_portal: 'Toegang tot uw klantenportaal',
     start_journey: 'Begin uw reis met NOVALIS AI',
     full_name: 'Volledige Naam',
@@ -301,6 +302,7 @@ const nl = {
     approve_remove_tip: 'Keur klantaccounts goed of verwijder ze',
     name: 'Naam',
     email: 'E-mail',
+    company: 'Bedrijf',
     status: 'Status',
     actions: 'Acties',
     activate: 'Activeren',

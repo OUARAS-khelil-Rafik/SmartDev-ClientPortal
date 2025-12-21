@@ -7,6 +7,7 @@ export interface User {
   email: string;
   role: 'admin' | 'client' | 'developer';
   avatar?: string;
+  company?: string;
   // Optional approval status for admin moderation
   status?: 'pending' | 'approved' | 'rejected';
 }

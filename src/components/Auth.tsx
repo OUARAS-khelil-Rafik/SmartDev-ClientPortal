@@ -14,6 +14,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [company, setCompany] = useState('');
     const [loading, setLoading] = useState(false);
     // Google sign-in removed
     const [error, setError] = useState('');
@@ -30,7 +31,8 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                 user = await api.login(email);
             } else {
                 if (!name) throw new Error("Name is required");
-                user = await api.signup(name, email);
+                // Pass company to signup so admin can review organization
+                user = await api.signup(name, email, company.trim() || undefined);
                 // New signups require admin approval; don't auto-login
                 if ((user as any).status === 'pending') {
                     setError('Account created and is pending administrator approval. You will be notified once approved.');
@@ -71,8 +73,9 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                             </div>
                         )}
 
-                        {!isLogin && (
-                             <div className="space-y-1 animate-fade-in-up">
+                            {!isLogin && (
+                               <>
+                                <div className="space-y-1 animate-fade-in-up">
                                 <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.full_name')}</label>
                                 <div className="relative group">
                                     <User className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
@@ -85,7 +88,21 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                                     />
                                 </div>
                             </div>
-                        )}
+                            <div className="space-y-1 animate-fade-in-up">
+                                    <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.company')}</label>
+                                    <div className="relative group">
+                                        <Mail className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+                                        <input 
+                                            type="text" 
+                                            value={company}
+                                            onChange={(e) => setCompany(e.target.value)}
+                                            className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all duration-300 text-slate-900 dark:text-white focus:shadow-lg focus:shadow-blue-500/10"
+                                            placeholder="Acme Corp"
+                                        />
+                                    </div>
+                                    </div>
+                                </>
+                            )}
 
                         <div className="space-y-1 animate-fade-in-up animation-delay-100">
                             <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.email')}</label>

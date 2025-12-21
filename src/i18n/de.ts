@@ -137,6 +137,7 @@ const de = {
   auth: {
     welcome_back: 'Willkommen Zurück',
     create_account: 'Konto Erstellen',
+      company: 'Firma',
     access_portal: 'Zugang zu Ihrem Kundenportal',
     start_journey: 'Starten Sie Ihre Reise mit NOVALIS AI',
     full_name: 'Vollständiger Name',
@@ -301,6 +302,7 @@ const de = {
     approve_remove_tip: 'Kundenkonten genehmigen oder entfernen',
     name: 'Name',
     email: 'E-Mail',
+    company: 'Unternehmen',
     status: 'Status',
     actions: 'Aktionen',
     activate: 'Aktivieren',

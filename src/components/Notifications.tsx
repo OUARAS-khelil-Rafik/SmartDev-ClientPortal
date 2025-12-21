@@ -44,8 +44,13 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
     if (!user) return setItems([]);
     setLoading(true);
     try {
-      // Only fetch notifications for the current user here (bell should reflect the current user's inbox)
-      const res = await api.getNotifications(user.id);
+      // Admins should see all notifications; other users see their own
+      let res;
+      if (user.role === 'admin') {
+        res = await api.getNotifications(undefined, 'admin');
+      } else {
+        res = await api.getNotifications(user.id);
+      }
       setItems(res);
     } catch (e) {
       console.error('Failed to load notifications', e);
@@ -64,7 +69,29 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
     document.addEventListener('click', onDoc);
 
     // listen for external notification changes (created elsewhere in the app)
-    const onNot = () => fetch();
+    const onNot = (ev: Event) => {
+      try {
+        const ce = ev as CustomEvent;
+        const payload = ce?.detail?.notifications;
+        if (payload && Array.isArray(payload)) {
+          // If no user, ignore
+          if (!user) return;
+          // Admin should see all notifications
+          if (user.role === 'admin') {
+            const sorted = payload.slice().sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            setItems(sorted);
+          } else {
+            const filtered = payload.filter((n: any) => n.userId === user.id).sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            setItems(filtered);
+          }
+          return;
+        }
+      } catch (e) {
+        // fall through to fetch if event payload is unexpected
+      }
+      // fallback: refetch from API
+      fetch();
+    };
     window.addEventListener('nexus:notifications-changed', onNot as EventListener);
 
     return () => {
@@ -82,25 +109,60 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
 
   const toggleRead = async (id: string, currentlyRead: boolean) => {
     if (!user) return;
-    await api.setNotificationRead(id, !currentlyRead, user.id);
+    try {
+      if (user.role === 'admin') {
+        // Admin may toggle read state for any notification by id
+        await api.setNotificationRead(id, !currentlyRead);
+      } else {
+        await api.setNotificationRead(id, !currentlyRead, user.id);
+      }
+    } catch (e) {
+      console.error('Failed to toggle read', e);
+    }
     fetch();
   };
 
   const deleteOne = async (id: string) => {
     if (!user) return;
-    await api.deleteNotification(id, user.id);
+    try {
+      if (user.role === 'admin') {
+        await api.deleteNotification(id);
+      } else {
+        await api.deleteNotification(id, user.id);
+      }
+    } catch (e) {
+      console.error('Failed to delete notification', e);
+    }
     fetch();
   };
 
   const markAll = async () => {
     if (!user) return;
-    await api.markAllNotificationsRead(user.id);
+    try {
+      if (user.role === 'admin') {
+        // Admin: mark every notification as read
+        const all = await api.getNotifications(undefined, 'admin');
+        await Promise.all(all.map((n: any) => api.setNotificationRead(n.id, true)));
+      } else {
+        await api.markAllNotificationsRead(user.id);
+      }
+    } catch (e) {
+      console.error('Failed to mark all read', e);
+    }
     fetch();
   };
 
   const clearAll = async () => {
     if (!user) return;
-    await api.clearNotifications(user.id);
+    try {
+      if (user.role === 'admin') {
+        await api.clearNotifications();
+      } else {
+        await api.clearNotifications(user.id);
+      }
+    } catch (e) {
+      console.error('Failed to clear notifications', e);
+    }
     fetch();
   };
 

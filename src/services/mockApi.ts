@@ -59,16 +59,16 @@ class MockApi {
     return user;
   }
 
-  async signup(name: string, email: string): Promise<User> {
+  async signup(name: string, email: string, company?: string): Promise<User> {
     await delay(800);
     const users = this.getUsers();
     if (users.find(u => u.email === email)) throw new Error('Email already exists');
-
     const newUser: User = {
         id: Date.now().toString(),
         name,
         email,
-        role: 'client' // Default role
+        role: 'client', // Default role
+        company: company || undefined
     } as User;
     // New signups require admin approval by default
     newUser.status = 'pending';

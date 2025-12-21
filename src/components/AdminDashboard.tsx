@@ -359,6 +359,7 @@ const AdminDashboard: React.FC = () => {
                                     <tr>
                                         <th className="px-4 py-3">{t('admin.name')}</th>
                                         <th className="px-4 py-3">{t('admin.email')}</th>
+                                        <th className="px-4 py-3">{t('admin.company')}</th>
                                         <th className="px-4 py-3">{t('admin.status')}</th>
                                         <th className="px-4 py-3">{t('admin.actions')}</th>
                                         <th className="px-4 py-3">{t('admin.activate')}</th>
@@ -369,12 +370,13 @@ const AdminDashboard: React.FC = () => {
                                         .filter(u => {
                                             if (!clientFilter.trim()) return true;
                                             const q = clientFilter.toLowerCase();
-                                            return u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q);
+                                            return u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q) || (u.company || '').toLowerCase().includes(q);
                                         })
                                         .map(u => (
                                         <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                             <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{u.name}</td>
                                             <td className="px-4 py-3 text-xs">{u.email}</td>
+                                            <td className="px-4 py-3 text-xs">{u.company || '-'}</td>
                                             <td className="px-4 py-3">
                                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize
                                                     ${u.status === 'approved' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 
