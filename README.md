@@ -264,6 +264,18 @@ A compact assistant widget that:
 
 ---
 
+## 🔔 Notifications
+
+SmartDev includes a real-time notification system used for booking updates, demo requests, and admin alerts.
+
+- Users receive notifications scoped to their account; admins see all notifications.
+- Notifications support marking read/unread, deleting, and bulk actions.
+- Translations for notification UI strings live in the `src/i18n` files (see `notifications.*` keys).
+
+The frontend `Notifications` component uses the mock API in `src/services/mockApi.ts` for local development. In production, ensure your backend exposes the same endpoints and event hooks used by the app.
+
+---
+
 ## 🎨 Custom Cursor
 
 The portal features a unique animated cursor experience:
