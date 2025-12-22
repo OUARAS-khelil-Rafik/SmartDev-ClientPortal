@@ -515,8 +515,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             <div className="flex flex-col gap-6">
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex-1 min-h-[300px]">
                      <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">{t('dashboard.work_breakdown')}</h3>
-                     <div className="h-full pb-6">
-                        <ResponsiveContainer width="100%" height="100%">
+                            <div className="h-full pb-6">
+                                <ResponsiveContainer width="100%" height={260}>
                             <PieChart>
                                 <Pie
                                     data={[
