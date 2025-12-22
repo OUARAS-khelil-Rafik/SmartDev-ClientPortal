@@ -39,6 +39,8 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
   const [items, setItems] = useState<NotificationItem[]>([]);
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [popupStyle, setPopupStyle] = useState<React.CSSProperties | null>(null);
 
   const fetch = async () => {
     if (!user) return setItems([]);
@@ -99,6 +101,30 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
       window.removeEventListener('nexus:notifications-changed', onNot as EventListener);
     };
   }, [user]);
+
+  // Compute popup position to render below the navbar (not inside it)
+  useEffect(() => {
+    const updatePos = () => {
+      if (!buttonRef.current) return;
+      const rect = buttonRef.current.getBoundingClientRect();
+      // place popup slightly below the button and align to its right edge
+      setPopupStyle({ position: 'fixed', top: rect.bottom + 8, right: Math.max(8, window.innerWidth - rect.right), zIndex: 9999 });
+    };
+
+    if (open) updatePos();
+
+    const onResize = () => {
+      if (open) updatePos();
+    };
+    window.addEventListener('resize', onResize);
+    // capture scroll events to reposition while scrolling
+    window.addEventListener('scroll', onResize, true);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onResize, true);
+    };
+  }, [open]);
 
   const unreadCount = items.filter(i => !i.read).length;
 
@@ -177,6 +203,7 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
     <div className="relative" ref={ref}>
       <button
         type="button"
+        ref={buttonRef}
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
         aria-haspopup="menu"
@@ -193,7 +220,7 @@ const Notifications: React.FC<NotificationsProps> = ({ user, setView }) => {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-80 md:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg overflow-hidden z-50">
+        <div style={popupStyle || undefined} className="w-80 md:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg overflow-hidden">
           <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-2">
                 <Clock size={16} />

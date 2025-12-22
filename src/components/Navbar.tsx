@@ -114,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
     }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300 animate-slide-down">
+    <nav className="sticky top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300 animate-slide-down">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center cursor-pointer group" onClick={() => setView(ViewState.HOME)}>
@@ -238,7 +238,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
       </div>
       
       {/* Mobile Menu Bar */}
-      <div className="md:hidden flex justify-around border-t border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 py-3 backdrop-blur-lg overflow-x-auto">
+          <div className="md:hidden flex justify-around border-t border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 py-3 backdrop-blur-lg overflow-x-auto">
           {navItems.map((item) => (
              <button
                 key={item.id}
@@ -250,11 +250,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, isDark, toggleThe
                  {item.icon}
              </button>
           ))}
-          {user && (
-            <div className="flex items-center">
-              <Notifications user={user} setView={setView} />
-            </div>
-          )}
             {user ? (
               <button onClick={onLogout} title={t('nav.logout')} aria-label={t('nav.logout')} className="p-2 rounded-lg flex-shrink-0 mx-1 text-red-500 hover:scale-110 transition-transform">
                 <LogOut size={18} />
