@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import MotionZone from './MotionZone';
 import { api } from '../services/mockApi';
 import { User } from '../types';
 import { Trash2, CheckCircle, Circle, Clock } from 'lucide-react';
@@ -71,9 +70,9 @@ const AllNotifications: React.FC<Props> = ({ user }) => {
   const { t } = useI18n();
 
   return (
-    <MotionZone variant="fadeUp" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 pt-28 md:pt-24 pb-24 md:pb-16">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 pt-28 md:pt-24 pb-24 md:pb-16">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4">
-        <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2"><Clock size={18} className="sm:w-5 sm:h-5" /> {t('notifications.title')}</h2>
+        <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2"><Clock size={18} className="sm:w-5 sm:h-5" /> <span data-gsap-split="words">{t('notifications.title')}</span></h2>
         <div className="flex items-center gap-2">
           <button type="button" onClick={fetch} className="px-2 sm:px-3 py-1.5 sm:py-2 bg-slate-100 dark:bg-slate-800 rounded-md text-xs sm:text-sm">{t('notifications.refresh')}</button>
           <button type="button" onClick={clearAll} className="px-2 sm:px-3 py-1.5 sm:py-2 bg-red-50 text-red-700 hover:bg-red-100 rounded-md text-xs sm:text-sm">{t('notifications.clear_all')}</button>
@@ -105,7 +104,7 @@ const AllNotifications: React.FC<Props> = ({ user }) => {
           </div>
         ))}
       </div>
-    </MotionZone>
+    </div>
   );
 };
 

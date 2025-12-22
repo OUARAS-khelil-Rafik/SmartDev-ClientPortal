@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import MotionZone from './MotionZone';
 import { Calendar as CalendarIcon, Clock, MessageSquare, Check, Loader2, Video, Lock, List, AlignLeft, RefreshCw, ExternalLink, Info, Briefcase } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
@@ -78,7 +77,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                                         <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <Lock size={32} className="text-slate-500" />
                                         </div>
-                                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.login_required')}</h2>
+                                    <h2 data-gsap-split="words" className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.login_required')}</h2>
                   <p className="text-slate-600 dark:text-slate-400 mb-8">{t('booking.please_log_in')}</p>
                   <button 
                     onClick={() => setView(ViewState.LOGIN)}
@@ -99,7 +98,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                   <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lock size={32} className="text-red-500" />
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.admin_restricted')}</h2>
+                  <h2 data-gsap-split="words" className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.admin_restricted')}</h2>
                   <p className="text-slate-600 dark:text-slate-400 mb-8">{t('booking.admin_restricted_msg')}</p>
               </div>
           </div>
@@ -211,7 +210,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   };
 
     return (
-        <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
       <div className="max-w-6xl w-full flex flex-col gap-6">
         
         {/* Navigation Tabs */}
@@ -238,7 +237,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-subtle">
                         <Check size={32} className="text-green-600 dark:text-green-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('common.request_sent')}</h2>
+                    <h2 data-gsap-split="words" className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('common.request_sent')}</h2>
                     <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm">
                         {t('booking.request_received_prefix')}<b>{formatDateDisplay(selectedDate)}{selectedTime ? ` ${t('booking.select_time').toLowerCase()} ${formatTimeDisplay(selectedTime)}` : ''}</b>{t('booking.google_meet_msg_suffix')}
                     </p>
@@ -278,7 +277,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                 <div className="lg:w-1/3 bg-slate-900 text-white p-6 sm:p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-600/20 to-transparent pointer-events-none"></div>
                     <div>
-                                <h2 className="text-2xl sm:text-3xl font-bold mb-4">{t('booking.schedule_consultation')}</h2>
+                                <h2 data-gsap-split="words" className="text-2xl sm:text-3xl font-bold mb-4">{t('booking.schedule_consultation')}</h2>
                         <p className="text-slate-300 mb-8">
                             {t('booking.select_services_hint')}
                         </p>
@@ -488,7 +487,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
             <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-800 p-6 sm:p-8 animate-fadeIn">
                  <div className="flex items-center justify-between gap-4 mb-6 overflow-x-auto pb-2">
                          <div className="flex items-center gap-3 flex-shrink-0">
-                             <h2 className="text-2xl font-bold text-slate-900 dark:text-white whitespace-nowrap">{t('booking.my_requests')}</h2>
+                             <h2 data-gsap-split="words" className="text-2xl font-bold text-slate-900 dark:text-white whitespace-nowrap">{t('booking.my_requests')}</h2>
                          </div>
                          <div className="flex items-center gap-3 flex-shrink-0">
                              <input
@@ -587,7 +586,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                 <span className="text-xs text-slate-500">{t('admin.include_finished')}</span>
             </label>
         </ConfirmDialog>
-        </MotionZone>
+        </div>
     );
 };
 

@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import MotionZone from './MotionZone';
 import { Project, User } from '../types';
 import { api } from '../services/mockApi';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
@@ -261,7 +260,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
     return (
         <>
-        <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+                <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 animate-fade-in-down">
@@ -558,7 +557,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             </div>
         )}
       </div>
-    </MotionZone>
+        </div>
                 {renameDialogOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
                         <div className="absolute inset-0 bg-black/40" onClick={() => setRenameDialogOpen(false)} />

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import MotionZone from './MotionZone';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useI18n } from '../i18n';
 import { 
@@ -394,7 +393,7 @@ const AppsShowcase: React.FC = () => {
   };
 
   return (
-    <MotionZone variant="none" className="relative overflow-hidden" id="apps-showcase" ref={containerRef as any}>
+    <div className="relative overflow-hidden" id="apps-showcase" ref={containerRef as any}>
       {/* Animated background gradients */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
@@ -553,6 +552,9 @@ const AppsShowcase: React.FC = () => {
                       <img 
                         src={translatedPointageImages[pointageImageIndex]?.src} 
                         alt={translatedPointageImages[pointageImageIndex]?.title}
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
                         className="w-full h-full object-cover object-top"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
@@ -586,7 +588,7 @@ const AppsShowcase: React.FC = () => {
                         : 'border-slate-200 dark:border-slate-700 hover:border-blue-300'
                     }`}
                   >
-                    <img src={img.src} alt={img.title} className="w-full h-full object-cover" />
+                    <img src={img.src} alt={img.title} decoding="async" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -781,6 +783,9 @@ const AppsShowcase: React.FC = () => {
                       <img 
                         src={translatedBrailleImages[brailleImageIndex]?.src} 
                         alt={translatedBrailleImages[brailleImageIndex]?.title}
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
                         className="w-full h-full object-cover object-top"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
@@ -814,7 +819,7 @@ const AppsShowcase: React.FC = () => {
                         : 'border-slate-200 dark:border-slate-700 hover:border-cyan-300'
                     }`}
                   >
-                    <img src={img.src} alt={img.title} className="w-full h-full object-cover" />
+                    <img src={img.src} alt={img.title} decoding="async" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -1116,6 +1121,8 @@ const AppsShowcase: React.FC = () => {
                   <img 
                     src={currentImages[lightboxImage]?.src} 
                     alt={currentImages[lightboxImage]?.title}
+                    loading="eager"
+                    decoding="async"
                     className="w-full h-auto max-h-[70vh] object-contain bg-slate-100 dark:bg-slate-800"
                   />
                   {/* Caption overlay */}
@@ -1152,6 +1159,7 @@ const AppsShowcase: React.FC = () => {
                     <img 
                       src={img.src} 
                       alt={img.title}
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -1162,7 +1170,7 @@ const AppsShowcase: React.FC = () => {
           );
         })()}
       </AnimatePresence>
-    </MotionZone>
+    </div>
   );
 };
 

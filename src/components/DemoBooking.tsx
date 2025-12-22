@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import MotionZone from './MotionZone';
 import { Calendar as CalendarIcon, Clock, Check, Loader2, Video, User, Mail, Building, Phone, MessageSquare, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { api } from '../services/mockApi';
 import { ViewState } from '../types';
@@ -133,13 +132,13 @@ const DemoBooking: React.FC<DemoBookingProps> = ({ setView }) => {
   // Success state
   if (success) {
     return (
-      <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
+      <div className="min-h-screen pt-28 md:pt-24 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
         <div className="max-w-2xl mx-auto">
           <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 sm:p-12 text-center">
             <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 size={48} className="text-emerald-500" />
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+            <h2 data-gsap-split="words" className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
               {t('demo_booking.success_title')}
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-300 mb-2">
@@ -170,12 +169,12 @@ const DemoBooking: React.FC<DemoBookingProps> = ({ setView }) => {
             </div>
           </div>
         </div>
-      </MotionZone>
+      </div>
     );
   }
 
   return (
-    <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
+    <div className="min-h-screen pt-28 md:pt-24 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
@@ -185,7 +184,7 @@ const DemoBooking: React.FC<DemoBookingProps> = ({ setView }) => {
             <span className="mx-2">•</span>
             <span>{t('demo_booking.free_consultation')}</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          <h1 data-gsap-split="words" className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             {t('demo_booking.title')}
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
@@ -380,7 +379,7 @@ const DemoBooking: React.FC<DemoBookingProps> = ({ setView }) => {
           </div>
         </div>
       </div>
-    </MotionZone>
+    </div>
   );
 };
 

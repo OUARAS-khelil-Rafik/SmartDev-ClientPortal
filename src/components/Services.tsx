@@ -1,57 +1,100 @@
 
-import React, { useState, useEffect } from 'react';
-import MotionZone from './MotionZone';
+import React, { useState, useEffect, useRef } from 'react';
 import { useI18n } from '../i18n';
 import { Sparkles, BotMessageSquare, PanelsTopLeft, Rocket } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import angularIcon from '../img/tech-icons/angularjs-original.svg';
+import appleIcon from '../img/tech-icons/apple-original.svg';
+import azureIcon from '../img/tech-icons/azure-original.svg';
+import bootstrapIcon from '../img/tech-icons/bootstrap-original.svg';
+import cIcon from '../img/tech-icons/c-original.svg';
+import cppIcon from '../img/tech-icons/cplusplus-original.svg';
+import csharpIcon from '../img/tech-icons/csharp-original.svg';
+import cssIcon from '../img/tech-icons/css3-original.svg';
+import djangoIcon from '../img/tech-icons/django-plain.svg';
+import dockerIcon from '../img/tech-icons/docker-original.svg';
+import expressIcon from '../img/tech-icons/express-original.svg';
+import fastapiIcon from '../img/tech-icons/fastapi-original.svg';
+import flaskIcon from '../img/tech-icons/flask-original.svg';
+import flutterIcon from '../img/tech-icons/flutter-original.svg';
+import gitIcon from '../img/tech-icons/git-original.svg';
+import gcpIcon from '../img/tech-icons/googlecloud-original.svg';
+import htmlIcon from '../img/tech-icons/html5-original.svg';
+import javaIcon from '../img/tech-icons/java-original.svg';
+import javascriptIcon from '../img/tech-icons/javascript-original.svg';
+import kotlinIcon from '../img/tech-icons/kotlin-original.svg';
+import kubernetesIcon from '../img/tech-icons/kubernetes-plain.svg';
+import linuxIcon from '../img/tech-icons/linux-original.svg';
+import metaIcon from '../img/tech-icons/meta.svg';
+import mongodbIcon from '../img/tech-icons/mongodb-original.svg';
+import nextIcon from '../img/tech-icons/nextjs-original.svg';
+import nodeIcon from '../img/tech-icons/nodejs-original.svg';
+import pandasIcon from '../img/tech-icons/pandas-original.svg';
+import phpIcon from '../img/tech-icons/php-original.svg';
+import postgresqlIcon from '../img/tech-icons/postgresql-original.svg';
+import pythonIcon from '../img/tech-icons/python-original.svg';
+import reactIcon from '../img/tech-icons/react-original.svg';
+import rubyIcon from '../img/tech-icons/ruby-original.svg';
+import sqliteIcon from '../img/tech-icons/sqlite-original.svg';
+import streamlitIcon from '../img/tech-icons/streamlit.svg';
+import swiftIcon from '../img/tech-icons/swift-original.svg';
+import tailwindIcon from '../img/tech-icons/tailwindcss.svg';
+import typescriptIcon from '../img/tech-icons/typescript-original.svg';
+import vueIcon from '../img/tech-icons/vuejs-original.svg';
+import windowsIcon from '../img/tech-icons/windows8-original.svg';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const techLogos = [
-  { name: 'TypeScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-  { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-  { name: 'Python', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'Java', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-  { name: 'C', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg' },
-  { name: 'C++', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
-  { name: 'C#', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
-  { name: 'Node.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-  { name: 'React', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-  { name: 'Next.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
-  { name: 'Vue.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
-  { name: 'Angular', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg' },
-  { name: 'Flutter', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
-  { name: 'React Native', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-  { name: 'Swift', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg' },
-  { name: 'Kotlin', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+  { name: 'TypeScript', src: typescriptIcon },
+  { name: 'JavaScript', src: javascriptIcon },
+  { name: 'Python', src: pythonIcon },
+  { name: 'Java', src: javaIcon },
+  { name: 'C', src: cIcon },
+  { name: 'C++', src: cppIcon },
+  { name: 'C#', src: csharpIcon },
+  { name: 'Node.js', src: nodeIcon },
+  { name: 'React', src: reactIcon },
+  { name: 'Next.js', src: nextIcon },
+  { name: 'Vue.js', src: vueIcon },
+  { name: 'Angular', src: angularIcon },
+  { name: 'Flutter', src: flutterIcon },
+  { name: 'React Native', src: reactIcon },
+  { name: 'Swift', src: swiftIcon },
+  { name: 'Kotlin', src: kotlinIcon },
   { name: 'Rust', src: 'https://www.rust-lang.org/logos/rust-logo-blk.svg' },
-  { name: 'Ruby', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg' },
-  { name: 'PHP', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
+  { name: 'Ruby', src: rubyIcon },
+  { name: 'PHP', src: phpIcon },
   { name: 'Laravel', src: 'https://laravel.com/img/logotype.min.svg' },
-  { name: 'Django', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
-  { name: 'Flask', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg' },
-  { name: 'FastAPI', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
-  { name: 'Express.js', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
-  { name: 'HTML', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-  { name: 'CSS', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-  { name: 'Tailwind', src: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tailwindcss.svg' },
-  { name: 'Bootstrap', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+  { name: 'Django', src: djangoIcon },
+  { name: 'Flask', src: flaskIcon },
+  { name: 'FastAPI', src: fastapiIcon },
+  { name: 'Express.js', src: expressIcon },
+  { name: 'HTML', src: htmlIcon },
+  { name: 'CSS', src: cssIcon },
+  { name: 'Tailwind', src: tailwindIcon },
+  { name: 'Bootstrap', src: bootstrapIcon },
   { name: 'TensorFlow', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg' },
-  { name: 'LLaMA', src: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/meta.svg' },
+  { name: 'LLaMA', src: metaIcon },
   { name: 'NumPy', src: 'https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg' },
-  { name: 'Pandas', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
+  { name: 'Pandas', src: pandasIcon },
   { name: 'Matplotlib', src: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg' },
   { name: 'Seaborn', src: 'https://seaborn.pydata.org/_images/logo-mark-lightbg.svg' },
   { name: 'Apache Spark', src: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg' },
-  { name: 'Streamlit', src: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/streamlit.svg' },
-  { name: 'SQLite', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg' },
+  { name: 'Streamlit', src: streamlitIcon },
+  { name: 'SQLite', src: sqliteIcon },
   { name: 'SQL', src: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png' },
-  { name: 'PostgreSQL', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
-  { name: 'MongoDB', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+  { name: 'PostgreSQL', src: postgresqlIcon },
+  { name: 'MongoDB', src: mongodbIcon },
   { name: 'Oracle', src: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg' },
-  { name: 'Docker', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
-  { name: 'Kubernetes', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' },
+  { name: 'Docker', src: dockerIcon },
+  { name: 'Kubernetes', src: kubernetesIcon },
   { name: 'AWS', src: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg' },
-  { name: 'Azure', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg' },
-  { name: 'GCP', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
-  { name: 'Git', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' }
+  { name: 'Azure', src: azureIcon },
+  { name: 'GCP', src: gcpIcon },
+  { name: 'Git', src: gitIcon }
 ];
 
 const marqueeRows = [
@@ -60,13 +103,17 @@ const marqueeRows = [
 ];
 
 const systemLogos = [
-  { name: 'Windows', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg' },
-  { name: 'macOS', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg' },
-  { name: 'Linux', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' }
+  { name: 'Windows', src: windowsIcon },
+  { name: 'macOS', src: appleIcon },
+  { name: 'Linux', src: linuxIcon }
 ];
 
 const Services: React.FC = () => {
   const { t } = useI18n();
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
+  const devicesRef = useRef<HTMLDivElement>(null);
   const marketingLinesRaw = t('services.marketingLines');
   const marketingLines = Array.isArray(marketingLinesRaw) ? marketingLinesRaw : [];
 
@@ -98,6 +145,93 @@ const Services: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    // Title animation
+    if (titleRef.current) {
+      gsap.fromTo(titleRef.current, 
+        { y: 50, opacity: 0 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          duration: 1, 
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    // Capability cards animation
+    if (cardsRef.current) {
+      const cards = cardsRef.current.children;
+      gsap.fromTo(cards, 
+        { y: 60, opacity: 0, scale: 0.9 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          scale: 1,
+          duration: 0.8, 
+          ease: "back.out(1.7)",
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    // Stack section animation
+    if (stackRef.current) {
+      gsap.fromTo(stackRef.current, 
+        { x: -100, opacity: 0 },
+        { 
+          x: 0, 
+          opacity: 1, 
+          duration: 1.2, 
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: stackRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    // Devices section animation
+    if (devicesRef.current) {
+      gsap.fromTo(devicesRef.current, 
+        { x: 100, opacity: 0, rotationY: -15 },
+        { 
+          x: 0, 
+          opacity: 1, 
+          rotationY: 0,
+          duration: 1.5, 
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: devicesRef.current,
+            start: "top 75%",
+            end: "bottom 25%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
+
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
   const capabilityCards = [
     {
       icon: <BotMessageSquare size={28} className="text-blue-300" />,
@@ -126,7 +260,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <MotionZone variant="fadeUp" className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white transition-colors" id="services-section">
+    <div className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white transition-colors" id="services-section">
       <div className="absolute inset-0 gradient-aurora opacity-70 dark:opacity-90" aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.08),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.07),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.07),transparent_22%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.12),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.12),transparent_22%)]" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-24 pb-20 relative">
@@ -184,7 +318,7 @@ const Services: React.FC = () => {
                   {[...row, ...row].map((logo, idx) => (
                     <div key={`${logo.name}-${idx}`} className="flex items-center gap-3 px-6 py-4">
                       <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white shadow-sm border border-slate-200/80 dark:bg-white dark:border-white/20 dark:shadow-white/10 flex items-center justify-center">
-                        <img src={logo.src} alt={logo.name} className="h-8 w-8 sm:h-10 sm:w-10 object-contain" loading="lazy" />
+                        <img src={logo.src} alt={logo.name} className="h-8 w-8 sm:h-10 sm:w-10 object-contain" decoding="async" />
                       </div>
                       <span className="text-sm sm:text-base font-semibold text-slate-800 dark:text-white/90">{logo.name}</span>
                     </div>
@@ -210,7 +344,7 @@ const Services: React.FC = () => {
                       src={os.src}
                       alt={os.name}
                       className={`absolute inset-0 h-5 w-5 object-contain transition-all duration-500 ${idx === currentOsIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
-                      loading="lazy"
+                      decoding="async"
                     />
                   ))}
                 </div>
@@ -303,7 +437,7 @@ const Services: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               {systemLogos.map((os) => (
                 <div key={os.name} className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200/70 dark:border-white/10 bg-white/80 dark:bg-white/5 shadow-sm">
-                  <img src={os.src} alt={os.name} className="h-6 w-6 object-contain" loading="lazy" />
+                  <img src={os.src} alt={os.name} className="h-6 w-6 object-contain" decoding="async" />
                   <span className="text-sm font-semibold text-slate-800 dark:text-white/90">{os.name}</span>
                 </div>
               ))}
@@ -312,7 +446,7 @@ const Services: React.FC = () => {
           </div>
         </div>
       </div>
-    </MotionZone>
+    </div>
   );
 };
 

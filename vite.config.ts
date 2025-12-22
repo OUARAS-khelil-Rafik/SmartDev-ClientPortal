@@ -39,6 +39,30 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        rollupOptions: {
+          output: {
+            manualChunks(id) {
+              if (!id.includes('node_modules')) return;
+
+              // Keep React runtime separate.
+              if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) return 'react-vendor';
+
+              // Animation libs can get big.
+              if (/[\\/]node_modules[\\/](framer-motion)[\\/]/.test(id)) return 'motion';
+              if (/[\\/]node_modules[\\/](gsap)[\\/]/.test(id)) return 'gsap';
+
+              // Charting pulls in a lot of deps.
+              if (/[\\/]node_modules[\\/](recharts|d3-.*)[\\/]/.test(id)) return 'charts';
+
+              // Icons are used everywhere; isolate them.
+              if (/[\\/]node_modules[\\/](lucide-react)[\\/]/.test(id)) return 'icons';
+
+              return 'vendor';
+            }
+          }
+        }
       }
     };
 });

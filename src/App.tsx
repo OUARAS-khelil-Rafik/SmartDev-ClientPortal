@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import AppsShowcase from './components/AppsShowcase';
-import Dashboard from './components/Dashboard';
-import Booking from './components/Booking';
-import DemoBooking from './components/DemoBooking';
-import AIConsultant from './components/AIConsultant';
 import FloatingCopilot from './components/FloatingCopilot';
-import Auth from './components/Auth';
-import AdminDashboard from './components/AdminDashboard';
-import AllComponents from './components/AllComponents';
-import AllNotifications from './components/AllNotifications';
 import { I18nProvider } from './i18n';
 import { ViewState, User } from './types';
 import CustomCursor from './components/CustomCursor';
+
+const Dashboard = React.lazy(() => import('./components/Dashboard'));
+const Booking = React.lazy(() => import('./components/Booking'));
+const DemoBooking = React.lazy(() => import('./components/DemoBooking'));
+const AIConsultant = React.lazy(() => import('./components/AIConsultant'));
+const Auth = React.lazy(() => import('./components/Auth'));
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
+const AllComponents = React.lazy(() => import('./components/AllComponents'));
+const AllNotifications = React.lazy(() => import('./components/AllNotifications'));
 
 const App: React.FC = () => {
   const [currentView, setView] = useState<ViewState>(ViewState.HOME);
@@ -73,32 +74,82 @@ const App: React.FC = () => {
       
       // Protected Routes
       case ViewState.DASHBOARD:
-        if (!user) return <Auth onLogin={handleLogin} />;
-        return <Dashboard user={user} />;
+        if (!user) {
+          return (
+            <Suspense fallback={null}>
+              <Auth onLogin={handleLogin} />
+            </Suspense>
+          );
+        }
+        return (
+          <Suspense fallback={null}>
+            <Dashboard user={user} />
+          </Suspense>
+        );
       
       case ViewState.ADMIN_DASHBOARD:
-        if (!user || user.role !== 'admin') return <Auth onLogin={handleLogin} />;
-        return <AdminDashboard />;
+        if (!user || user.role !== 'admin') {
+          return (
+            <Suspense fallback={null}>
+              <Auth onLogin={handleLogin} />
+            </Suspense>
+          );
+        }
+        return (
+          <Suspense fallback={null}>
+            <AdminDashboard />
+          </Suspense>
+        );
         
       case ViewState.BOOKING:
         // Booking handles its own auth check internally for the UI, but we pass user
-        return <Booking user={user} setView={setView} />;
+        return (
+          <Suspense fallback={null}>
+            <Booking user={user} setView={setView} />
+          </Suspense>
+        );
 
       case ViewState.DEMO_BOOKING:
         // Demo booking for new users - no login required
-        return <DemoBooking setView={setView} />;
+        return (
+          <Suspense fallback={null}>
+            <DemoBooking setView={setView} />
+          </Suspense>
+        );
         
       case ViewState.AI_CONSULT:
-        return <AIConsultant />;
+        return (
+          <Suspense fallback={null}>
+            <AIConsultant />
+          </Suspense>
+        );
 
       case ViewState.ALL_COMPONENTS:
-        return <AllComponents />;
+        return (
+          <Suspense fallback={null}>
+            <AllComponents />
+          </Suspense>
+        );
       case ViewState.ALL_NOTIFICATIONS:
-        if (!user) return <Auth onLogin={handleLogin} />;
-        return <AllNotifications user={user} />;
+        if (!user) {
+          return (
+            <Suspense fallback={null}>
+              <Auth onLogin={handleLogin} />
+            </Suspense>
+          );
+        }
+        return (
+          <Suspense fallback={null}>
+            <AllNotifications user={user} />
+          </Suspense>
+        );
         
       case ViewState.LOGIN:
-        return <Auth onLogin={handleLogin} />;
+        return (
+          <Suspense fallback={null}>
+            <Auth onLogin={handleLogin} />
+          </Suspense>
+        );
         
       default:
         return <Hero setView={setView} />;

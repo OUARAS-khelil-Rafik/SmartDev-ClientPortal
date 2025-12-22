@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import MotionZone from './MotionZone';
 import { useI18n } from '../i18n';
 import { User, Lock, Mail, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { api } from '../services/mockApi';
@@ -52,14 +51,14 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     // Google sign-in removed. Use email signup/login.
 
     return (
-        <MotionZone variant="fadeUp" className="min-h-screen pt-20 md:pt-16 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+        <div className="min-h-screen pt-20 md:pt-16 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
             <div className="w-full max-w-md animate-fade-in-up">
-                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition-shadow duration-500">
+                <div data-gsap="reveal" className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition-shadow duration-500">
                     <div className="p-5 sm:p-8 pb-0 text-center">
                         <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl mx-auto flex items-center justify-center shadow-lg shadow-blue-500/30 mb-4 sm:mb-6 animate-scale-in-bounce hover:rotate-12 transition-transform cursor-pointer">
                             <Sparkles className="text-white animate-pulse" size={24} />
                         </div>
-                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white animate-fade-in-up animation-delay-200">
+                        <h2 data-gsap-split="words" className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white animate-fade-in-up animation-delay-200">
                             {isLogin ? t('auth.welcome_back') : t('auth.create_account')}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm animate-fade-in-up animation-delay-300">
@@ -170,7 +169,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     {t('auth.developer_tip')}
                 </p>
             </div>
-        </MotionZone>
+        </div>
     );
 };
 
