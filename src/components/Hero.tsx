@@ -95,7 +95,7 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-16">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-8 md:pt-6">
       {/* Animated Background Blobs */}
       <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
       <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>

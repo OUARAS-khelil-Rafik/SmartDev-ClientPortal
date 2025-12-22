@@ -73,7 +73,7 @@ const AIConsultant: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex flex-col items-center">
+    <div className="min-h-screen pt-8 md:pt-6 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex flex-col items-center">
       <div className="max-w-4xl w-full flex-grow flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden h-[70vh] sm:h-[80vh] animate-fade-in-up">
         
         {/* Header */}

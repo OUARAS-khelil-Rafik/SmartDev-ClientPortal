@@ -132,7 +132,7 @@ const DemoBooking: React.FC<DemoBookingProps> = ({ setView }) => {
   // Success state
   if (success) {
     return (
-      <div className="min-h-screen pt-28 md:pt-24 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
+      <div className="min-h-screen pt-8 md:pt-6 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
         <div className="max-w-2xl mx-auto">
           <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 sm:p-12 text-center">
             <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -174,7 +174,7 @@ const DemoBooking: React.FC<DemoBookingProps> = ({ setView }) => {
   }
 
   return (
-    <div className="min-h-screen pt-28 md:pt-24 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
+    <div className="min-h-screen pt-8 md:pt-6 pb-20 bg-slate-50 dark:bg-slate-950 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">

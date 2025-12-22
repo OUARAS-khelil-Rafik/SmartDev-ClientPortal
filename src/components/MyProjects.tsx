@@ -221,7 +221,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
   if (!user) return null;
   if (user.role !== 'client') {
     return (
-      <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen pt-8 md:pt-6 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="max-w-2xl text-center">
           <h2 className="text-2xl font-bold mb-2">Access Restricted</h2>
           <p className="text-slate-600 dark:text-slate-400">Only client accounts can create or delete projects here. Administrators manage projects from the Admin Control Center.</p>
@@ -231,7 +231,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
   }
 
   return (
-    <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen pt-8 md:pt-6 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-4 sm:mb-6 animate-fade-in-down">
           <h2 className="text-xl sm:text-2xl font-bold">{t('my_projects.title')}</h2>

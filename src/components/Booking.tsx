@@ -72,7 +72,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   // If not logged in, show restricted access state
   if (!user) {
       return (
-          <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+          <div className="min-h-screen pt-8 md:pt-6 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
               <div className="text-center max-w-md">
                                         <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <Lock size={32} className="text-slate-500" />
@@ -93,7 +93,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   // Prevent Admin from Booking
   if (user.role === 'admin') {
       return (
-          <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+          <div className="min-h-screen pt-8 md:pt-6 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
               <div className="text-center max-w-md">
                   <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lock size={32} className="text-red-500" />
@@ -210,7 +210,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
   };
 
     return (
-        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="min-h-screen pt-8 md:pt-6 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
       <div className="max-w-6xl w-full flex flex-col gap-6">
         
         {/* Navigation Tabs */}

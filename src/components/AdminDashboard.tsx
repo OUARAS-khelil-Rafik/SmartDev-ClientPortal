@@ -240,14 +240,14 @@ const AdminDashboard: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+            <div className="min-h-screen pt-8 md:pt-6 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
                 <Loader2 size={48} className="animate-spin text-blue-600" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+        <div className="min-h-screen pt-8 md:pt-6 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-6 sm:mb-8">
                     <h1 data-gsap-split="words" className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('admin.title')}</h1>
