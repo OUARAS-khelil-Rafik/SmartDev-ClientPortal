@@ -387,7 +387,7 @@ const de = {
   },
   ai_consultant: {
     welcome: 'Hallo! Ich bin der NOVALIS AI KI-Architekt. Erzählen Sie mir von Ihrer Software-Idee, und ich helfe Ihnen, die technischen Anforderungen, Stack-Vorschläge und den geschätzten Umfang aufzuschlüsseln.',
-    title: 'KI-Architekt',
+    title: 'Agent IA',
     subtitle: 'Angetrieben von Gemini 2.5 Flash',
     status: {
       online: 'Online'

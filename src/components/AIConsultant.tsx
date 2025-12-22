@@ -80,7 +80,7 @@ const AIConsultant: React.FC = () => {
         <div className="p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20 animate-pulse-slow">
-                    <Sparkles className="text-white animate-spin-slow" size={16} />
+                  <Bot className="text-white" size={16} />
                 </div>
                 <div>
                     <h2 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">{t('ai_consultant.title')}</h2>

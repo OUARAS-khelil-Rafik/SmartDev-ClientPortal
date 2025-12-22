@@ -395,7 +395,7 @@ const fr = {
   ,
   ai_consultant: {
     welcome: "Bonjour ! Je suis l'Architecte IA de NOVALIS AI. Parlez-moi de votre idée logicielle et je vous aiderai à définir les exigences techniques, les suggestions de stack et l'estimation de l'envergure.",
-    title: 'Architecte IA',
+    title: 'Agent IA',
     subtitle: 'Propulsé par Gemini 2.5 Flash',
     status: {
       online: 'En ligne'

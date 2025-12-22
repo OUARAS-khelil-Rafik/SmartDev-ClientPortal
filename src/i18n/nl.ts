@@ -387,7 +387,7 @@ const nl = {
   },
   ai_consultant: {
     welcome: 'Hallo! Ik ben de NOVALIS AI Architect. Vertel me over uw software-idee, en ik help u de technische vereisten, stack suggesties en geschatte scope uit te werken.',
-    title: 'AI Architect',
+    title: 'Agent IA',
     subtitle: 'Aangedreven door Gemini 2.5 Flash',
     status: {
       online: 'Online'

@@ -393,7 +393,7 @@ const en = {
   ,
   ai_consultant: {
     welcome: "Hello! I'm the NOVALIS AI Architect. Tell me about your software idea, and I'll help you break down the technical requirements, stack suggestions, and estimated scope.",
-    title: 'AI Architect',
+    title: 'Agent IA',
     subtitle: 'Powered by Gemini 2.5 Flash',
     status: {
       online: 'Online'
