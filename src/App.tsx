@@ -167,6 +167,7 @@ const App: React.FC = () => {
         user={user}
         onLogout={handleLogout}
       />
+      <div id="app-top" />
       
       <main className="flex-grow">
         <AnimatePresence mode="wait">

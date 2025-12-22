@@ -260,7 +260,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <div className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white transition-colors" id="services-section">
+    <div className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white transition-colors scroll-mt-24" id="services-section">
       <div className="absolute inset-0 gradient-aurora opacity-70 dark:opacity-90" aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.08),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.07),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.07),transparent_22%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.14),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.12),transparent_20%),radial-gradient(circle_at_50%_80%,rgba(236,72,153,0.12),transparent_22%)]" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-24 pb-20 relative">

@@ -10,6 +10,12 @@
     height: 100%;
     overflow-x: hidden;
   }
+  html {
+    scroll-behavior: smooth;
+  }
+  #app-top {
+    scroll-margin-top: 72px; /* reserve space for fixed navbar (h-16 ~ 64px) */
+  }
   body {
     font-family: Inter, sans-serif;
     background-color: #f8fafc;

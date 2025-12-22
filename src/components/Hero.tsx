@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useI18n } from '../i18n';
 import { ViewState } from '../types';
-import { ArrowRight, Code2, ShieldCheck, Database, Cpu, ChevronDown } from 'lucide-react';
+import { ArrowRight, Code2, ShieldCheck, Database, Cpu, ChevronUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface HeroProps {
@@ -11,15 +11,52 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ setView }) => {
   const { t } = useI18n();
 
-  const scrollToServices = () => {
-    // Scroll to services section or trigger view change
-    const servicesSection = document.querySelector('#services-section');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      // Fallback: scroll down by viewport height
-      window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsAtTop(window.scrollY < 40);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    const anchor = document.getElementById('app-top');
+    if (anchor) {
+      try {
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      } catch (e) {
+        // fallthrough to general scroll
+      }
     }
+
+    const el: any = document.scrollingElement || document.documentElement || document.body;
+    try {
+      el.scrollTo?.({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setTimeout(() => {
+      try { el.scrollTo?.({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      el.scrollTop = 0;
+      if ((document.documentElement as any).scrollTop) (document.documentElement as any).scrollTop = 0;
+      if ((document.body as any).scrollTop) (document.body as any).scrollTop = 0;
+    }, 120);
+  };
+
+  const scrollPageUp = () => {
+    window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+  };
+
+  const scrollToServices = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const target = document.getElementById('services-section');
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   // Animation variants for staggered children
@@ -170,22 +207,59 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
             </motion.div>
         </div>
       </div>
-      
-      {/* Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+
+      {/* Bottom-right scroll-to-top button (exact style requested) */}
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="fixed right-6 bottom-6 z-50 flex flex-col gap-3 m-0"
+        style={{ transform: 'none' }}
       >
-        <button
-          onClick={scrollToServices}
-          aria-label="Scroll to services"
-          className="group w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center p-1 hover:border-blue-500 transition-colors cursor-pointer animate-bounce"
+
+        <motion.button
+          type="button"
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+          tabIndex={0}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.95 }}
+          className="p-2 rounded-full text-white shadow-xl focus:outline-none focus:ring-4 focus:ring-nexus-300"
+          style={{ background: 'linear-gradient(135deg,#06b6d4,#8b5cf6)' }}
         >
-            <ChevronDown size={16} className="text-slate-400 group-hover:text-blue-500 transition-colors mt-1" />
-        </button>
+          <svg
+            stroke="currentColor"
+            fill="currentColor"
+            strokeWidth="0"
+            viewBox="0 0 512 512"
+            height="28"
+            width="28"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M8 256C8 119 119 8 256 8s248 111 248 248-111 248-248 248S8 393 8 256zm143.6 28.9l72.4-75.5V392c0 13.3 10.7 24 24 24h16c13.3 0 24-10.7 24-24V209.4l72.4 75.5c9.3 9.7 24.8 9.9 34.3.4l10.9-11c9.4-9.4 9.4-24.6 0-33.9L273 107.7c-9.4-9.4-24.6-9.4-33.9 0L106.3 240.4c-9.4 9.4-9.4 24.6 0 33.9l10.9 11c9.6 9.5 25.1 9.3 34.4-.4z" />
+          </svg>
+        </motion.button>
       </motion.div>
+
+      {/* Pill scroll indicator link (exact structure requested) */}
+      {isAtTop && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-50"
+        >
+          <a href="#services-section" aria-label="Scroll to services" onClick={scrollToServices}>
+            <div className="w-[35px] h-[64px] rounded-3xl border-4 border-nexus-500/70 hover:border-nexus-500 flex justify-center items-start p-2 cursor-pointer bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm transition-colors">
+              <motion.div
+                className="w-3 h-3 rounded-full bg-nexus-500 mb-1"
+                animate={{ y: [0, 26, 0] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </div>
+          </a>
+        </motion.div>
+      )}
     </div>
   );
 };
