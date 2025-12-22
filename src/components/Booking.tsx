@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import MotionZone from './MotionZone';
 import { Calendar as CalendarIcon, Clock, MessageSquare, Check, Loader2, Video, Lock, List, AlignLeft, RefreshCw, ExternalLink, Info, Briefcase } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
@@ -75,10 +75,10 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
       return (
           <div className="min-h-screen pt-28 md:pt-24 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
               <div className="text-center max-w-md">
-                  <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Lock size={32} className="text-slate-500" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.login_required')}</h2>
+                                        <div className="w-16 h-16 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <Lock size={32} className="text-slate-500" />
+                                        </div>
+                                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{t('booking.login_required')}</h2>
                   <p className="text-slate-600 dark:text-slate-400 mb-8">{t('booking.please_log_in')}</p>
                   <button 
                     onClick={() => setView(ViewState.LOGIN)}
@@ -210,8 +210,8 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
       api.getOccupiedSlots().then(setOccupiedSlots);
   };
 
-  return (
-    <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+    return (
+        <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
       <div className="max-w-6xl w-full flex flex-col gap-6">
         
         {/* Navigation Tabs */}
@@ -587,7 +587,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                 <span className="text-xs text-slate-500">{t('admin.include_finished')}</span>
             </label>
         </ConfirmDialog>
-        </div>
+        </MotionZone>
     );
 };
 

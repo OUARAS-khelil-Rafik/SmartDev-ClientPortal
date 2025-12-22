@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import MotionZone from './MotionZone';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useI18n } from '../i18n';
 import { 
@@ -393,7 +394,7 @@ const AppsShowcase: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden">
+    <MotionZone variant="none" className="relative overflow-hidden" id="apps-showcase" ref={containerRef as any}>
       {/* Animated background gradients */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
@@ -1161,7 +1162,7 @@ const AppsShowcase: React.FC = () => {
           );
         })()}
       </AnimatePresence>
-    </div>
+    </MotionZone>
   );
 };
 

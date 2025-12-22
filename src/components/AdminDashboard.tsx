@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import MotionZone from './MotionZone';
 import { Booking, Project, User } from '../types';
 import { api } from '../services/mockApi';
 import { Check, X, Video, Calendar, Clock, Loader2, Users, Briefcase, ExternalLink, FileText, BarChart3, Trash, Edit, Plus, Code } from 'lucide-react';
@@ -247,7 +248,7 @@ const AdminDashboard: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+        <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-6 sm:mb-8">
                     <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('admin.title')}</h1>
@@ -948,7 +949,7 @@ const AdminDashboard: React.FC = () => {
                 )}
 
             </div>
-        </div>
+        </MotionZone>
     );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -116,8 +117,19 @@ const App: React.FC = () => {
         onLogout={handleLogout}
       />
       
-      <main className="flex-grow animate-fadeIn">
-        {renderView()}
+      <main className="flex-grow">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentView}
+            initial={{ opacity: 0, y: 8, scale: 0.995 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.995 }}
+            transition={{ duration: 0.36, ease: 'easeOut' }}
+            className="animate-fadeIn"
+          >
+            {renderView()}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       <FloatingCopilot />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import MotionZone from './MotionZone';
 import { Briefcase, Plus, Trash, Loader2, Edit, FileText, X, ChevronDown, ChevronUp } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { api } from '../services/mockApi';
@@ -231,7 +232,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
   }
 
   return (
-    <div className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
+    <MotionZone variant="fadeUp" className="min-h-screen pt-28 md:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-4 sm:mb-6 animate-fade-in-down">
           <h2 className="text-xl sm:text-2xl font-bold">{t('my_projects.title')}</h2>
@@ -461,7 +462,7 @@ const MyProjects: React.FC<Props> = ({ user }) => {
           </div>
         )}
       </div>
-    </div>
+    </MotionZone>
   );
 };
 

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import MotionZone from './MotionZone';
 import { useI18n } from '../i18n';
 import { User, Lock, Mail, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { api } from '../services/mockApi';
@@ -51,7 +52,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     // Google sign-in removed. Use email signup/login.
 
     return (
-        <div className="min-h-screen pt-20 md:pt-16 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
+        <MotionZone variant="fadeUp" className="min-h-screen pt-20 md:pt-16 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-4">
             <div className="w-full max-w-md animate-fade-in-up">
                 <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-2xl transition-shadow duration-500">
                     <div className="p-5 sm:p-8 pb-0 text-center">
@@ -169,7 +170,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     {t('auth.developer_tip')}
                 </p>
             </div>
-        </div>
+        </MotionZone>
     );
 };
 

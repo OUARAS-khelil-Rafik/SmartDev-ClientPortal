@@ -1,4 +1,5 @@
 import React from 'react';
+import MotionZone from './MotionZone';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import Services from './Services';
@@ -14,7 +15,7 @@ const AllComponents: React.FC = () => {
   const { t } = useI18n();
 
   return (
-    <div className="space-y-12 p-6">
+    <MotionZone variant="fade" className="space-y-12 p-6">
       <section>
         <h2 className="text-xl font-bold mb-4">{t('all_components.navbar')}</h2>
         <div className="border p-4"><Navbar currentView={null as any} setView={() => {}} isDark={false} toggleTheme={() => {}} user={null as any} onLogout={() => {}} /></div>
@@ -60,7 +61,7 @@ const AllComponents: React.FC = () => {
         <div className="border p-4"><FloatingCopilot /></div>
       </section>
 
-    </div>
+    </MotionZone>
   );
 };
 

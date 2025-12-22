@@ -1,4 +1,5 @@
 import React from 'react';
+import MotionZone from './MotionZone';
 import { useI18n } from '../i18n';
 import { ViewState } from '../types';
 import { ArrowRight, Code2, ShieldCheck, Database, Cpu, ChevronDown } from 'lucide-react';
@@ -44,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-16">
+    <MotionZone variant="none" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-16">
       {/* Animated Background Blobs */}
       <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
       <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -186,7 +187,7 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
             <ChevronDown size={16} className="text-slate-400 group-hover:text-blue-500 transition-colors mt-1" />
         </button>
       </motion.div>
-    </div>
+    </MotionZone>
   );
 };
 
