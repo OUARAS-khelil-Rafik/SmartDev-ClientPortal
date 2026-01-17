@@ -41,6 +41,16 @@ export default defineConfig(({ mode }) => {
         }
       },
       build: {
+        minify: 'terser',
+        terserOptions: {
+          compress: {
+            drop_console: false,
+            passes: 1
+          },
+          mangle: {
+            reserved: ['PieChart', 'Pie', 'Cell', 'ResponsiveContainer', 'Tooltip']
+          }
+        },
         rollupOptions: {
           output: {
             manualChunks(id) {
