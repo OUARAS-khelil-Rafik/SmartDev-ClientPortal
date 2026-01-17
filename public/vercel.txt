@@ -1,1 +1,0 @@
-Vercel deployment test - this file confirms public folder is being served
