@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 server/.env
+package-lock.json
+server/package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +27,5 @@ server/.env
 *.njsproj
 *.sln
 *.sw?
+.vercel
+.env*.local
