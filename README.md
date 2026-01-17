@@ -169,17 +169,20 @@ SmartDev-ClientPortal/
 │   ├── 📂 components/
 │   │   ├── 🎨 AdminDashboard.tsx    # Admin control panel
 │   │   ├── 🤖 AIConsultant.tsx      # AI chat interface
+│   │   ├── 🎯 AllComponents.tsx     # All components showcase
+│   │   ├── 📬 AllNotifications.tsx  # All notifications view
+│   │   ├── 🎪 AppsShowcase.tsx      # Apps showcase section
 │   │   ├── 🔐 Auth.tsx              # Authentication
 │   │   ├── 📅 Booking.tsx           # Booking system (logged-in users)
-│   │   ├── 🎫 DemoBooking.tsx       # Demo booking (no login required)
+│   │   ├── ⚠️ ConfirmDialog.tsx     # Confirmation dialog
+│   │   ├── 🎯 CustomCursor.tsx      # Animated cursor
 │   │   ├── 📊 Dashboard.tsx         # Client dashboard
+│   │   ├── 🎫 DemoBooking.tsx       # Demo booking (no login required)
 │   │   ├── 💬 FloatingCopilot.tsx   # AI assistant widget
 │   │   ├── 🏠 Hero.tsx              # Landing hero section
-│   │   ├── 📁 MyProjects.tsx        # Project management
 │   │   ├── 🧭 Navbar.tsx            # Navigation bar
 │   │   ├── 🔔 Notifications.tsx     # Notification system
-│   │   ├── 🛠️ Services.tsx          # Services showcase
-│   │   └── 🎯 CustomCursor.tsx      # Animated cursor
+│   │   └── 🛠️ Services.tsx          # Services showcase
 │   │
 │   ├── 📂 i18n/
 │   │   ├── 🇬🇧 en.ts                 # English translations
@@ -187,6 +190,9 @@ SmartDev-ClientPortal/
 │   │   ├── 🇳🇱 nl.ts                 # Dutch translations
 │   │   ├── 🇩🇪 de.ts                 # German translations
 │   │   └── 📦 index.tsx             # i18n provider
+│   │
+│   ├── 📂 img/
+│   │   └── 📂 tech-icons/           # Technology icons
 │   │
 │   ├── 📂 services/
 │   │   ├── 🤖 geminiService.ts      # AI API client

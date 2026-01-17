@@ -28,7 +28,6 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
     const [filterText, setFilterText] = useState('');
     const [clearDialogOpen, setClearDialogOpen] = useState(false);
     const [clearIncludeFinished, setClearIncludeFinished] = useState(false);
-    // Project creation/deletion moved to MyProjects page; remove inline creation state
 
   useEffect(() => {
       // Load availability and User Projects when component mounts or tab changes to 'new'
@@ -43,7 +42,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
       }
   }, [user, activeTab]);
 
-    // Listen for project updates so Booking can refresh its project list when MyProjects changes projects
+    // Listen for project updates to refresh the project list
     useEffect(() => {
         const onProjectsUpdated = () => {
             if (!user) return;
