@@ -5,7 +5,9 @@ import type { PreRenderedChunk } from 'rollup';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    const isProduction = mode === 'production';
     return {
+      base: '/',
       server: {
         port: 3000,
         host: '0.0.0.0',
@@ -42,6 +44,10 @@ export default defineConfig(({ mode }) => {
         }
       },
       build: {
+        target: 'es2020',
+        outDir: 'dist',
+        assetsDir: 'assets',
+        cssCodeSplit: true,
         rollupOptions: {
           output: {
             manualChunks(id) {
