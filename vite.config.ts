@@ -63,17 +63,15 @@ export default defineConfig(({ mode }) => {
               return 'vendor';
             }
           }
-        }
-      },
-      // Don't minify recharts chunk due to compatibility issues with Vite 6
-      rollupOptions: {
-        output: {
-          // Disable minification for recharts chunk
-          chunkFileNames: (chunkInfo: PreRenderedChunk) => {
-            if (chunkInfo.name && chunkInfo.name.includes('charts')) {
-              return 'assets/[name]-[hash].js';
-            }
-            return 'assets/[name]-[hash].js';
+        },
+        minify: 'terser',
+        terserOptions: {
+          compress: {
+            drop_console: false
+          },
+          mangle: {
+            // Don't mangle names for recharts compatibility
+            keep_fnames: /recharts|_.*_recharts/i
           }
         }
       }
