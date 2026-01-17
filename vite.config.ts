@@ -6,6 +6,8 @@ import type { PreRenderedChunk } from 'rollup';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     const isProduction = mode === 'production';
+    const geminiKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+    
     return {
       base: '/',
       server: {
@@ -35,8 +37,8 @@ export default defineConfig(({ mode }) => {
           }
         ],
       define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        'process.env.GEMINI_API_KEY': JSON.stringify(geminiKey),
+        'process.env.API_KEY': JSON.stringify(geminiKey)
       },
       resolve: {
         alias: {
