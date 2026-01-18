@@ -8,17 +8,20 @@ const consultationSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
+    // Optional for anonymous interactions
+    required: false,
     lowercase: true
   },
   name: {
     type: String,
-    required: [true, 'Name is required']
+    // Optional for anonymous interactions
+    required: false
   },
   projectType: {
     type: String,
     enum: ['Web', 'Mobile', 'AI', 'Cloud', 'Other'],
-    required: true
+    // Optional; can be set later
+    required: false
   },
   description: {
     type: String,

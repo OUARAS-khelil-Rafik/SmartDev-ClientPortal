@@ -2,6 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const { sendCopilotMessage } = require('../services/copilotService');
+const Consultation = require('../models/Consultation');
 
 // Validation middleware
 const validateCopilot = [
@@ -28,21 +29,48 @@ const handleValidationErrors = (req, res, next) => {
 
 // POST /api/copilot - Send copilot message
 router.post('/', validateCopilot, handleValidationErrors, async (req, res) => {
+  const { message, history = [] } = req.body;
+  let responseText;
   try {
-    const { message, history } = req.body;
+    responseText = await sendCopilotMessage(message, history);
+  } catch (error) {
+    console.error('Copilot route error:', error);
+    // Fallback copilot response when AI is unavailable
+    responseText = (
+      'Hi! The copilot is momentarily unavailable. You can explore Services (Web, Mobile, AI, Cloud) ' +
+      'or ask for pricing and timelines. Tell me what you need, and we’ll assist shortly.'
+    );
+  }
 
-    const response = await sendCopilotMessage(message, history);
+  try {
+    // Persist interaction as a lightweight consultation record
+    const conversationHistory = [
+      ...history.map((h) => ({
+        role: h.role === 'model' ? 'model' : 'user',
+        message: h.parts?.[0]?.text || h.text || '',
+      })),
+      { role: 'user', message },
+      { role: 'model', message: responseText }
+    ];
+
+    const doc = new Consultation({
+      projectType: 'AI',
+      conversationHistory,
+      status: 'active'
+    });
+    await doc.save();
 
     res.json({ 
       success: true,
-      response 
+      response: responseText,
+      interactionId: doc._id
     });
-  } catch (error) {
-    console.error('Copilot route error:', error);
+  } catch (persistError) {
+    console.error('Copilot persistence error:', persistError);
     res.status(500).json({ 
       success: false,
-      error: 'Error with AI service',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: 'Failed to persist interaction',
+      details: process.env.NODE_ENV === 'development' ? persistError.message : undefined
     });
   }
 });

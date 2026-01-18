@@ -1,4 +1,5 @@
-const aiClient = require('../config/gemini');
+// Lazy-load the AI client to avoid startup crashes on unsupported Node versions
+let aiClient;
 
 const CONSULTANT_SYSTEM_PROMPT = 
   "You are an expert AI Project Consultant for SmartDev, a cutting-edge software development agency. " +
@@ -27,6 +28,15 @@ const sendConsultationMessage = async (message, history = []) => {
     }
 
     const formattedHistory = formatHistory(history);
+
+    if (!aiClient) {
+      try {
+        aiClient = require('../config/gemini');
+      } catch (e) {
+        console.error('Failed to initialize AI client:', e);
+        throw new Error('AI client initialization failed');
+      }
+    }
 
     const chat = aiClient.chats.create({
       model: 'gemini-2.0-flash',

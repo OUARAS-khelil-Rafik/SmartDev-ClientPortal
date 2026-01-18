@@ -7,8 +7,20 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, '../.env.local') });
 
+// Import database connection
+const { connectDB, disconnectDB } = require('./config/database');
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+// Normalize PORT to a valid number; fallback to 3003
+const normalizePort = (val) => {
+  const port = parseInt(val, 10);
+  if (!isNaN(port) && port > 0) return port;
+  return 3003;
+};
+const PORT = normalizePort(process.env.PORT);
+
+// ==================== Database Connection ====================
+connectDB();
 
 // ==================== Middleware ====================
 app.use(cors({
@@ -28,14 +40,51 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// ==================== Root Route ====================
+app.get('/', (req, res) => {
+  res.json({
+    name: 'SmartDev AI API',
+    status: 'OK',
+    health: '/api/health',
+    docs: '/api/docs'
+  });
+});
+
 // ==================== API Routes ====================
 // Import routes
 const consultationRoutes = require('./routes/consultation');
 const copilotRoutes = require('./routes/copilot');
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const bookingRoutes = require('./routes/booking');
+const notificationRoutes = require('./routes/notification');
+const fs = require('fs');
+
+// Simple Docs route serving OpenAPI JSON if present
+app.get('/api/docs', (req, res) => {
+  const docPath = path.join(__dirname, 'openapi.json');
+  try {
+    if (fs.existsSync(docPath)) {
+      const json = fs.readFileSync(docPath, 'utf8');
+      res.type('application/json').send(json);
+    } else {
+      res.status(200).json({
+        message: 'OpenAPI document not found. See server/README.md.',
+        path: '/server/openapi.json'
+      });
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load docs', error: err.message });
+  }
+});
 
 // Register routes
 app.use('/api/consultation', consultationRoutes);
 app.use('/api/copilot', copilotRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/booking', bookingRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // ==================== Error Handling ====================
 // 404 Handler
@@ -62,11 +111,30 @@ app.use((err, req, res, next) => {
 });
 
 // ==================== Start Server ====================
+let server;
 if (require.main === module) {
-  app.listen(PORT, () => {
+  server = app.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
     console.log(`📝 API Documentation: http://localhost:${PORT}/api/docs`);
   });
+
+  const shutdown = async (signal) => {
+    try {
+      console.log(`\n${signal} received. Shutting down gracefully...`);
+      if (server) {
+        await new Promise((resolve) => server.close(resolve));
+        console.log('HTTP server closed');
+      }
+      await disconnectDB();
+      process.exit(0);
+    } catch (err) {
+      console.error('Error during shutdown:', err);
+      process.exit(1);
+    }
+  };
+
+  process.on('SIGINT', () => shutdown('SIGINT'));
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
 }
 
 module.exports = app;

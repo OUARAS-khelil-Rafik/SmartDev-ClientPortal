@@ -2,14 +2,16 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/smartdev';
+    const mongoUri = process.env.MONGODB_URI;
     
-    await mongoose.connect(mongoUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI is not defined in environment variables');
+    }
+    
+    await mongoose.connect(mongoUri);
 
-    console.log('✅ MongoDB connected successfully');
+    console.log('✅ MongoDB Atlas connected successfully');
+    console.log('📍 Database:', mongoUri.split('/').pop().split('?')[0]);
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
     process.exit(1);
