@@ -9,6 +9,7 @@ dotenv.config({ path: path.join(__dirname, '../.env.local') });
 
 // Import database connection
 const { connectDB, disconnectDB } = require('./config/database');
+const { initializeDefaultAdmin } = require('./initialize-admin');
 
 const app = express();
 // Normalize PORT to a valid number; fallback to 3003
@@ -21,6 +22,12 @@ const PORT = normalizePort(process.env.PORT);
 
 // ==================== Database Connection ====================
 connectDB();
+
+// ==================== Initialize Default Admin ====================
+initializeDefaultAdmin().catch(error => {
+  console.error('Warning: Could not initialize admin user:', error.message);
+  // Continue anyway - admin can be created manually
+});
 
 // ==================== Middleware ====================
 app.use(cors({

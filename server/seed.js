@@ -34,6 +34,15 @@ const seedDatabase = async () => {
     console.log('\n📝 Creating sample users...');
     const users = await User.create([
       {
+        firstName: 'Admin',
+        lastName: 'Novalis',
+        email: 'admin@novalis-ai.dev',
+        password: 'Novalis@2026',
+        phone: '+213660496144',
+        company: 'Novalis AI',
+        role: 'admin'
+      },
+      {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john@example.com',

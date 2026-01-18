@@ -1,8 +1,8 @@
 const express = require('express');
-const { body, validationResult, param } = require('express-validator');
+const { body, validationResult, param, query } = require('express-validator');
 const router = express.Router();
 const Notification = require('../models/Notification');
-const { authenticate } = require('../middleware/auth');
+const { authenticate, requireAdmin } = require('../middleware/auth');
 
 // Validation helper
 const handleValidationErrors = (req, res, next) => {
@@ -188,6 +188,148 @@ router.delete('/delete-all', authenticate, async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error deleting notifications'
+    });
+  }
+});
+
+// ==================== ADMIN ROUTES ====================
+
+// POST /api/notifications/admin/create - Create notification for user (admin only)
+router.post('/admin/create', [
+  body('userId').isMongoId().withMessage('Valid user ID is required'),
+  body('type').isIn(['info', 'success', 'warning', 'error']).withMessage('Invalid notification type'),
+  body('title').trim().notEmpty().withMessage('Title is required').isLength({ max: 100 }),
+  body('message').trim().notEmpty().withMessage('Message is required').isLength({ max: 500 })
+], handleValidationErrors, authenticate, requireAdmin, async (req, res) => {
+  try {
+    const { userId, type, title, message } = req.body;
+
+    const notification = new Notification({
+      userId,
+      type,
+      title,
+      message
+    });
+
+    await notification.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Notification created successfully',
+      notification
+    });
+  } catch (error) {
+    console.error('Create notification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating notification'
+    });
+  }
+});
+
+// POST /api/notifications/admin/broadcast - Broadcast notification to all users (admin only)
+router.post('/admin/broadcast', [
+  body('type').isIn(['info', 'success', 'warning', 'error']).withMessage('Invalid notification type'),
+  body('title').trim().notEmpty().withMessage('Title is required').isLength({ max: 100 }),
+  body('message').trim().notEmpty().withMessage('Message is required').isLength({ max: 500 })
+], handleValidationErrors, authenticate, requireAdmin, async (req, res) => {
+  try {
+    const { type, title, message } = req.body;
+    const User = require('../models/User');
+
+    // Get all active users
+    const users = await User.find({ isActive: true }, '_id');
+
+    // Create notifications for all users
+    const notifications = users.map(user => ({
+      userId: user._id,
+      type,
+      title,
+      message
+    }));
+
+    await Notification.insertMany(notifications);
+
+    res.status(201).json({
+      success: true,
+      message: `Notification broadcast to ${users.length} users`,
+      count: users.length
+    });
+  } catch (error) {
+    console.error('Broadcast notification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error broadcasting notification'
+    });
+  }
+});
+
+// GET /api/notifications/admin/all - Get all notifications (admin only)
+router.get('/admin/all', [
+  query('page').optional().isInt({ min: 1 }),
+  query('limit').optional().isInt({ min: 1, max: 100 }),
+  query('userId').optional().isMongoId()
+], handleValidationErrors, authenticate, requireAdmin, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (req.query.userId) filter.userId = req.query.userId;
+    if (req.query.type) filter.type = req.query.type;
+    if (req.query.isRead !== undefined) filter.isRead = req.query.isRead === 'true';
+
+    const notifications = await Notification.find(filter)
+      .populate('userId', 'firstName lastName email')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Notification.countDocuments(filter);
+
+    res.json({
+      success: true,
+      notifications,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Get all notifications error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching notifications'
+    });
+  }
+});
+
+// DELETE /api/notifications/admin/:id - Delete any notification (admin only)
+router.delete('/admin/:id', [
+  param('id').isMongoId().withMessage('Invalid notification ID')
+], handleValidationErrors, authenticate, requireAdmin, async (req, res) => {
+  try {
+    const notification = await Notification.findByIdAndDelete(req.params.id);
+
+    if (!notification) {
+      return res.status(404).json({
+        success: false,
+        message: 'Notification not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Notification deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete notification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting notification'
     });
   }
 });
