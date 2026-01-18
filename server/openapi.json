@@ -1,0 +1,231 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SmartDev API",
+    "version": "1.0.0",
+    "description": "Backend API for SmartDev Client Portal with AI Consultation and Bookings"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.smartdev.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string" },
+          "company": { "type": "string" },
+          "role": { "type": "string", "enum": ["user", "admin"] },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "userId": { "type": "string" },
+          "serviceName": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "budget": { "type": "number" },
+          "timeline": { "type": "string" },
+          "status": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health check",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Server is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "timestamp": { "type": "string" },
+                    "uptime": { "type": "number" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "summary": "Register new user",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["firstName", "lastName", "email", "password"],
+                "properties": {
+                  "firstName": { "type": "string" },
+                  "lastName": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "company": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered successfully" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "User login",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/api/consultation": {
+      "post": {
+        "summary": "Send message to consultation AI",
+        "tags": ["AI Services"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["message"],
+                "properties": {
+                  "message": { "type": "string" },
+                  "history": { "type": "array" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "AI response received" },
+          "400": { "description": "Message is required" }
+        }
+      }
+    },
+    "/api/booking": {
+      "get": {
+        "summary": "Get user bookings",
+        "tags": ["Bookings"],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Bookings retrieved" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "post": {
+        "summary": "Create new booking",
+        "tags": ["Bookings"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["serviceName", "title", "description", "budget", "timeline"],
+                "properties": {
+                  "serviceName": { "type": "string" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "budget": { "type": "number" },
+                  "timeline": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Booking created" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/api/user/profile": {
+      "get": {
+        "summary": "Get user profile",
+        "tags": ["User"],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "User profile" }
+        }
+      },
+      "put": {
+        "summary": "Update user profile",
+        "tags": ["User"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": { "type": "string" },
+                  "lastName": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "company": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Profile updated" }
+        }
+      }
+    }
+  }
+}
