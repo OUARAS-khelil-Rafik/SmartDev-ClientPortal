@@ -376,21 +376,13 @@ Get-Process -Id (Get-NetTCPConnection -LocalPort 3001).OwningProcess | Stop-Proc
 
 ---
 
-## 👨‍💻 Authors
+## 👨‍💻 Author
 
 <div align="center">
 
 **OUARAS Khelil Rafik**
 
 [![GitHub](https://img.shields.io/badge/GitHub-OUARAS--khelil--Rafik-181717?style=for-the-badge&logo=github)](https://github.com/OUARAS-khelil-Rafik)
-
-**KEMMOUN Ramzy**
-
-[![GitHub](https://img.shields.io/badge/GitHub-ramzykemmoun-181717?style=for-the-badge&logo=github)](https://github.com/ramzykemmoun)
-
-**SAIDI Achraf**
-
-[![GitHub](https://img.shields.io/badge/GitHub-Achraf--Saidi-181717?style=for-the-badge&logo=github)](https://github.com/Achraf-Saidi)
 
 </div>
 
