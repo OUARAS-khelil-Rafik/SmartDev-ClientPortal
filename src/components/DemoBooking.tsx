@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Clock, Check, Loader2, Video, User, Mail, Building, Phone, MessageSquare, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { api } from '../services/mockApi';
+import { api } from '../services/api.ts';
 import { ViewState } from '../types';
 import { useI18n } from '../i18n';
 

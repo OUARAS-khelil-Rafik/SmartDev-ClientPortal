@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Project, User } from '../types';
-import { api } from '../services/mockApi';
+import { api } from '../services/api.ts';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { CheckCircle2, Circle, Plus, Loader2, Trash, Edit, X, GripVertical } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';

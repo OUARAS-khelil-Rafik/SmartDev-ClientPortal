@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Clock, MessageSquare, Check, Loader2, Video, Lock, List, AlignLeft, RefreshCw, ExternalLink, Info, Briefcase } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
-import { api } from '../services/mockApi';
+import { api } from '../services/api.ts';
 import { User, ViewState, Booking as BookingType, Project } from '../types';
 import { useI18n } from '../i18n';
 
@@ -169,7 +169,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
 
   const handleSubmit = async () => {
     if (!selectedDate || !selectedTime || selectedTopics.length === 0 || !description) return;
-    if (!selectedProjectId) {
+    if (userProjects.length > 0 && !selectedProjectId) {
         alert(t('booking.select_project_required'));
         return;
     }
@@ -471,7 +471,7 @@ const Booking: React.FC<BookingProps> = ({ user, setView }) => {
                         
                         <button 
                             onClick={handleSubmit}
-                            disabled={!selectedTime || !description || selectedTopics.length === 0 || !selectedProjectId || loading}
+                            disabled={!selectedTime || !description || selectedTopics.length === 0 || (userProjects.length > 0 && !selectedProjectId) || loading}
                             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-blue-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
                         >
                             {loading && <Loader2 size={20} className="animate-spin" />}

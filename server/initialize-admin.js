@@ -3,7 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 // Load environment variables
-dotenv.config({ path: path.join(__dirname, '../.env.local') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const User = require('./models/User');
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useI18n } from '../i18n';
 import { User, Lock, Mail, ArrowRight, Loader2, Sparkles } from 'lucide-react';
-import { api } from '../services/mockApi';
+import { api } from '../services/api.ts';
 import { User as UserType } from '../types';
 
 interface AuthProps {
@@ -28,17 +28,16 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
         try {
             let user;
             if (isLogin) {
-                user = await api.login(email);
+                if (!email || !password) throw new Error('Email and password are required');
+                const result = await api.login(email, password);
+                user = result.user;
             } else {
-                if (!name) throw new Error("Name is required");
-                // Pass company to signup so admin can review organization
-                user = await api.signup(name, email, company.trim() || undefined);
-                // New signups require admin approval; don't auto-login
-                if ((user as any).status === 'pending') {
-                    setError('Account created and is pending administrator approval. You will be notified once approved.');
-                    setLoading(false);
-                    return;
-                }
+                if (!name) throw new Error('Name is required');
+                if (!password) throw new Error('Password is required');
+                const nameParts = name.trim().split(' ');
+                const firstName = nameParts[0];
+                const lastName = nameParts.slice(1).join(' ') || 'User';
+                user = await api.signup(firstName, lastName, email, password, company.trim() || undefined);
             }
             onLogin(user);
         } catch (err: any) {
@@ -73,43 +72,43 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                             </div>
                         )}
 
-                            {!isLogin && (
-                               <>
+                        {!isLogin && (
+                            <>
                                 <div className="space-y-1 animate-fade-in-up">
-                                <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.full_name')}</label>
-                                <div className="relative group">
-                                    <User className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-                                    <input 
-                                        type="text" 
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all duration-300 text-slate-900 dark:text-white focus:shadow-lg focus:shadow-blue-500/10"
-                                        placeholder="John Doe"
-                                    />
+                                    <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.full_name')}</label>
+                                    <div className="relative group">
+                                        <User className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+                                        <input
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all duration-300 text-slate-900 dark:text-white focus:shadow-lg focus:shadow-blue-500/10"
+                                            placeholder="John Doe"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="space-y-1 animate-fade-in-up">
+                                <div className="space-y-1 animate-fade-in-up">
                                     <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.company')}</label>
                                     <div className="relative group">
                                         <Mail className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-                                        <input 
-                                            type="text" 
+                                        <input
+                                            type="text"
                                             value={company}
                                             onChange={(e) => setCompany(e.target.value)}
                                             className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all duration-300 text-slate-900 dark:text-white focus:shadow-lg focus:shadow-blue-500/10"
                                             placeholder="Acme Corp"
                                         />
                                     </div>
-                                    </div>
-                                </>
-                            )}
+                                </div>
+                            </>
+                        )}
 
                         <div className="space-y-1 animate-fade-in-up animation-delay-100">
                             <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.email')}</label>
                             <div className="relative group">
                                 <Mail className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-                                <input 
-                                    type="email" 
+                                <input
+                                    type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all duration-300 text-slate-900 dark:text-white focus:shadow-lg focus:shadow-blue-500/10"
@@ -122,8 +121,8 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                             <label className="text-xs font-semibold uppercase text-slate-500 ml-1">{t('auth.password')}</label>
                             <div className="relative group">
                                 <Lock className="absolute left-3 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-                                <input 
-                                    type="password" 
+                                <input
+                                    type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all duration-300 text-slate-900 dark:text-white focus:shadow-lg focus:shadow-blue-500/10"
@@ -132,7 +131,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                             </div>
                         </div>
 
-                        <button 
+                        <button
                             type="submit"
                             disabled={loading}
                             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 flex items-center justify-center gap-2 mt-4 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/40 active:scale-[0.98] animate-fade-in-up animation-delay-300"
@@ -147,7 +146,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     </form>
 
                     <div className="bg-slate-50 dark:bg-slate-800/50 p-4 text-center border-t border-slate-200 dark:border-slate-800">
-                        <button 
+                        <button
                             onClick={() => setIsLogin(!isLogin)}
                             className="text-sm text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 font-medium transition-all duration-300 hover:scale-105 underline-animate"
                         >
@@ -160,7 +159,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                         )}
                     </div>
                 </div>
-                
+
                 {/* Admin Tip */}
                 <p className="mt-8 text-center text-xs text-slate-400 animate-fade-in animation-delay-500">
                     {t('auth.admin_tip')}

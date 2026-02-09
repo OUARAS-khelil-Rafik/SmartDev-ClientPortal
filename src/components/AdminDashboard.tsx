@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Booking, Project, User } from '../types';
-import { api } from '../services/mockApi';
+import { api } from '../services/api.ts';
 import { Check, X, Video, Calendar, Clock, Loader2, Users, Briefcase, ExternalLink, FileText, BarChart3, Trash, Edit, Plus, Code } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { useI18n } from '../i18n';

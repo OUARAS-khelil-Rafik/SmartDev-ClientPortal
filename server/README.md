@@ -474,7 +474,7 @@ lsof -i :3001
 kill -9 <PID>
 
 # Or use different port
-PORT=3002 npm run dev
+PORT=3001 npm run dev
 ```
 
 ### Missing Environment Variables

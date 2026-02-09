@@ -5,7 +5,7 @@
 
 const http = require('http');
 
-const BASE_URL = 'http://localhost:3002';
+const BASE_URL = 'http://localhost:3001';
 let authToken = null;
 let userId = null;
 let bookingId = null;

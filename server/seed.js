@@ -3,12 +3,13 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 // Load environment variables
-dotenv.config({ path: path.join(__dirname, '../.env.local') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const User = require('./models/User');
 const Booking = require('./models/Booking');
 const Consultation = require('./models/Consultation');
 const Notification = require('./models/Notification');
+const Project = require('./models/Project');
 
 const seedDatabase = async () => {
   try {
@@ -28,6 +29,7 @@ const seedDatabase = async () => {
     await User.deleteMany({});
     await Booking.deleteMany({});
     await Consultation.deleteMany({});
+    await Project.deleteMany({});
     await Notification.deleteMany({});
     console.log('✅ Existing data cleared');
 
@@ -76,6 +78,25 @@ const seedDatabase = async () => {
         phone: '+33612348765',
         company: 'Novalis AI',
         role: 'admin'
+      }
+      ,
+      {
+        firstName: 'Dev',
+        lastName: 'One',
+        email: 'dev1@smartdev.com',
+        password: 'devpass123',
+        phone: '+33600000001',
+        company: 'Freelance',
+        role: 'developer'
+      },
+      {
+        firstName: 'Dev',
+        lastName: 'Two',
+        email: 'dev2@smartdev.com',
+        password: 'devpass456',
+        phone: '+33600000002',
+        company: 'Freelance',
+        role: 'developer'
       }
     ]);
 
@@ -126,6 +147,43 @@ const seedDatabase = async () => {
     ]);
 
     console.log(`✅ Created ${bookings.length} bookings`);
+
+    console.log('\n🚧 Creating sample projects...');
+    const projects = await Project.create([
+      {
+        userId: users[0]._id,
+        title: 'E-commerce Revamp Project',
+        description: 'Full redesign and migration to a modern headless stack',
+        status: 'active',
+        budget: 20000,
+        timeline: '2-4 weeks',
+        startDate: new Date('2026-02-01'),
+        relatedBooking: bookings[0]._id,
+        tags: ['ecommerce', 'frontend', 'payments']
+      },
+      {
+        userId: users[2]._id,
+        title: 'Mobile Ordering App',
+        description: 'Native-feeling cross-platform app for restaurants',
+        status: 'in-progress',
+        budget: 25000,
+        timeline: '1-3 months',
+        startDate: new Date('2026-02-15'),
+        relatedBooking: bookings[1]._id,
+        tags: ['mobile', 'react-native']
+      },
+      {
+        userId: users[3]._id,
+        title: 'AI Analytics Pilot',
+        description: 'Proof-of-concept for business intelligence dashboards',
+        status: 'planned',
+        budget: 50000,
+        timeline: '3-6 months',
+        tags: ['ai', 'analytics']
+      }
+    ]);
+
+    console.log(`✅ Created ${projects.length} projects`);
 
     console.log('\n💬 Creating sample consultations...');
     const consultations = await Consultation.create([
@@ -238,6 +296,7 @@ const seedDatabase = async () => {
     console.log(`   📅 Bookings: ${bookings.length}`);
     console.log(`   💬 Consultations: ${consultations.length}`);
     console.log(`   🔔 Notifications: ${notifications.length}`);
+    console.log(`   🗂️ Projects: ${projects ? projects.length : 0}`);
     console.log('\n📋 Sample Credentials:');
     console.log('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('   User Email: john@example.com');
@@ -249,6 +308,12 @@ const seedDatabase = async () => {
     console.log('   Your Admin: rafik@novalis-ai.com');
     console.log('   Password: Kiko12032003');
     console.log('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('   Developer Email: dev1@smartdev.com');
+      console.log('   Developer Password: devpass123');
+      console.log('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('   Developer Email: dev2@smartdev.com');
+      console.log('   Developer Password: devpass456');
+      console.log('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('\n🌐 MongoDB Atlas Database: novalis-ai');
     console.log('🎉 All data is now stored in MongoDB!\n');
 

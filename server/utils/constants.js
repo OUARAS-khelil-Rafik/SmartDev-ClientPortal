@@ -15,6 +15,7 @@ const USER_ROLES = {
   USER: 'user',
   ADMIN: 'admin'
 };
+USER_ROLES.DEVELOPER = 'developer';
 
 // Booking Status
 const BOOKING_STATUS = {

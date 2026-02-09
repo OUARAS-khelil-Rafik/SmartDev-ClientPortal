@@ -5,18 +5,18 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 // Load environment variables
-dotenv.config({ path: path.join(__dirname, '../.env.local') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 // Import database connection
 const { connectDB, disconnectDB } = require('./config/database');
 const { initializeDefaultAdmin } = require('./initialize-admin');
 
 const app = express();
-// Normalize PORT to a valid number; fallback to 3003
+// Normalize PORT to a valid number; fallback to 3001
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
   if (!isNaN(port) && port > 0) return port;
-  return 3003;
+  return 3001;
 };
 const PORT = normalizePort(process.env.PORT);
 
@@ -65,6 +65,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const bookingRoutes = require('./routes/booking');
 const notificationRoutes = require('./routes/notification');
+const projectRoutes = require('./routes/project');
 const fs = require('fs');
 
 // Simple Docs route serving OpenAPI JSON if present
@@ -92,6 +93,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/booking', bookingRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/projects', projectRoutes);
 
 // ==================== Error Handling ====================
 // 404 Handler

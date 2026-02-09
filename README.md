@@ -196,7 +196,7 @@ SmartDev-ClientPortal/
 │   │
 │   ├── 📂 services/
 │   │   ├── 🤖 geminiService.ts      # AI API client
-│   │   └── 📡 mockApi.ts            # Mock data service
+│   │   └── 🌐 api.ts                # MongoDB-backed API client
 │   │
 │   ├── 🎨 App.tsx                   # Main application
 │   ├── 🎭 index.css                 # Global styles
@@ -278,7 +278,7 @@ SmartDev includes a real-time notification system used for booking updates, demo
 - Notifications support marking read/unread, deleting, and bulk actions.
 - Translations for notification UI strings live in the `src/i18n` files (see `notifications.*` keys).
 
-The frontend `Notifications` component uses the mock API in `src/services/mockApi.ts` for local development. In production, ensure your backend exposes the same endpoints and event hooks used by the app.
+The frontend `Notifications` component uses the MongoDB-backed API client in `src/services/api.ts`.
 
 ---
 

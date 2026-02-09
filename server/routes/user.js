@@ -140,7 +140,7 @@ router.get('/:id', [
 router.get('/admin/all', [
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
-  query('role').optional().isIn(['user', 'admin']),
+  query('role').optional().isIn(['user', 'admin', 'developer']),
   query('isActive').optional().isBoolean()
 ], handleValidationErrors, authenticate, requireAdmin, async (req, res) => {
   try {
@@ -188,7 +188,7 @@ router.get('/admin/all', [
 // PUT /api/user/admin/:id - Update user (admin only)
 router.put('/admin/:id', [
   param('id').isMongoId().withMessage('Invalid user ID'),
-  body('role').optional().isIn(['user', 'admin']),
+  body('role').optional().isIn(['user', 'admin', 'developer']),
   body('isActive').optional().isBoolean()
 ], handleValidationErrors, authenticate, requireAdmin, async (req, res) => {
   try {

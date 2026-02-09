@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { api } from '../services/mockApi';
+import { api } from '../services/api.ts';
 import { User } from '../types';
 import { Trash2, CheckCircle, Circle, Clock } from 'lucide-react';
 import { useI18n } from '../i18n';
